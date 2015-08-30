@@ -1,34 +1,11 @@
 /**
  * List of opcodes of the SH7750h.
  *
- * The idea of this list is to be the input of the tool that automatically
- * generates the LUT for the opcodes. The format is something like this:
+ * @see sh4opcode.def file for the definition of the input array for the LUT
+ * table generation.
  *
- *    _OP(1110nnnniiiiiiii, "mov #i,Rn")
- *
- * Then the parser will translate this into:
- *
- *  // Functions declarations
- *  void __1110nnnniiiiiiii(uin16_t op);
- *
- *  // LUT
- *  typedef void (*OPProcesor_t)(uint16_t);
- *
- *  struct {
- *      uint16_t opcode;
- *      OPProcesor_t processor;
- *  } SH7750OPLUT[] = {
- *      ....
- *      ....
- *      __1110nnnniiiiiiii, // 0xE000 is 1110000000000000
- *      __1110nnnniiiiiiii,
- *      ...
- *      ...
- *      __1110nnnniiiiiiii,
- *      __1110nnnniiiiiiii, // 0xEFFF is 1110111111111111
- *      ...
- *      };
- *
+ * The opcode definition is read and then 2 lookup tables are generated, one
+ * for the dissassembler and the other one for the interpreter. This is 
  * Then the function implementation by default is:
  *
  *      void __1110nnnniiiiiiii(uin16_t op) {
@@ -221,29 +198,51 @@ int main(int argc, char **argv)
     fprintf(hFile, "\n");
     fprintf(hFile, "#include <stdint.h>\n");
     fprintf(hFile, "\n");
-    fprintf(hFile, "/* Forward declaration of all opcode processors */\n");
+    fprintf(hFile, "/* SH4 opcode processor type */\n");
+    fprintf(hFile, "typedef void (*SH4OPProcesor_t)(uint16_t);\n");
+    fprintf(hFile, "\n");
+    fprintf(hFile, "/* Forward declaration of all opcode interpreter processors */\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(hFile, "void __%s(uint16_t op); /**< %s */\n", opcodeDefs[i].opcode, opcodeDefs[i].mnemonic);
     }
     fprintf(hFile, "\n");
 
-    fprintf(hFile, "/* Opcodes lookup table declaration */\n");
-    fprintf(hFile, "typedef void (*OPProcesor_t)(uint16_t);\n");
+    fprintf(hFile, "/* Opcodes interpreter lookup table declaration */\n");
+    fprintf(hFile, "extern SH4OPProcesor_t SH7750InterpLUT[];\n");
     fprintf(hFile, "\n");
-    fprintf(hFile, "extern OPProcesor_t SH7750OPLUT[];\n");
+    fprintf(hFile, "/* Forward declaration of all opcode disasembler processors */\n");
+    fprintf(hFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
+    for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
+        fprintf(hFile, "void __%s_dis(uint16_t op); /**< %s */\n", opcodeDefs[i].opcode, opcodeDefs[i].mnemonic);
+    }
+    fprintf(hFile, "\n");
+
+    fprintf(hFile, "/* Opcodes disassembler lookup table declaration */\n");
+    fprintf(hFile, "extern SH4OPProcesor_t SH7750DisasmLUT[];\n");
+    fprintf(hFile, "#endif // SH7750_ENABLE_DISASSEMBLER\n");
     fprintf(hFile, "\n");
     fprintf(hFile, "#endif // %s\n", hCPPLabel);
 
     /* File containing the LUT */
     fprintf(cLUTFile, "#include \"%s\"\n", hFileName);
     fprintf(cLUTFile, "\n");
-    fprintf(cLUTFile, "/* Lookup table definition */\n");
-    fprintf(cLUTFile, "OPProcesor_t SH7750OPLUT[] = {\n");
+    fprintf(cLUTFile, "/* Interpreter Lookup table definition */\n");
+    fprintf(cLUTFile, "SH4OPProcesor_t SH7750InterpLUT[] = {\n");
     for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
         uint16_t defEntry = opcodeLUT[i];
         fprintf(cLUTFile, "__%s, /**< %s */\n", opcodeDefs[defEntry].opcode, opcodeDefs[defEntry].mnemonic);
     }
     fprintf(cLUTFile, "};\n");
+
+    fprintf(cLUTFile, "/* Lookup table definition */\n");
+    fprintf(cLUTFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
+    fprintf(cLUTFile, "SH4OPProcesor_t SH7750DisasmLUT[] = {\n");
+    for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
+        uint16_t defEntry = opcodeLUT[i];
+        fprintf(cLUTFile, "__%s_dis, /**< %s */\n", opcodeDefs[defEntry].opcode, opcodeDefs[defEntry].mnemonic);
+    }
+    fprintf(cLUTFile, "};\n");
+    fprintf(cLUTFile, "#endif // SH7750_ENABLE_DISASSEMBLER\n");
 
     /* File containing the disassembling functions */
     fprintf(cDisFile, "#include \"%s\"\n", hFileName);
@@ -251,12 +250,12 @@ int main(int argc, char **argv)
     fprintf(cDisFile, "\n");
     fprintf(cDisFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
-        fprintf(cDisFile, "void __%s(uint16_t op)\n", opcodeDefs[i].opcode);
+        fprintf(cDisFile, "void __%s_dis(uint16_t op)\n", opcodeDefs[i].opcode);
         fprintf(cDisFile, "{\n");
         fprintf(cDisFile, "    /* ");
-                fprintf(cDisFile, opcodeDefs[i].mnemonic, opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[0]],
-                                                          opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[1]],
-                                                          opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[2]]);
+        fprintf(cDisFile, opcodeDefs[i].mnemonic, opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[0]],
+                          opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[1]],
+                          opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[2]]);
         fprintf(cDisFile, " */\n");
 
         /* Precooked variables holding the needed ops */
@@ -291,7 +290,6 @@ int main(int argc, char **argv)
     fprintf(cEmuFile, "#include <stdio.h>\n");
     fprintf(cEmuFile, "#include <stdlib.h>\n");
     fprintf(cEmuFile, "\n");
-    fprintf(cEmuFile, "#ifndef SH7750_ENABLE_DISASSEMBLER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(cEmuFile, "void __%s(uint16_t op)\n", opcodeDefs[i].opcode);
         fprintf(cEmuFile, "{\n");
@@ -327,7 +325,6 @@ int main(int argc, char **argv)
         fprintf(cEmuFile, "}\n");
         fprintf(cEmuFile, "\n");
     }
-    fprintf(cEmuFile, "#endif // !SH7750_ENABLE_DISASSEMBLER\n");
 
     fclose(cDisFile);
     fclose(cEmuFile);
