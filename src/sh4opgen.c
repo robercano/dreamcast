@@ -203,7 +203,11 @@ int main(int argc, char **argv)
     fprintf(hFile, "\n");
     fprintf(hFile, "/* Forward declaration of all opcode interpreter processors */\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
-        fprintf(hFile, "void __%s(uint16_t op); /**< %s */\n", opcodeDefs[i].opcode, opcodeDefs[i].mnemonic);
+        fprintf(hFile, "void __%s(uint16_t op); /**< ", opcodeDefs[i].opcode);
+        fprintf(hFile, opcodeDefs[i].mnemonic, opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[0]],
+                opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[1]],
+                opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[2]]);
+        fprintf(hFile, " */\n");
     }
     fprintf(hFile, "\n");
 
@@ -213,12 +217,17 @@ int main(int argc, char **argv)
     fprintf(hFile, "/* Forward declaration of all opcode disasembler processors */\n");
     fprintf(hFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
-        fprintf(hFile, "void __%s_dis(uint16_t op); /**< %s */\n", opcodeDefs[i].opcode, opcodeDefs[i].mnemonic);
+        fprintf(hFile, "void __%s_dis(uint16_t op); /**< ", opcodeDefs[i].opcode);
+        fprintf(hFile, opcodeDefs[i].mnemonic, opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[0]],
+                opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[1]],
+                opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[2]]);
+        fprintf(hFile, " */\n");
     }
     fprintf(hFile, "\n");
 
     fprintf(hFile, "/* Opcodes disassembler lookup table declaration */\n");
     fprintf(hFile, "extern SH4OPProcesor_t SH7750DisasmLUT[];\n");
+    fprintf(hFile, "\n");
     fprintf(hFile, "#endif // SH7750_ENABLE_DISASSEMBLER\n");
     fprintf(hFile, "\n");
     fprintf(hFile, "#endif // %s\n", hCPPLabel);
@@ -230,7 +239,11 @@ int main(int argc, char **argv)
     fprintf(cLUTFile, "SH4OPProcesor_t SH7750InterpLUT[] = {\n");
     for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
         uint16_t defEntry = opcodeLUT[i];
-        fprintf(cLUTFile, "__%s, /**< %s */\n", opcodeDefs[defEntry].opcode, opcodeDefs[defEntry].mnemonic);
+        fprintf(cLUTFile, "__%s, /**< 0x%04x: ", opcodeDefs[defEntry].opcode, i);
+        fprintf(cLUTFile, opcodeDefs[defEntry].mnemonic, opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[0]],
+                          opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[1]],
+                          opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[2]]);
+        fprintf(cLUTFile, " */\n");
     }
     fprintf(cLUTFile, "};\n");
 
@@ -239,7 +252,11 @@ int main(int argc, char **argv)
     fprintf(cLUTFile, "SH4OPProcesor_t SH7750DisasmLUT[] = {\n");
     for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
         uint16_t defEntry = opcodeLUT[i];
-        fprintf(cLUTFile, "__%s_dis, /**< %s */\n", opcodeDefs[defEntry].opcode, opcodeDefs[defEntry].mnemonic);
+        fprintf(cLUTFile, "__%s_dis, /**< 0x%04x: ", opcodeDefs[defEntry].opcode, i);
+        fprintf(cLUTFile, opcodeDefs[defEntry].mnemonic, opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[0]],
+                          opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[1]],
+                          opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[2]]);
+        fprintf(cLUTFile, " */\n");
     }
     fprintf(cLUTFile, "};\n");
     fprintf(cLUTFile, "#endif // SH7750_ENABLE_DISASSEMBLER\n");
