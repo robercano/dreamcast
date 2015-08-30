@@ -1,0 +1,39 @@
+/* Definition of all opcodes for the SH4 processor. The
+   format is as follows:
+
+   { <opcode1>, <mnemonic1> },
+   { <opcode2>, <mnemonic2> },
+	...
+   { "<opcodeN>", "<mnemonicN>" }
+
+  where:
+	<opcode> is the binary generic representation of the opcode. In this representation any
+             combination of '1', '0' and any letter is allowed, with a maximum of 3 different
+             letter symbols. Each letter is considered an opcode parameter and the number of
+			 letters of the same symbol is used to determine its size in bits. For example:
+
+                   0101mmnn0000dddd
+
+			 Indicates 3 parameters: m, n and d, with respectively 2, 2 and 4 bits
+
+	<mnemonic> is a string representing the mnemonic associated to the opcode. For this
+               representation the special pair %<letter> is allowed to indicate where the
+               parameter defined in <opcode> fits in the disassembled mnemonic. For example,
+               taking into account the opcode defined in the previous example:
+
+                   ldc @(%d,R%m),R%n
+
+  This file is intended to be included inside a struct array definition like:
+
+    struct {
+        char opcode[17];
+        char mnemonic[32];
+	} opcodeDefs[] = {
+        #include "sh4opcode.def"
+    }
+*/
+{ "0000000000000000", "noop" },
+{ "1110nnnniiiiiiii", "mov #%i,R%n" },
+{ "1001nnnndddddddd", "mov.w @(%d,PC),R%n" },
+{ "1101nnnndddddddd", "mov.w @(%d,PC),R%n" },
+{ "0110nnnnmmmm0011", "mov R%m,R%n" },
