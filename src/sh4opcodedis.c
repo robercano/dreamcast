@@ -1659,7 +1659,7 @@ void __1111nnn1mmm01100_dis(uint16_t op)
     /* fmov DRm,XDn */
     uint8_t n = (op>>9)&0x7;
     uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov DR%d,XDn\n", m, n);
+    fprintf(stdout, "fmov DR%d,XD%d\n", m, n);
 }
 
 void __1111nnn0mmm11100_dis(uint16_t op)
@@ -1667,7 +1667,7 @@ void __1111nnn0mmm11100_dis(uint16_t op)
     /* fmov XDm,DRn */
     uint8_t n = (op>>9)&0x7;
     uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XDm,DR%d\n", n, n);
+    fprintf(stdout, "fmov XD%d,DR%d\n", m, n);
 }
 
 void __1111nnn1mmm11100_dis(uint16_t op)
@@ -1675,7 +1675,7 @@ void __1111nnn1mmm11100_dis(uint16_t op)
     /* fmov XDm,XDn */
     uint8_t n = (op>>9)&0x7;
     uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XDm,XDn\n", n, n);
+    fprintf(stdout, "fmov XD%d,XD%d\n", m, n);
 }
 
 void __1111nnn1mmmm1000_dis(uint16_t op)
@@ -1683,7 +1683,7 @@ void __1111nnn1mmmm1000_dis(uint16_t op)
     /* fmov @Rm,XDn */
     uint8_t n = (op>>9)&0x7;
     uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @R%d,XDn\n", m, n);
+    fprintf(stdout, "fmov @R%d,XD%d\n", m, n);
 }
 
 void __1111nnn1mmmm1001_dis(uint16_t op)
@@ -1691,7 +1691,7 @@ void __1111nnn1mmmm1001_dis(uint16_t op)
     /* fmov @Rm+,XDn */
     uint8_t n = (op>>9)&0x7;
     uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @R%d+,XDn\n", m, n);
+    fprintf(stdout, "fmov @R%d+,XD%d\n", m, n);
 }
 
 void __1111nnn1mmmm0110_dis(uint16_t op)
@@ -1707,7 +1707,7 @@ void __1111nnnnmmm11010_dis(uint16_t op)
     /* fmov XDm,@Rn */
     uint8_t n = (op>>8)&0xf;
     uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XDm,@R%d\n", n, n);
+    fprintf(stdout, "fmov XD%d,@R%d\n", m, n);
 }
 
 void __1111nnnnmmm11011_dis(uint16_t op)
@@ -1715,7 +1715,7 @@ void __1111nnnnmmm11011_dis(uint16_t op)
     /* fmov XDm,@-Rn */
     uint8_t n = (op>>8)&0xf;
     uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XDm,@-R%d\n", n, n);
+    fprintf(stdout, "fmov XD%d,@-R%d\n", m, n);
 }
 
 void __1111nnnnmmm10111_dis(uint16_t op)
@@ -1723,7 +1723,7 @@ void __1111nnnnmmm10111_dis(uint16_t op)
     /* fmov XDm,@(R0,Rn) */
     uint8_t n = (op>>8)&0xf;
     uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XDm,@(R0,R%d)\n", n, n);
+    fprintf(stdout, "fmov XD%d,@(R0,R%d)\n", m, n);
 }
 
 void __1111nnmm11101101_dis(uint16_t op)

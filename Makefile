@@ -16,8 +16,10 @@ SH4OPGEN_SRC := sh4opgen.c
 SH4OPGEN_OBJ := $(patsubst %.c, obj/%.o, $(SH4OPGEN_SRC))
 
 # SH4 disassembler tool
+SH4DISASM_SRC := sh4disassembler.c sh4opcodeLUT.c sh4opcodedis.c
+SH4DISASM_OBJ := $(patsubst %.c, obj/%.o, $(SH4DISASM_SRC))
 
-all: createdirs $(TOOLSDIR)/sh4opgen
+all: createdirs $(TOOLSDIR)/sh4opgen $(TOOLSDIR)/sh4disassembler
 
 createdirs:
 	mkdir -p $(OBJDIR)
@@ -26,14 +28,19 @@ createdirs:
 $(TOOLSDIR)/sh4opgen: $(SH4OPGEN_OBJ)
 	$(CXX) -o $@ $^
 
+$(TOOLSDIR)/sh4disassembler: CFLAGS=-DSH7750_ENABLE_DISASSEMBLER
+$(TOOLSDIR)/sh4disassembler: CXXFLAGS=-DSH7750_ENABLE_DISASSEMBLER
+$(TOOLSDIR)/sh4disassembler: $(SH4DISASM_OBJ)
+	$(CXX) -o $@ $^
+
 clean:
 	rm -rf $(OBJDIR)
 	rm -rf $(TOOLSDIR)
 
 obj/%.o: src/%.c
-	$(CC) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 obj/%.o: src/%.cpp
-	$(CXX) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 .PHONY: createdirs

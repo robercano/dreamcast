@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef SH7750_ENABLE_INTERPRETER
 void __0000000000000000(uint16_t op)
 {
     /* EXCEPTION */
@@ -1985,3 +1986,4 @@ void __1111001111111101(uint16_t op)
     exit(1);
 }
 
+#endif // SH7750_ENABLE_INTERPRETER

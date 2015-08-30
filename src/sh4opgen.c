@@ -202,6 +202,7 @@ int main(int argc, char **argv)
     fprintf(hFile, "typedef void (*SH4OPProcesor_t)(uint16_t);\n");
     fprintf(hFile, "\n");
     fprintf(hFile, "/* Forward declaration of all opcode interpreter processors */\n");
+    fprintf(hFile, "#ifdef SH7750_ENABLE_INTERPRETER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(hFile, "void __%s(uint16_t op); /**< ", opcodeDefs[i].opcode);
         fprintf(hFile, opcodeDefs[i].mnemonic, opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[0]],
@@ -213,6 +214,8 @@ int main(int argc, char **argv)
 
     fprintf(hFile, "/* Opcodes interpreter lookup table declaration */\n");
     fprintf(hFile, "extern SH4OPProcesor_t SH7750InterpLUT[];\n");
+    fprintf(hFile, "\n");
+    fprintf(hFile, "#endif // SH7750_ENABLE_INTERPRETER\n");
     fprintf(hFile, "\n");
     fprintf(hFile, "/* Forward declaration of all opcode disasembler processors */\n");
     fprintf(hFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
@@ -235,7 +238,8 @@ int main(int argc, char **argv)
     /* File containing the LUT */
     fprintf(cLUTFile, "#include \"%s\"\n", hFileName);
     fprintf(cLUTFile, "\n");
-    fprintf(cLUTFile, "/* Interpreter Lookup table definition */\n");
+    fprintf(cLUTFile, "/* Interpreter lookup table definition */\n");
+    fprintf(cLUTFile, "#ifdef SH7750_ENABLE_INTERPRETER\n");
     fprintf(cLUTFile, "SH4OPProcesor_t SH7750InterpLUT[] = {\n");
     for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
         uint16_t defEntry = opcodeLUT[i];
@@ -246,8 +250,10 @@ int main(int argc, char **argv)
         fprintf(cLUTFile, " */\n");
     }
     fprintf(cLUTFile, "};\n");
+    fprintf(cLUTFile, "#endif // SH7750_ENABLE_INTERPRETER\n");
+    fprintf(cLUTFile, "\n");
 
-    fprintf(cLUTFile, "/* Lookup table definition */\n");
+    fprintf(cLUTFile, "/* Disassembler lookup table definition */\n");
     fprintf(cLUTFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
     fprintf(cLUTFile, "SH4OPProcesor_t SH7750DisasmLUT[] = {\n");
     for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
@@ -307,6 +313,7 @@ int main(int argc, char **argv)
     fprintf(cEmuFile, "#include <stdio.h>\n");
     fprintf(cEmuFile, "#include <stdlib.h>\n");
     fprintf(cEmuFile, "\n");
+    fprintf(cEmuFile, "#ifdef SH7750_ENABLE_INTERPRETER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(cEmuFile, "void __%s(uint16_t op)\n", opcodeDefs[i].opcode);
         fprintf(cEmuFile, "{\n");
@@ -342,6 +349,7 @@ int main(int argc, char **argv)
         fprintf(cEmuFile, "}\n");
         fprintf(cEmuFile, "\n");
     }
+    fprintf(cEmuFile, "#endif // SH7750_ENABLE_INTERPRETER\n");
 
     fclose(cDisFile);
     fclose(cEmuFile);
