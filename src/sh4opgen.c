@@ -80,9 +80,10 @@ int main(int argc, char **argv)
     uint8_t numPrintVars;
     size_t mnemonicLen;
     char cDisFileName[256], cEmuFileName[256],
-         cLUTFileName[256], hFileName[256];
+         cDisLUTFileName[256], cEmuLUTFileName[256],
+         hFileName[256];
     char hCPPLabel[256];
-    FILE *cDisFile, *cEmuFile, *cLUTFile, *hFile;
+    FILE *cDisFile, *cEmuFile, *cDisLUTFile, *cEmuLUTFile, *hFile;
     char *basename = argv[1];
 
     if (argc < 2) {
@@ -91,7 +92,8 @@ int main(int argc, char **argv)
         fprintf(stderr, "\tare generated:\n");
         fprintf(stderr, "\t\t<base_name>dis.c\n");
         fprintf(stderr, "\t\t<base_name>emu.c\n");
-        fprintf(stderr, "\t\t<base_name>LUT.c\n");
+        fprintf(stderr, "\t\t<base_name>disLUT.c\n");
+        fprintf(stderr, "\t\t<base_name>emuLUT.c\n");
         fprintf(stderr, "\t\t<base_name>.h\n");
         fprintf(stderr, "\n");
         exit(1);
@@ -99,7 +101,8 @@ int main(int argc, char **argv)
 
     snprintf(cDisFileName, sizeof cDisFileName, "%sdis.c", basename);
     snprintf(cEmuFileName, sizeof cEmuFileName, "%semu.c", basename);
-    snprintf(cLUTFileName, sizeof cLUTFileName, "%sLUT.c", basename);
+    snprintf(cDisLUTFileName, sizeof cDisLUTFileName, "%sdisLUT.c", basename);
+    snprintf(cEmuLUTFileName, sizeof cEmuLUTFileName, "%semuLUT.c", basename);
     snprintf(hFileName, sizeof hFileName, "%s.h", basename);
     snprintf(hCPPLabel, sizeof hCPPLabel, "__%s_H__", basename);
     i=0;
@@ -110,17 +113,20 @@ int main(int argc, char **argv)
 
     cDisFile = fopen(cDisFileName, "w");
     cEmuFile = fopen(cEmuFileName, "w");
-    cLUTFile = fopen(cLUTFileName, "w");
+    cDisLUTFile = fopen(cDisLUTFileName, "w");
+    cEmuLUTFile = fopen(cEmuLUTFileName, "w");
     hFile = fopen(hFileName, "w");
 
     if (cDisFile == NULL || cEmuFile == NULL ||
-        cLUTFile == NULL || hFile == NULL) {
+        cDisLUTFile == NULL || cEmuLUTFile == NULL ||
+        hFile == NULL) {
         fclose(cDisFile);
         fclose(cEmuFile);
-        fclose(cLUTFile);
+        fclose(cDisLUTFile);
+        fclose(cEmuLUTFile);
         fclose(hFile);
-        fprintf(stderr, "ERROR could not open %s, %s, %s or %s\n",
-                cDisFileName, cEmuFileName, cLUTFileName, hFileName);
+        fprintf(stderr, "ERROR could not open %s, %s, %s, %s or %s\n",
+                cDisFileName, cEmuFileName, cDisLUTFileName, cEmuLUTFileName, hFileName);
         return 1;
     }
 
@@ -189,7 +195,8 @@ int main(int argc, char **argv)
 
     WriteHeader(cDisFile, cDisFileName, "Contains the implementation of the processing functions for the disassembler", true);
     WriteHeader(cEmuFile, cEmuFileName, "Contains the implementation of the processing functions for the emulator", false);
-    WriteHeader(cLUTFile, cLUTFileName, "Contains the lookup table for the processing functions", true);
+    WriteHeader(cDisLUTFile, cDisLUTFileName, "Contains the lookup table for the processing functions", true);
+    WriteHeader(cEmuLUTFile, cEmuLUTFileName, "Contains the lookup table for the processing functions", true);
     WriteHeader(hFile, hFileName, "Header file with all the LUT definitions", true);
 
     /* Header file */
@@ -202,7 +209,6 @@ int main(int argc, char **argv)
     fprintf(hFile, "typedef void (*SH4OPProcesor_t)(uint16_t);\n");
     fprintf(hFile, "\n");
     fprintf(hFile, "/* Forward declaration of all opcode interpreter processors */\n");
-    fprintf(hFile, "#ifdef SH7750_ENABLE_INTERPRETER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(hFile, "void __%s(uint16_t op); /**< ", opcodeDefs[i].opcode);
         fprintf(hFile, opcodeDefs[i].mnemonic, opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[0]],
@@ -215,10 +221,7 @@ int main(int argc, char **argv)
     fprintf(hFile, "/* Opcodes interpreter lookup table declaration */\n");
     fprintf(hFile, "extern SH4OPProcesor_t SH7750InterpLUT[];\n");
     fprintf(hFile, "\n");
-    fprintf(hFile, "#endif // SH7750_ENABLE_INTERPRETER\n");
-    fprintf(hFile, "\n");
     fprintf(hFile, "/* Forward declaration of all opcode disasembler processors */\n");
-    fprintf(hFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(hFile, "void __%s_dis(uint16_t op); /**< ", opcodeDefs[i].opcode);
         fprintf(hFile, opcodeDefs[i].mnemonic, opcodeDefsMeta[i].seenVars[opcodeDefsMeta[i].seenVarsOrder[0]],
@@ -231,47 +234,42 @@ int main(int argc, char **argv)
     fprintf(hFile, "/* Opcodes disassembler lookup table declaration */\n");
     fprintf(hFile, "extern SH4OPProcesor_t SH7750DisasmLUT[];\n");
     fprintf(hFile, "\n");
-    fprintf(hFile, "#endif // SH7750_ENABLE_DISASSEMBLER\n");
-    fprintf(hFile, "\n");
     fprintf(hFile, "#endif // %s\n", hCPPLabel);
 
-    /* File containing the LUT */
-    fprintf(cLUTFile, "#include \"%s\"\n", hFileName);
-    fprintf(cLUTFile, "\n");
-    fprintf(cLUTFile, "/* Interpreter lookup table definition */\n");
-    fprintf(cLUTFile, "#ifdef SH7750_ENABLE_INTERPRETER\n");
-    fprintf(cLUTFile, "SH4OPProcesor_t SH7750InterpLUT[] = {\n");
+    /* File containing the disassembler LUT */
+    fprintf(cDisLUTFile, "#include \"%s\"\n", hFileName);
+    fprintf(cDisLUTFile, "\n");
+    fprintf(cDisLUTFile, "/* Disassembler lookup table definition */\n");
+    fprintf(cDisLUTFile, "SH4OPProcesor_t SH7750DisasmLUT[] = {\n");
     for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
         uint16_t defEntry = opcodeLUT[i];
-        fprintf(cLUTFile, "__%s, /**< 0x%04x: ", opcodeDefs[defEntry].opcode, i);
-        fprintf(cLUTFile, opcodeDefs[defEntry].mnemonic, opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[0]],
+        fprintf(cDisLUTFile, "__%s_dis, /**< 0x%04x: ", opcodeDefs[defEntry].opcode, i);
+        fprintf(cDisLUTFile, opcodeDefs[defEntry].mnemonic, opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[0]],
                           opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[1]],
                           opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[2]]);
-        fprintf(cLUTFile, " */\n");
+        fprintf(cDisLUTFile, " */\n");
     }
-    fprintf(cLUTFile, "};\n");
-    fprintf(cLUTFile, "#endif // SH7750_ENABLE_INTERPRETER\n");
-    fprintf(cLUTFile, "\n");
+    fprintf(cDisLUTFile, "};\n");
 
-    fprintf(cLUTFile, "/* Disassembler lookup table definition */\n");
-    fprintf(cLUTFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
-    fprintf(cLUTFile, "SH4OPProcesor_t SH7750DisasmLUT[] = {\n");
+    /* File containing the interpreter LUT */
+    fprintf(cEmuLUTFile, "#include \"%s\"\n", hFileName);
+    fprintf(cEmuLUTFile, "\n");
+    fprintf(cEmuLUTFile, "/* Interpreter lookup table definition */\n");
+    fprintf(cEmuLUTFile, "SH4OPProcesor_t SH7750InterpLUT[] = {\n");
     for (i=0; i<sizeof opcodeLUT/sizeof *opcodeLUT; ++i) {
         uint16_t defEntry = opcodeLUT[i];
-        fprintf(cLUTFile, "__%s_dis, /**< 0x%04x: ", opcodeDefs[defEntry].opcode, i);
-        fprintf(cLUTFile, opcodeDefs[defEntry].mnemonic, opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[0]],
+        fprintf(cEmuLUTFile, "__%s, /**< 0x%04x: ", opcodeDefs[defEntry].opcode, i);
+        fprintf(cEmuLUTFile, opcodeDefs[defEntry].mnemonic, opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[0]],
                           opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[1]],
                           opcodeDefsMeta[defEntry].seenVars[opcodeDefsMeta[defEntry].seenVarsOrder[2]]);
-        fprintf(cLUTFile, " */\n");
+        fprintf(cEmuLUTFile, " */\n");
     }
-    fprintf(cLUTFile, "};\n");
-    fprintf(cLUTFile, "#endif // SH7750_ENABLE_DISASSEMBLER\n");
+    fprintf(cEmuLUTFile, "};\n");
 
     /* File containing the disassembling functions */
     fprintf(cDisFile, "#include \"%s\"\n", hFileName);
     fprintf(cDisFile, "#include <stdio.h>\n");
     fprintf(cDisFile, "\n");
-    fprintf(cDisFile, "#ifdef SH7750_ENABLE_DISASSEMBLER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(cDisFile, "void __%s_dis(uint16_t op)\n", opcodeDefs[i].opcode);
         fprintf(cDisFile, "{\n");
@@ -306,14 +304,12 @@ int main(int argc, char **argv)
         fprintf(cDisFile, "}\n");
         fprintf(cDisFile, "\n");
     }
-    fprintf(cDisFile, "#endif // SH7750_ENABLE_DISASSEMBLER\n");
 
     /* File containing the emulator functions */
     fprintf(cEmuFile, "#include \"%s\"\n", hFileName);
     fprintf(cEmuFile, "#include <stdio.h>\n");
     fprintf(cEmuFile, "#include <stdlib.h>\n");
     fprintf(cEmuFile, "\n");
-    fprintf(cEmuFile, "#ifdef SH7750_ENABLE_INTERPRETER\n");
     for (i=0; i<sizeof opcodeDefs/sizeof *opcodeDefs; ++i) {
         fprintf(cEmuFile, "void __%s(uint16_t op)\n", opcodeDefs[i].opcode);
         fprintf(cEmuFile, "{\n");
@@ -349,11 +345,11 @@ int main(int argc, char **argv)
         fprintf(cEmuFile, "}\n");
         fprintf(cEmuFile, "\n");
     }
-    fprintf(cEmuFile, "#endif // SH7750_ENABLE_INTERPRETER\n");
 
     fclose(cDisFile);
     fclose(cEmuFile);
-    fclose(cLUTFile);
+    fclose(cDisLUTFile);
+    fclose(cEmuLUTFile);
     fclose(hFile);
 
     fprintf(stdout, "Done!\n");

@@ -12,7 +12,6 @@
 #include "sh4opcode.h"
 #include <stdio.h>
 
-#ifdef SH7750_ENABLE_DISASSEMBLER
 void __0000000000000000_dis(uint16_t op)
 {
     /* EXCEPTION */
@@ -1753,4 +1752,3 @@ void __1111001111111101_dis(uint16_t op)
     fprintf(stdout, "fschg\n");
 }
 
-#endif // SH7750_ENABLE_DISASSEMBLER

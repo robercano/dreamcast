@@ -18,7 +18,6 @@
 typedef void (*SH4OPProcesor_t)(uint16_t);
 
 /* Forward declaration of all opcode interpreter processors */
-#ifdef SH7750_ENABLE_INTERPRETER
 void __0000000000000000(uint16_t op); /**< EXCEPTION */
 void __1110nnnniiiiiiii(uint16_t op); /**< mov     #i,rn */
 void __1001nnnndddddddd(uint16_t op); /**< mov.w   @(d,pc),rn */
@@ -258,10 +257,7 @@ void __1111001111111101(uint16_t op); /**< fschg */
 /* Opcodes interpreter lookup table declaration */
 extern SH4OPProcesor_t SH7750InterpLUT[];
 
-#endif // SH7750_ENABLE_INTERPRETER
-
 /* Forward declaration of all opcode disasembler processors */
-#ifdef SH7750_ENABLE_DISASSEMBLER
 void __0000000000000000_dis(uint16_t op); /**< EXCEPTION */
 void __1110nnnniiiiiiii_dis(uint16_t op); /**< mov     #i,rn */
 void __1001nnnndddddddd_dis(uint16_t op); /**< mov.w   @(d,pc),rn */
@@ -500,7 +496,5 @@ void __1111001111111101_dis(uint16_t op); /**< fschg */
 
 /* Opcodes disassembler lookup table declaration */
 extern SH4OPProcesor_t SH7750DisasmLUT[];
-
-#endif // SH7750_ENABLE_DISASSEMBLER
 
 #endif // __SH4OPCODE_H__
