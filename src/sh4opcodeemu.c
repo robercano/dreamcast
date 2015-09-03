@@ -6,9 +6,42 @@
  * @author Roberto Cano <roberto dot cano at google mail>
  *
  *********************************************/
+#include "sh4.h"
 #include "sh4opcode.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+/* Main registers */
+SH7750hRegisters_t regs;
+uint8_t *code;
+uint32_t codeBase;
+uint32_t codeLen;
+uint32_t memorySize;
+
+void memwrite_l(uint32_t value, uint32_t address)
+{
+    if (address > memorySize) {
+        fprintf(stderr, "MEMORY WRITE EXCEPTION AT ADDRESS %04x\n", address);
+        exit(1);
+    }
+    *(uint32_t*)(code+address) = htonl(value);
+}
+uint32_t memread_l(uint32_t address)
+{
+    if (address > memorySize) {
+        fprintf(stderr, "MEMORY READ EXCEPTION AT ADDRESS %04x\n", address);
+        exit(1);
+    }
+    return ntohl(*(uint32_t*)(code+address));
+}
+int16_t memread_ws(uint32_t address)
+{
+    if (address > memorySize) {
+        fprintf(stderr, "MEMORY READ EXCEPTION AT ADDRESS %04x\n", address);
+        exit(1);
+    }
+    return (int16_t)ntohs(*(uint32_t*)(code+address));
+}
 
 void __0000000000000000(uint16_t op)
 {
@@ -22,8 +55,7 @@ void __1110nnnniiiiiiii(uint16_t op)
     /* mov     #i,rn */
     int8_t n = (op>>8)&0xf;
     int8_t i = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov     #i,rn --> __1110nnnniiiiiiii\n");
-    exit(1);
+    _R(n) = i;
 }
 
 void __1001nnnndddddddd(uint16_t op)
@@ -31,8 +63,8 @@ void __1001nnnndddddddd(uint16_t op)
     /* mov.w   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
     int8_t d = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.w   @(d,pc),rn --> __1001nnnndddddddd\n");
-    exit(1);
+
+    _R(n) = memread_ws(d*2 + regs.PC + 4);
 }
 
 void __1101nnnndddddddd(uint16_t op)
@@ -40,8 +72,7 @@ void __1101nnnndddddddd(uint16_t op)
     /* mov.l   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
     int8_t d = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   @(d,pc),rn --> __1101nnnndddddddd\n");
-    exit(1);
+    _R(n) = memread_l(d*4 + (regs.PC&0xfffffffc) + 4);
 }
 
 void __0110nnnnmmmm0011(uint16_t op)
@@ -49,8 +80,7 @@ void __0110nnnnmmmm0011(uint16_t op)
     /* mov     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov     rm,rn --> __0110nnnnmmmm0011\n");
-    exit(1);
+    _R(n) = _R(m);
 }
 
 void __0010nnnnmmmm0000(uint16_t op)
@@ -76,8 +106,7 @@ void __0010nnnnmmmm0010(uint16_t op)
     /* mov.l   rm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   rm,@rn --> __0010nnnnmmmm0010\n");
-    exit(1);
+    memwrite_l(_R(m), _R(n));
 }
 
 void __0110nnnnmmmm0000(uint16_t op)
@@ -103,8 +132,7 @@ void __0110nnnnmmmm0010(uint16_t op)
     /* mov.l   @rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   @rm,rn --> __0110nnnnmmmm0010\n");
-    exit(1);
+    _R(n) = memread_l(_R(m));
 }
 
 void __0010nnnnmmmm0100(uint16_t op)
@@ -130,8 +158,9 @@ void __0010nnnnmmmm0110(uint16_t op)
     /* mov.l   rm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   rm,@-rn --> __0010nnnnmmmm0110\n");
-    exit(1);
+
+    _R(n) -= 4;
+    memwrite_l(_R(m), _R(n));
 }
 
 void __0110nnnnmmmm0100(uint16_t op)
@@ -157,8 +186,8 @@ void __0110nnnnmmmm0110(uint16_t op)
     /* mov.l   @rm+,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   @rm+,rn --> __0110nnnnmmmm0110\n");
-    exit(1);
+    _R(n) = memread_l(_R(m));
+    _R(m) += 4;
 }
 
 void __10000000nnnndddd(uint16_t op)
@@ -185,8 +214,7 @@ void __0001nnnnmmmmdddd(uint16_t op)
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
     int8_t d = op&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   rm,@(d,rn) --> __0001nnnnmmmmdddd\n");
-    exit(1);
+    memwrite_l(_R(m), d*4+_R(n));
 }
 
 void __10000100mmmmdddd(uint16_t op)
@@ -267,8 +295,7 @@ void __0000nnnnmmmm1110(uint16_t op)
     /* mov.l   @(r0,rm),rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   @(r0,rm),rn --> __0000nnnnmmmm1110\n");
-    exit(1);
+    _R(n) = memread_l(_R(0) + _R(m));
 }
 
 void __11000000dddddddd(uint16_t op)
@@ -367,8 +394,7 @@ void __0011nnnnmmmm1100(uint16_t op)
     /* add     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] add     rm,rn --> __0011nnnnmmmm1100\n");
-    exit(1);
+    _R(n) += _R(m);
 }
 
 void __0111nnnniiiiiiii(uint16_t op)
@@ -376,8 +402,7 @@ void __0111nnnniiiiiiii(uint16_t op)
     /* add     #i,rn */
     int8_t n = (op>>8)&0xf;
     int8_t i = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] add     #i,rn --> __0111nnnniiiiiiii\n");
-    exit(1);
+    _R(n) += i;
 }
 
 void __0011nnnnmmmm1110(uint16_t op)
@@ -429,8 +454,7 @@ void __0011nnnnmmmm0011(uint16_t op)
     /* cmp/ge  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] cmp/ge  rm,rn --> __0011nnnnmmmm0011\n");
-    exit(1);
+    regs.SR.T = (int32_t)_R(n) >= (int32_t)_R(m);
 }
 
 void __0011nnnnmmmm0110(uint16_t op)
@@ -447,8 +471,7 @@ void __0011nnnnmmmm0111(uint16_t op)
     /* cmp/gt  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] cmp/gt  rm,rn --> __0011nnnnmmmm0111\n");
-    exit(1);
+    regs.SR.T = (int32_t)_R(n) > (int32_t)_R(m);
 }
 
 void __0100nnnn00010001(uint16_t op)
@@ -725,8 +748,7 @@ void __0010nnnnmmmm1000(uint16_t op)
     /* tst     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] tst     rm,rn --> __0010nnnnmmmm1000\n");
-    exit(1);
+    regs.SR.T = _R(n)&_R(m) ? 0 : 1;
 }
 
 void __11001000iiiiiiii(uint16_t op)
@@ -856,8 +878,7 @@ void __0100nnnn00001000(uint16_t op)
 {
     /* shll2   rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] shll2   rn --> __0100nnnn00001000\n");
-    exit(1);
+    _R(n) <<= 2;
 }
 
 void __0100nnnn00001001(uint16_t op)
@@ -904,8 +925,10 @@ void __10001011dddddddd(uint16_t op)
 {
     /* bf      d */
     int8_t d = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] bf      d --> __10001011dddddddd\n");
-    exit(1);
+    if (regs.SR.T == 0) {
+        regs.NPC = d*2 + regs.PC + 4;
+        regs.NNPC = regs.NPC+2;
+    }
 }
 
 void __10001111dddddddd(uint16_t op)
@@ -920,8 +943,9 @@ void __10001001dddddddd(uint16_t op)
 {
     /* bt      d */
     int8_t d = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] bt      d --> __10001001dddddddd\n");
-    exit(1);
+    if (regs.SR.T) {
+        regs.NPC += d*2 + 4;
+    }
 }
 
 void __10001101dddddddd(uint16_t op)
@@ -968,23 +992,21 @@ void __0100nnnn00101011(uint16_t op)
 {
     /* jmp     @rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] jmp     @rn --> __0100nnnn00101011\n");
-    exit(1);
+    regs.NNPC = _R(n);
 }
 
 void __0100nnnn00001011(uint16_t op)
 {
     /* jsr     @rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] jsr     @rn --> __0100nnnn00001011\n");
-    exit(1);
+    regs.PR = regs.PC+4;
+    regs.NNPC = _R(n);
 }
 
 void __0000000000001011(uint16_t op)
 {
     /* rts */
-    fprintf(stderr, "[NOT IMPLEMENTED!] rts --> __0000000000001011\n");
-    exit(1);
+    regs.NNPC = regs.PR;
 }
 
 void __0000000000101000(uint16_t op)
@@ -1012,8 +1034,8 @@ void __0100mmmm00001110(uint16_t op)
 {
     /* ldc     rm,sr */
     int8_t m = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] ldc     rm,sr --> __0100mmmm00001110\n");
-    exit(1);
+    _SRPUT(_R(m));
+    fprintf(stderr, "------------> %d, %x\n", m, _R(m)>>12);
 }
 
 void __0100mmmm00011110(uint16_t op)
@@ -1166,8 +1188,8 @@ void __0100mmmm00100110(uint16_t op)
 {
     /* lds.l   @rm+,pr */
     int8_t m = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] lds.l   @rm+,pr --> __0100mmmm00100110\n");
-    exit(1);
+    regs.PR = memread_l(_R(m));
+    _R(m) += 4;
 }
 
 void __0000000000111000(uint16_t op)
@@ -1188,8 +1210,6 @@ void __0000nnnn11000011(uint16_t op)
 void __0000000000001001(uint16_t op)
 {
     /* nop */
-    fprintf(stderr, "[NOT IMPLEMENTED!] nop --> __0000000000001001\n");
-    exit(1);
 }
 
 void __0000nnnn10010011(uint16_t op)
@@ -1426,8 +1446,8 @@ void __0100nnnn00100010(uint16_t op)
 {
     /* sts.l   pr,@-rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] sts.l   pr,@-rn --> __0100nnnn00100010\n");
-    exit(1);
+    _R(n) -= 4;
+    memwrite_l(regs.PR, _R(n));
 }
 
 void __11000011iiiiiiii(uint16_t op)
