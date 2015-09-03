@@ -286,7 +286,7 @@ int main(int argc, char **argv)
             if (opcodeDefsMeta[i].seenVars[j].numBits > 8) {
                 fprintf(cDisFile, "    uint16_t ");
             } else {
-                fprintf(cDisFile, "    uint8_t ");
+                fprintf(cDisFile, "    int8_t ");
             }
             if (opcodeDefsMeta[i].seenVars[j].firstBit+1-opcodeDefsMeta[i].seenVars[j].numBits > 0) {
                 fprintf(cDisFile, "%c = (op>>%d)&0x%x;\n", opcodeDefsMeta[i].seenVars[j].symbol,
@@ -328,7 +328,7 @@ int main(int argc, char **argv)
             if (opcodeDefsMeta[i].seenVars[j].numBits > 8) {
                 fprintf(cEmuFile, "    uint16_t ");
             } else {
-                fprintf(cEmuFile, "    uint8_t ");
+                fprintf(cEmuFile, "    int8_t ");
             }
             if (opcodeDefsMeta[i].seenVars[j].firstBit+1-opcodeDefsMeta[i].seenVars[j].numBits > 0) {
                 fprintf(cEmuFile, "%c = (op>>%d)&0x%x;\n", opcodeDefsMeta[i].seenVars[j].symbol,

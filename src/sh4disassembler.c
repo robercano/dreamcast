@@ -45,7 +45,7 @@ int main(int argc, char **argv)
         op = ntohs(op);
 
         /* Execute the opcode */
-        fprintf(stdout, "OP[0x%04x] ", op);
+        fprintf(stdout, "%02x %02x           ", (op>>8)&0xff, op&0xff);
         SH7750DisasmLUT[op](op);
     }
 

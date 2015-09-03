@@ -21,425 +21,425 @@ void __0000000000000000_dis(uint16_t op)
 
 void __1110nnnniiiiiiii_dis(uint16_t op)
 {
-    /* mov #i,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t i = op&0xff;
-    fprintf(stdout, "mov #%d,R%d\n", i, n);
+    /* mov     #i,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t i = op&0xff;
+    fprintf(stdout, "mov     #%d,r%d\n", i, n);
 }
 
 void __1001nnnndddddddd_dis(uint16_t op)
 {
-    /* mov.w @(d,PC),Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.w @(%d,PC),R%d\n", d, n);
+    /* mov.w   @(d,pc),rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.w   @(%d,pc),r%d\n", d, n);
 }
 
 void __1101nnnndddddddd_dis(uint16_t op)
 {
-    /* mov.l @(d,PC),Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.l @(%d,PC),R%d\n", d, n);
+    /* mov.l   @(d,pc),rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.l   @(%d,pc),r%d\n", d, n);
 }
 
 void __0110nnnnmmmm0011_dis(uint16_t op)
 {
-    /* mov Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov R%d,R%d\n", m, n);
+    /* mov     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov     r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm0000_dis(uint16_t op)
 {
-    /* mov.b Rm,@Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.b R%d,@R%d\n", m, n);
+    /* mov.b   rm,@rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.b   r%d,@r%d\n", m, n);
 }
 
 void __0010nnnnmmmm0001_dis(uint16_t op)
 {
-    /* mov.w Rm,@Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.w R%d,@R%d\n", m, n);
+    /* mov.w   rm,@rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.w   r%d,@r%d\n", m, n);
 }
 
 void __0010nnnnmmmm0010_dis(uint16_t op)
 {
-    /* mov.l Rm,@Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.l R%d,@R%d\n", m, n);
+    /* mov.l   rm,@rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.l   r%d,@r%d\n", m, n);
 }
 
 void __0110nnnnmmmm0000_dis(uint16_t op)
 {
-    /* mov.b @Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.b @R%d,R%d\n", m, n);
+    /* mov.b   @rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.b   @r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm0001_dis(uint16_t op)
 {
-    /* mov.w @Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.w @R%d,R%d\n", m, n);
+    /* mov.w   @rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.w   @r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm0010_dis(uint16_t op)
 {
-    /* mov.l @Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.l @R%d,R%d\n", m, n);
+    /* mov.l   @rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.l   @r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm0100_dis(uint16_t op)
 {
-    /* mov.b Rm,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.b R%d,@-R%d\n", m, n);
+    /* mov.b   rm,@-rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.b   r%d,@-r%d\n", m, n);
 }
 
 void __0010nnnnmmmm0101_dis(uint16_t op)
 {
-    /* mov.w Rm,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.w R%d,@-R%d\n", m, n);
+    /* mov.w   rm,@-rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.w   r%d,@-r%d\n", m, n);
 }
 
 void __0010nnnnmmmm0110_dis(uint16_t op)
 {
-    /* mov.l Rm,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.l R%d,@-R%d\n", m, n);
+    /* mov.l   rm,@-rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.l   r%d,@-r%d\n", m, n);
 }
 
 void __0110nnnnmmmm0100_dis(uint16_t op)
 {
-    /* mov.b @Rm+,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.b @R%d+,R%d\n", m, n);
+    /* mov.b   @rm+,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.b   @r%d+,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm0101_dis(uint16_t op)
 {
-    /* mov.w @Rm+,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.w @R%d+,R%d\n", m, n);
+    /* mov.w   @rm+,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.w   @r%d+,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm0110_dis(uint16_t op)
 {
-    /* mov.l @Rm+,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.l @R%d+,R%d\n", m, n);
+    /* mov.l   @rm+,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.l   @r%d+,r%d\n", m, n);
 }
 
 void __10000000nnnndddd_dis(uint16_t op)
 {
-    /* mov.b R0,@(d,Rn) */
-    uint8_t n = (op>>4)&0xf;
-    uint8_t d = op&0xf;
-    fprintf(stdout, "mov.b R0,@(%d,R%d)\n", d, n);
+    /* mov.b   r0,@(d,rn) */
+    int8_t n = (op>>4)&0xf;
+    int8_t d = op&0xf;
+    fprintf(stdout, "mov.b   r0,@(%d,r%d)\n", d, n);
 }
 
 void __10000001nnnndddd_dis(uint16_t op)
 {
-    /* mov.w R0,@(d,Rn) */
-    uint8_t n = (op>>4)&0xf;
-    uint8_t d = op&0xf;
-    fprintf(stdout, "mov.w R0,@(%d,R%d)\n", d, n);
+    /* mov.w   r0,@(d,rn) */
+    int8_t n = (op>>4)&0xf;
+    int8_t d = op&0xf;
+    fprintf(stdout, "mov.w   r0,@(%d,r%d)\n", d, n);
 }
 
 void __0001nnnnmmmmdddd_dis(uint16_t op)
 {
-    /* mov.l Rm,@(d,Rn) */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    uint8_t d = op&0xf;
-    fprintf(stdout, "mov.l R%d,@(%d,R%d)\n", m, d, n);
+    /* mov.l   rm,@(d,rn) */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    int8_t d = op&0xf;
+    fprintf(stdout, "mov.l   r%d,@(%d,r%d)\n", m, d, n);
 }
 
 void __10000100mmmmdddd_dis(uint16_t op)
 {
-    /* mov.b @(d,Rm),R0 */
-    uint8_t m = (op>>4)&0xf;
-    uint8_t d = op&0xf;
-    fprintf(stdout, "mov.b @(%d,R%d),R0\n", d, m);
+    /* mov.b   @(d,rm),r0 */
+    int8_t m = (op>>4)&0xf;
+    int8_t d = op&0xf;
+    fprintf(stdout, "mov.b   @(%d,r%d),r0\n", d, m);
 }
 
 void __10000101mmmmdddd_dis(uint16_t op)
 {
-    /* mov.w @(d,Rm),R0 */
-    uint8_t m = (op>>4)&0xf;
-    uint8_t d = op&0xf;
-    fprintf(stdout, "mov.w @(%d,R%d),R0\n", d, m);
+    /* mov.w   @(d,rm),r0 */
+    int8_t m = (op>>4)&0xf;
+    int8_t d = op&0xf;
+    fprintf(stdout, "mov.w   @(%d,r%d),r0\n", d, m);
 }
 
 void __0101nnnnmmmmdddd_dis(uint16_t op)
 {
-    /* mov.l @(d,Rm),Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    uint8_t d = op&0xf;
-    fprintf(stdout, "mov.l @(%d,R%d),R%d\n", d, m, n);
+    /* mov.l   @(d,rm),rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    int8_t d = op&0xf;
+    fprintf(stdout, "mov.l   @(%d,r%d),r%d\n", d, m, n);
 }
 
 void __0000nnnnmmmm0100_dis(uint16_t op)
 {
-    /* mov.b Rm,@(R0,Rn) */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.b R%d,@(R0,R%d)\n", m, n);
+    /* mov.b   rm,@(r0,rn) */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.b   r%d,@(r0,r%d)\n", m, n);
 }
 
 void __0000nnnnmmmm0101_dis(uint16_t op)
 {
-    /* mov.w Rm,@(R0,Rn) */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.w R%d,@(R0,R%d)\n", m, n);
+    /* mov.w   rm,@(r0,rn) */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.w   r%d,@(r0,r%d)\n", m, n);
 }
 
 void __0000nnnnmmmm0110_dis(uint16_t op)
 {
-    /* mov.l Rm,@(R0,Rn) */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.l R%d,@(R0,R%d)\n", m, n);
+    /* mov.l   rm,@(r0,rn) */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.l   r%d,@(r0,r%d)\n", m, n);
 }
 
 void __0000nnnnmmmm1100_dis(uint16_t op)
 {
-    /* mov.b @(R0,Rm),Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.b @(R0,R%d),R%d\n", m, n);
+    /* mov.b   @(r0,rm),rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.b   @(r0,r%d),r%d\n", m, n);
 }
 
 void __0000nnnnmmmm1101_dis(uint16_t op)
 {
-    /* mov.w @(R0,Rm),Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.w @(R0,R%d),R%d\n", m, n);
+    /* mov.w   @(r0,rm),rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.w   @(r0,r%d),r%d\n", m, n);
 }
 
 void __0000nnnnmmmm1110_dis(uint16_t op)
 {
-    /* mov.l @(R0,Rm),Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mov.l @(R0,R%d),R%d\n", m, n);
+    /* mov.l   @(r0,rm),rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mov.l   @(r0,r%d),r%d\n", m, n);
 }
 
 void __11000000dddddddd_dis(uint16_t op)
 {
-    /* mov.b R0,@(d,GBR) */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.b R0,@(%d,GBR)\n", d);
+    /* mov.b   r0,@(d,gbr) */
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.b   r0,@(%d,gbr)\n", d);
 }
 
 void __11000001dddddddd_dis(uint16_t op)
 {
-    /* mov.w R0,@(d,GBR) */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.w R0,@(%d,GBR)\n", d);
+    /* mov.w   r0,@(d,gbr) */
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.w   r0,@(%d,gbr)\n", d);
 }
 
 void __11000010dddddddd_dis(uint16_t op)
 {
-    /* mov.l R0,@(d,GBR) */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.l R0,@(%d,GBR)\n", d);
+    /* mov.l   r0,@(d,gbr) */
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.l   r0,@(%d,gbr)\n", d);
 }
 
 void __11000100dddddddd_dis(uint16_t op)
 {
-    /* mov.b @(d,GBR),R0 */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.b @(%d,GBR),R0\n", d);
+    /* mov.b   @(d,gbr),r0 */
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.b   @(%d,gbr),r0\n", d);
 }
 
 void __11000101dddddddd_dis(uint16_t op)
 {
-    /* mov.w @(d,GBR),R0 */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.w @(%d,GBR),R0\n", d);
+    /* mov.w   @(d,gbr),r0 */
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.w   @(%d,gbr),r0\n", d);
 }
 
 void __11000110dddddddd_dis(uint16_t op)
 {
-    /* mov.l @(d,GBR),R0 */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mov.l @(%d,GBR),R0\n", d);
+    /* mov.l   @(d,gbr),r0 */
+    int8_t d = op&0xff;
+    fprintf(stdout, "mov.l   @(%d,gbr),r0\n", d);
 }
 
 void __11000111dddddddd_dis(uint16_t op)
 {
-    /* mova @(d,PC),R0 */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "mova @(%d,PC),R0\n", d);
+    /* mova    @(d,pc),r0 */
+    int8_t d = op&0xff;
+    fprintf(stdout, "mova    @(%d,pc),r0\n", d);
 }
 
 void __0000nnnn00101001_dis(uint16_t op)
 {
-    /* movt Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "movt R%d\n", n);
+    /* movt    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "movt    r%d\n", n);
 }
 
 void __0110nnnnmmmm1000_dis(uint16_t op)
 {
-    /* swap.b Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "swap.b R%d,R%d\n", m, n);
+    /* swap.b  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "swap.b  r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm1001_dis(uint16_t op)
 {
-    /* swap.w Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "swap.w R%d,R%d\n", m, n);
+    /* swap.w  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "swap.w  r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm1101_dis(uint16_t op)
 {
-    /* xtrct Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "xtrct R%d,R%d\n", m, n);
+    /* xtrct   rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "xtrct   r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm1100_dis(uint16_t op)
 {
-    /* add Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "add R%d,R%d\n", m, n);
+    /* add     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "add     r%d,r%d\n", m, n);
 }
 
 void __0111nnnniiiiiiii_dis(uint16_t op)
 {
-    /* add #i,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t i = op&0xff;
-    fprintf(stdout, "add #%d,R%d\n", i, n);
+    /* add     #i,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t i = op&0xff;
+    fprintf(stdout, "add     #%d,r%d\n", i, n);
 }
 
 void __0011nnnnmmmm1110_dis(uint16_t op)
 {
-    /* addc Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "addc R%d,R%d\n", m, n);
+    /* addc    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "addc    r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm1111_dis(uint16_t op)
 {
-    /* addv Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "addv R%d,R%d\n", m, n);
+    /* addv    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "addv    r%d,r%d\n", m, n);
 }
 
 void __10001000iiiiiiii_dis(uint16_t op)
 {
-    /* cmp/eq #i,R0 */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "cmp/eq #%d,R0\n", i);
+    /* cmp/eq  #i,r0 */
+    int8_t i = op&0xff;
+    fprintf(stdout, "cmp/eq  #%d,r0\n", i);
 }
 
 void __0011nnnnmmmm0000_dis(uint16_t op)
 {
-    /* cmp/eq Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "cmp/eq R%d,R%d\n", m, n);
+    /* cmp/eq  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "cmp/eq  r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm0010_dis(uint16_t op)
 {
-    /* cmp/hs Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "cmp/hs R%d,R%d\n", m, n);
+    /* cmp/hs  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "cmp/hs  r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm0011_dis(uint16_t op)
 {
-    /* cmp/ge Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "cmp/ge R%d,R%d\n", m, n);
+    /* cmp/ge  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "cmp/ge  r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm0110_dis(uint16_t op)
 {
-    /* cmp/hi Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "cmp/hi R%d,R%d\n", m, n);
+    /* cmp/hi  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "cmp/hi  r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm0111_dis(uint16_t op)
 {
-    /* cmp/gt Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "cmp/gt R%d,R%d\n", m, n);
+    /* cmp/gt  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "cmp/gt  r%d,r%d\n", m, n);
 }
 
 void __0100nnnn00010001_dis(uint16_t op)
 {
-    /* cmp/pz Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "cmp/pz R%d\n", n);
+    /* cmp/pz  rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "cmp/pz  r%d\n", n);
 }
 
 void __0100nnnn00010101_dis(uint16_t op)
 {
-    /* cmp/pl Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "cmp/pl R%d\n", n);
+    /* cmp/pl  rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "cmp/pl  r%d\n", n);
 }
 
 void __0010nnnnmmmm1100_dis(uint16_t op)
 {
-    /* cmp/str Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "cmp/str R%d,R%d\n", m, n);
+    /* cmp/str rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "cmp/str r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm0100_dis(uint16_t op)
 {
-    /* div1 Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "div1 R%d,R%d\n", m, n);
+    /* div1    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "div1    r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm0111_dis(uint16_t op)
 {
-    /* div0s Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "div0s R%d,R%d\n", m, n);
+    /* div0s   rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "div0s   r%d,r%d\n", m, n);
 }
 
 void __0000000000011001_dis(uint16_t op)
@@ -450,424 +450,424 @@ void __0000000000011001_dis(uint16_t op)
 
 void __0011nnnnmmmm1101_dis(uint16_t op)
 {
-    /* dmuls.l Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "dmuls.l R%d,R%d\n", m, n);
+    /* dmuls.l rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "dmuls.l r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm0101_dis(uint16_t op)
 {
-    /* dmulu.l Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "dmulu.l R%d,R%d\n", m, n);
+    /* dmulu.l rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "dmulu.l r%d,r%d\n", m, n);
 }
 
 void __0100nnnn00010000_dis(uint16_t op)
 {
-    /* dt Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "dt R%d\n", n);
+    /* dt      rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "dt      r%d\n", n);
 }
 
 void __0110nnnnmmmm1110_dis(uint16_t op)
 {
-    /* exts.b Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "exts.b R%d,R%d\n", m, n);
+    /* exts.b  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "exts.b  r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm1111_dis(uint16_t op)
 {
-    /* exts.w Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "exts.w R%d,R%d\n", m, n);
+    /* exts.w  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "exts.w  r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm1100_dis(uint16_t op)
 {
-    /* extu.b Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "extu.b R%d,R%d\n", m, n);
+    /* extu.b  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "extu.b  r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm1101_dis(uint16_t op)
 {
-    /* extu.w Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "extu.w R%d,R%d\n", m, n);
+    /* extu.w  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "extu.w  r%d,r%d\n", m, n);
 }
 
 void __0000nnnnmmmm1111_dis(uint16_t op)
 {
-    /* mac.l @Rm+,@Rn+ */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mac.l @R%d+,@R%d+\n", m, n);
+    /* mac.l   @rm+,@rn+ */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mac.l   @r%d+,@r%d+\n", m, n);
 }
 
 void __0100nnnnmmmm1111_dis(uint16_t op)
 {
-    /* mac.w @Rm+,@Rn+ */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mac.w @R%d+,@R%d+\n", m, n);
+    /* mac.w   @rm+,@rn+ */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mac.w   @r%d+,@r%d+\n", m, n);
 }
 
 void __0000nnnnmmmm0111_dis(uint16_t op)
 {
-    /* mul.l Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mul.l R%d,R%d\n", m, n);
+    /* mul.l   rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mul.l   r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm1111_dis(uint16_t op)
 {
-    /* muls.w Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "muls.w R%d,R%d\n", m, n);
+    /* muls.w  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "muls.w  r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm1110_dis(uint16_t op)
 {
-    /* mulu.w Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "mulu.w R%d,R%d\n", m, n);
+    /* mulu.w  rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "mulu.w  r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm1011_dis(uint16_t op)
 {
-    /* neg Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "neg R%d,R%d\n", m, n);
+    /* neg     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "neg     r%d,r%d\n", m, n);
 }
 
 void __0110nnnnmmmm1010_dis(uint16_t op)
 {
-    /* negc Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "negc R%d,R%d\n", m, n);
+    /* negc    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "negc    r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm1000_dis(uint16_t op)
 {
-    /* sub Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "sub R%d,R%d\n", m, n);
+    /* sub     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "sub     r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm1010_dis(uint16_t op)
 {
-    /* subc Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "subc R%d,R%d\n", m, n);
+    /* subc    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "subc    r%d,r%d\n", m, n);
 }
 
 void __0011nnnnmmmm1011_dis(uint16_t op)
 {
-    /* subv Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "subv R%d,R%d\n", m, n);
+    /* subv    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "subv    r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm1001_dis(uint16_t op)
 {
-    /* and Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "and R%d,R%d\n", m, n);
+    /* and     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "and     r%d,r%d\n", m, n);
 }
 
 void __11001001iiiiiiii_dis(uint16_t op)
 {
-    /* and #i,R0 */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "and #%d,R0\n", i);
+    /* and     #i,r0 */
+    int8_t i = op&0xff;
+    fprintf(stdout, "and     #%d,r0\n", i);
 }
 
 void __11001101iiiiiiii_dis(uint16_t op)
 {
-    /* and.b #i,@(R0,GBR) */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "and.b #%d,@(R0,GBR)\n", i);
+    /* and.b   #i,@(r0,gbr) */
+    int8_t i = op&0xff;
+    fprintf(stdout, "and.b   #%d,@(r0,gbr)\n", i);
 }
 
 void __0110nnnnmmmm0111_dis(uint16_t op)
 {
-    /* not Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "not R%d,R%d\n", m, n);
+    /* not     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "not     r%d,r%d\n", m, n);
 }
 
 void __0010nnnnmmmm1011_dis(uint16_t op)
 {
-    /* or Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "or R%d,R%d\n", m, n);
+    /* or      rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "or      r%d,r%d\n", m, n);
 }
 
 void __11001011iiiiiiii_dis(uint16_t op)
 {
-    /* or #i,R0 */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "or #%d,R0\n", i);
+    /* or      #i,r0 */
+    int8_t i = op&0xff;
+    fprintf(stdout, "or      #%d,r0\n", i);
 }
 
 void __11001111iiiiiiii_dis(uint16_t op)
 {
-    /* or.b #i,@(R0,GBR) */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "or.b #%d,@(R0,GBR)\n", i);
+    /* or.b    #i,@(r0,gbr) */
+    int8_t i = op&0xff;
+    fprintf(stdout, "or.b    #%d,@(r0,gbr)\n", i);
 }
 
 void __0100nnnn00011011_dis(uint16_t op)
 {
-    /* tas.b @Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "tas.b @R%d\n", n);
+    /* tas.b   @rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "tas.b   @r%d\n", n);
 }
 
 void __0010nnnnmmmm1000_dis(uint16_t op)
 {
-    /* tst Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "tst R%d,R%d\n", m, n);
+    /* tst     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "tst     r%d,r%d\n", m, n);
 }
 
 void __11001000iiiiiiii_dis(uint16_t op)
 {
-    /* tst #i,R0 */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "tst #%d,R0\n", i);
+    /* tst     #i,r0 */
+    int8_t i = op&0xff;
+    fprintf(stdout, "tst     #%d,r0\n", i);
 }
 
 void __11001100iiiiiiii_dis(uint16_t op)
 {
-    /* tst.b #i,@(R0,GBR) */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "tst.b #%d,@(R0,GBR)\n", i);
+    /* tst.b   #i,@(r0,gbr) */
+    int8_t i = op&0xff;
+    fprintf(stdout, "tst.b   #%d,@(r0,gbr)\n", i);
 }
 
 void __0010nnnnmmmm1010_dis(uint16_t op)
 {
-    /* xor Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "xor R%d,R%d\n", m, n);
+    /* xor     rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "xor     r%d,r%d\n", m, n);
 }
 
 void __11001010iiiiiiii_dis(uint16_t op)
 {
-    /* xor #i,R0 */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "xor #%d,R0\n", i);
+    /* xor     #i,r0 */
+    int8_t i = op&0xff;
+    fprintf(stdout, "xor     #%d,r0\n", i);
 }
 
 void __11001110iiiiiiii_dis(uint16_t op)
 {
-    /* xor.b #i,@(R0,GBR) */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "xor.b #%d,@(R0,GBR)\n", i);
+    /* xor.b   #i,@(r0,gbr) */
+    int8_t i = op&0xff;
+    fprintf(stdout, "xor.b   #%d,@(r0,gbr)\n", i);
 }
 
 void __0100nnnn00000100_dis(uint16_t op)
 {
-    /* rotl Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "rotl R%d\n", n);
+    /* rotl    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "rotl    r%d\n", n);
 }
 
 void __0100nnnn00000101_dis(uint16_t op)
 {
-    /* rotr Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "rotr R%d\n", n);
+    /* rotr    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "rotr    r%d\n", n);
 }
 
 void __0100nnnn00100100_dis(uint16_t op)
 {
-    /* rotcl Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "rotcl R%d\n", n);
+    /* rotcl   rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "rotcl   r%d\n", n);
 }
 
 void __0100nnnn00100101_dis(uint16_t op)
 {
-    /* rotcr Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "rotcr R%d\n", n);
+    /* rotcr   rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "rotcr   r%d\n", n);
 }
 
 void __0100nnnnmmmm1100_dis(uint16_t op)
 {
-    /* shad Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "shad R%d,R%d\n", m, n);
+    /* shad    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "shad    r%d,r%d\n", m, n);
 }
 
 void __0100nnnn00100000_dis(uint16_t op)
 {
-    /* shal Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shal R%d\n", n);
+    /* shal    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shal    r%d\n", n);
 }
 
 void __0100nnnn00100001_dis(uint16_t op)
 {
-    /* shar Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shar R%d\n", n);
+    /* shar    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shar    r%d\n", n);
 }
 
 void __0100nnnnmmmm1101_dis(uint16_t op)
 {
-    /* shld Rm,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "shld R%d,R%d\n", m, n);
+    /* shld    rm,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "shld    r%d,r%d\n", m, n);
 }
 
 void __0100nnnn00000000_dis(uint16_t op)
 {
-    /* shll Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shll R%d\n", n);
+    /* shll    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shll    r%d\n", n);
 }
 
 void __0100nnnn00000001_dis(uint16_t op)
 {
-    /* shlr Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shlr R%d\n", n);
+    /* shlr    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shlr    r%d\n", n);
 }
 
 void __0100nnnn00001000_dis(uint16_t op)
 {
-    /* shll2 Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shll2 R%d\n", n);
+    /* shll2   rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shll2   r%d\n", n);
 }
 
 void __0100nnnn00001001_dis(uint16_t op)
 {
-    /* shlr2 Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shlr2 R%d\n", n);
+    /* shlr2   rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shlr2   r%d\n", n);
 }
 
 void __0100nnnn00011000_dis(uint16_t op)
 {
-    /* shll8 Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shll8 R%d\n", n);
+    /* shll8   rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shll8   r%d\n", n);
 }
 
 void __0100nnnn00011001_dis(uint16_t op)
 {
-    /* shlr8 Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shlr8 R%d\n", n);
+    /* shlr8   rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shlr8   r%d\n", n);
 }
 
 void __0100nnnn00101000_dis(uint16_t op)
 {
-    /* shll16 Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shll16 R%d\n", n);
+    /* shll16  rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shll16  r%d\n", n);
 }
 
 void __0100nnnn00101001_dis(uint16_t op)
 {
-    /* shlr16 Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "shlr16 R%d\n", n);
+    /* shlr16  rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "shlr16  r%d\n", n);
 }
 
 void __10001011dddddddd_dis(uint16_t op)
 {
-    /* bf d */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "bf %d\n", d);
+    /* bf      d */
+    int8_t d = op&0xff;
+    fprintf(stdout, "bf      %d\n", d);
 }
 
 void __10001111dddddddd_dis(uint16_t op)
 {
-    /* bf/s d */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "bf/s %d\n", d);
+    /* bf/s    d */
+    int8_t d = op&0xff;
+    fprintf(stdout, "bf/s    %d\n", d);
 }
 
 void __10001001dddddddd_dis(uint16_t op)
 {
-    /* bt d */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "bt %d\n", d);
+    /* bt      d */
+    int8_t d = op&0xff;
+    fprintf(stdout, "bt      %d\n", d);
 }
 
 void __10001101dddddddd_dis(uint16_t op)
 {
-    /* bt/s d */
-    uint8_t d = op&0xff;
-    fprintf(stdout, "bt/s %d\n", d);
+    /* bt/s    d */
+    int8_t d = op&0xff;
+    fprintf(stdout, "bt/s    %d\n", d);
 }
 
 void __1010dddddddddddd_dis(uint16_t op)
 {
-    /* bra d */
+    /* bra     d */
     uint16_t d = op&0xfff;
-    fprintf(stdout, "bra %d\n", d);
+    fprintf(stdout, "bra     %d\n", d);
 }
 
 void __0000nnnn00100011_dis(uint16_t op)
 {
-    /* braf Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "braf R%d\n", n);
+    /* braf    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "braf    r%d\n", n);
 }
 
 void __1011dddddddddddd_dis(uint16_t op)
 {
-    /* bsr d */
+    /* bsr     d */
     uint16_t d = op&0xfff;
-    fprintf(stdout, "bsr %d\n", d);
+    fprintf(stdout, "bsr     %d\n", d);
 }
 
 void __0000nnnn00000011_dis(uint16_t op)
 {
-    /* bsrf Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "bsrf R%d\n", n);
+    /* bsrf    rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "bsrf    r%d\n", n);
 }
 
 void __0100nnnn00101011_dis(uint16_t op)
 {
-    /* jmp @Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "jmp @R%d\n", n);
+    /* jmp     @rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "jmp     @r%d\n", n);
 }
 
 void __0100nnnn00001011_dis(uint16_t op)
 {
-    /* jsr @Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "jsr @R%d\n", n);
+    /* jsr     @rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "jsr     @r%d\n", n);
 }
 
 void __0000000000001011_dis(uint16_t op)
@@ -896,144 +896,144 @@ void __0000000000001000_dis(uint16_t op)
 
 void __0100mmmm00001110_dis(uint16_t op)
 {
-    /* ldc Rm,SR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc R%d,SR\n", m);
+    /* ldc     rm,sr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc     r%d,sr\n", m);
 }
 
 void __0100mmmm00011110_dis(uint16_t op)
 {
-    /* ldc Rm,GBR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc R%d,GBR\n", m);
+    /* ldc     rm,gbr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc     r%d,gbr\n", m);
 }
 
 void __0100mmmm00101110_dis(uint16_t op)
 {
-    /* ldc Rm,VBR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc R%d,VBR\n", m);
+    /* ldc     rm,vbr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc     r%d,vbr\n", m);
 }
 
 void __0100mmmm00111110_dis(uint16_t op)
 {
-    /* ldc Rm,SSR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc R%d,SSR\n", m);
+    /* ldc     rm,ssr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc     r%d,ssr\n", m);
 }
 
 void __0100mmmm01001110_dis(uint16_t op)
 {
-    /* ldc Rm,SPC */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc R%d,SPC\n", m);
+    /* ldc     rm,spc */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc     r%d,spc\n", m);
 }
 
 void __0100mmmm11111010_dis(uint16_t op)
 {
-    /* ldc Rm,DBR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc R%d,DBR\n", m);
+    /* ldc     rm,dbr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc     r%d,dbr\n", m);
 }
 
 void __0100mmmm1nnn1110_dis(uint16_t op)
 {
-    /* ldc Rm,Rn_BANK */
-    uint8_t m = (op>>8)&0xf;
-    uint8_t n = (op>>4)&0x7;
-    fprintf(stdout, "ldc R%d,R%d_BANK\n", m, n);
+    /* ldc     rm,rn_bank */
+    int8_t m = (op>>8)&0xf;
+    int8_t n = (op>>4)&0x7;
+    fprintf(stdout, "ldc     r%d,r%d_bank\n", m, n);
 }
 
 void __0100mmmm00000111_dis(uint16_t op)
 {
-    /* ldc.l @Rm+,SR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc.l @R%d+,SR\n", m);
+    /* ldc.l   @rm+,sr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc.l   @r%d+,sr\n", m);
 }
 
 void __0100mmmm00010111_dis(uint16_t op)
 {
-    /* ldc.l @Rm+,GBR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc.l @R%d+,GBR\n", m);
+    /* ldc.l   @rm+,gbr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc.l   @r%d+,gbr\n", m);
 }
 
 void __0100mmmm00100111_dis(uint16_t op)
 {
-    /* ldc.l @Rm+,VBR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc.l @R%d+,VBR\n", m);
+    /* ldc.l   @rm+,vbr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc.l   @r%d+,vbr\n", m);
 }
 
 void __0100mmmm00110111_dis(uint16_t op)
 {
-    /* ldc.l @Rm+,SSR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc.l @R%d+,SSR\n", m);
+    /* ldc.l   @rm+,ssr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc.l   @r%d+,ssr\n", m);
 }
 
 void __0100mmmm01000111_dis(uint16_t op)
 {
-    /* ldc.l @Rm+,SPC */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc.l @R%d+,SPC\n", m);
+    /* ldc.l   @rm+,spc */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc.l   @r%d+,spc\n", m);
 }
 
 void __0100mmmm11110110_dis(uint16_t op)
 {
-    /* ldc.l @Rm+,DBR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ldc.l @R%d+,DBR\n", m);
+    /* ldc.l   @rm+,dbr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ldc.l   @r%d+,dbr\n", m);
 }
 
 void __0100mmmm1nnn0111_dis(uint16_t op)
 {
-    /* ldc.l @Rm+,Rn_BANK */
-    uint8_t m = (op>>8)&0xf;
-    uint8_t n = (op>>4)&0x7;
-    fprintf(stdout, "ldc.l @R%d+,R%d_BANK\n", m, n);
+    /* ldc.l   @rm+,rn_bank */
+    int8_t m = (op>>8)&0xf;
+    int8_t n = (op>>4)&0x7;
+    fprintf(stdout, "ldc.l   @r%d+,r%d_bank\n", m, n);
 }
 
 void __0100mmmm00001010_dis(uint16_t op)
 {
-    /* lds Rm,MACH */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds R%d,MACH\n", m);
+    /* lds     rm,mach */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds     r%d,mach\n", m);
 }
 
 void __0100mmmm00011010_dis(uint16_t op)
 {
-    /* lds Rm,MACL */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds R%d,MACL\n", m);
+    /* lds     rm,macl */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds     r%d,macl\n", m);
 }
 
 void __0100mmmm00101010_dis(uint16_t op)
 {
-    /* lds Rm,PR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds R%d,PR\n", m);
+    /* lds     rm,pr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds     r%d,pr\n", m);
 }
 
 void __0100mmmm00000110_dis(uint16_t op)
 {
-    /* lds.l @Rm+,MACH */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds.l @R%d+,MACH\n", m);
+    /* lds.l   @rm+,mach */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds.l   @r%d+,mach\n", m);
 }
 
 void __0100mmmm00010110_dis(uint16_t op)
 {
-    /* lds.l @Rm+,MACL */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds.l @R%d+,MACL\n", m);
+    /* lds.l   @rm+,macl */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds.l   @r%d+,macl\n", m);
 }
 
 void __0100mmmm00100110_dis(uint16_t op)
 {
-    /* lds.l @Rm+,PR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds.l @R%d+,PR\n", m);
+    /* lds.l   @rm+,pr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds.l   @r%d+,pr\n", m);
 }
 
 void __0000000000111000_dis(uint16_t op)
@@ -1044,9 +1044,9 @@ void __0000000000111000_dis(uint16_t op)
 
 void __0000nnnn11000011_dis(uint16_t op)
 {
-    /* movca.l R0,@Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "movca.l R0,@R%d\n", n);
+    /* movca.l r0,@rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "movca.l r0,@r%d\n", n);
 }
 
 void __0000000000001001_dis(uint16_t op)
@@ -1057,30 +1057,30 @@ void __0000000000001001_dis(uint16_t op)
 
 void __0000nnnn10010011_dis(uint16_t op)
 {
-    /* ocbi @Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "ocbi @R%d\n", n);
+    /* ocbi    @rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "ocbi    @r%d\n", n);
 }
 
 void __0000nnnn10100011_dis(uint16_t op)
 {
-    /* ocbp @Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "ocbp @R%d\n", n);
+    /* ocbp    @rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "ocbp    @r%d\n", n);
 }
 
 void __0000nnnn10110011_dis(uint16_t op)
 {
-    /* ocbwb @Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "ocbwb @R%d\n", n);
+    /* ocbwb   @rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "ocbwb   @r%d\n", n);
 }
 
 void __0000nnnn10000011_dis(uint16_t op)
 {
-    /* pref @Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "pref @R%d\n", n);
+    /* pref    @rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "pref    @r%d\n", n);
 }
 
 void __0000000000101011_dis(uint16_t op)
@@ -1109,636 +1109,636 @@ void __0000000000011011_dis(uint16_t op)
 
 void __0000nnnn00000010_dis(uint16_t op)
 {
-    /* stc SR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc SR,R%d\n", n);
+    /* stc     sr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc     sr,r%d\n", n);
 }
 
 void __0000nnnn00010010_dis(uint16_t op)
 {
-    /* stc GBR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc GBR,R%d\n", n);
+    /* stc     gbr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc     gbr,r%d\n", n);
 }
 
 void __0000nnnn00100010_dis(uint16_t op)
 {
-    /* stc VBR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc VBR,R%d\n", n);
+    /* stc     vbr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc     vbr,r%d\n", n);
 }
 
 void __0000nnnn00110010_dis(uint16_t op)
 {
-    /* stc SSR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc SSR,R%d\n", n);
+    /* stc     ssr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc     ssr,r%d\n", n);
 }
 
 void __0000nnnn01000010_dis(uint16_t op)
 {
-    /* stc SPC,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc SPC,R%d\n", n);
+    /* stc     spc,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc     spc,r%d\n", n);
 }
 
 void __0000nnnn00111010_dis(uint16_t op)
 {
-    /* stc SGR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc SGR,R%d\n", n);
+    /* stc     sgr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc     sgr,r%d\n", n);
 }
 
 void __0000nnnn11111010_dis(uint16_t op)
 {
-    /* stc DBR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc DBR,R%d\n", n);
+    /* stc     dbr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc     dbr,r%d\n", n);
 }
 
 void __0000nnnn1mmm0010_dis(uint16_t op)
 {
-    /* stc Rm_BANK,Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0x7;
-    fprintf(stdout, "stc R%d_BANK,R%d\n", m, n);
+    /* stc     rm_bank,rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0x7;
+    fprintf(stdout, "stc     r%d_bank,r%d\n", m, n);
 }
 
 void __0100nnnn00000011_dis(uint16_t op)
 {
-    /* stc.l SR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc.l SR,@-R%d\n", n);
+    /* stc.l   sr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc.l   sr,@-r%d\n", n);
 }
 
 void __0100nnnn00010011_dis(uint16_t op)
 {
-    /* stc.l GBR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc.l GBR,@-R%d\n", n);
+    /* stc.l   gbr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc.l   gbr,@-r%d\n", n);
 }
 
 void __0100nnnn00100011_dis(uint16_t op)
 {
-    /* stc.l VBR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc.l VBR,@-R%d\n", n);
+    /* stc.l   vbr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc.l   vbr,@-r%d\n", n);
 }
 
 void __0100nnnn00110011_dis(uint16_t op)
 {
-    /* stc.l SSR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc.l SSR,@-R%d\n", n);
+    /* stc.l   ssr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc.l   ssr,@-r%d\n", n);
 }
 
 void __0100nnnn01000011_dis(uint16_t op)
 {
-    /* stc.l SPC,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc.l SPC,@-R%d\n", n);
+    /* stc.l   spc,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc.l   spc,@-r%d\n", n);
 }
 
 void __0100nnnn00110010_dis(uint16_t op)
 {
-    /* stc.l SGR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc.l SGR,@-R%d\n", n);
+    /* stc.l   sgr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc.l   sgr,@-r%d\n", n);
 }
 
 void __0100nnnn11110010_dis(uint16_t op)
 {
-    /* stc.l DBR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "stc.l DBR,@-R%d\n", n);
+    /* stc.l   dbr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "stc.l   dbr,@-r%d\n", n);
 }
 
 void __0100nnnn1mmm0011_dis(uint16_t op)
 {
-    /* stc.l Rm_BANK,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0x7;
-    fprintf(stdout, "stc.l R%d_BANK,@-R%d\n", m, n);
+    /* stc.l   rm_bank,@-rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0x7;
+    fprintf(stdout, "stc.l   r%d_bank,@-r%d\n", m, n);
 }
 
 void __0000nnnn00001010_dis(uint16_t op)
 {
-    /* sts MACH,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts MACH,R%d\n", n);
+    /* sts     mach,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts     mach,r%d\n", n);
 }
 
 void __0000nnnn00011010_dis(uint16_t op)
 {
-    /* sts MACL,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts MACL,R%d\n", n);
+    /* sts     macl,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts     macl,r%d\n", n);
 }
 
 void __0000nnnn00101010_dis(uint16_t op)
 {
-    /* sts PR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts PR,R%d\n", n);
+    /* sts   pr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts   pr,r%d\n", n);
 }
 
 void __0100nnnn00000010_dis(uint16_t op)
 {
-    /* sts.l MACH,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts.l MACH,@-R%d\n", n);
+    /* sts.l   mach,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts.l   mach,@-r%d\n", n);
 }
 
 void __0100nnnn00010010_dis(uint16_t op)
 {
-    /* sts.l MACL,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts.l MACL,@-R%d\n", n);
+    /* sts.l   macl,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts.l   macl,@-r%d\n", n);
 }
 
 void __0100nnnn00100010_dis(uint16_t op)
 {
-    /* sts.l PR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts.l PR,@-R%d\n", n);
+    /* sts.l   pr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts.l   pr,@-r%d\n", n);
 }
 
 void __11000011iiiiiiii_dis(uint16_t op)
 {
-    /* trapa #i */
-    uint8_t i = op&0xff;
-    fprintf(stdout, "trapa #%d\n", i);
+    /* trapa   #i */
+    int8_t i = op&0xff;
+    fprintf(stdout, "trapa   #%d\n", i);
 }
 
 void __1111nnnn10001101_dis(uint16_t op)
 {
-    /* fldi0 FRn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "fldi0 FR%d\n", n);
+    /* fldi0   frn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "fldi0   fr%d\n", n);
 }
 
 void __1111nnnn10011101_dis(uint16_t op)
 {
-    /* fldi1 FRn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "fldi1 FR%d\n", n);
+    /* fldi1   frn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "fldi1   fr%d\n", n);
 }
 
 void __1111nnnnmmmm1100_dis(uint16_t op)
 {
-    /* fmov FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov FR%d,FR%d\n", m, n);
+    /* fmov    frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov    fr%d,fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm1000_dis(uint16_t op)
 {
-    /* fmov.s @Rm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov.s @R%d,FR%d\n", m, n);
+    /* fmov.s  @rm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov.s  @r%d,fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm0110_dis(uint16_t op)
 {
-    /* fmov.s @(R0,Rm),FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov.s @(R0,R%d),FR%d\n", m, n);
+    /* fmov.s  @(r0,rm),frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov.s  @(r0,r%d),fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm1001_dis(uint16_t op)
 {
-    /* fmov.s @Rm+,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov.s @R%d+,FR%d\n", m, n);
+    /* fmov.s  @rm+,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov.s  @r%d+,fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm1010_dis(uint16_t op)
 {
-    /* fmov.s FRm,@Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov.s FR%d,@R%d\n", m, n);
+    /* fmov.s  frm,@rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov.s  fr%d,@r%d\n", m, n);
 }
 
 void __1111nnnnmmmm1011_dis(uint16_t op)
 {
-    /* fmov.s FRm,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov.s FR%d,@-R%d\n", m, n);
+    /* fmov.s  frm,@-rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov.s  fr%d,@-r%d\n", m, n);
 }
 
 void __1111nnnnmmmm0111_dis(uint16_t op)
 {
-    /* fmov.s FRm,@(R0,Rn) */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov.s FR%d,@(R0,R%d)\n", m, n);
+    /* fmov.s  frm,@(r0,rn) */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov.s  fr%d,@(r0,r%d)\n", m, n);
 }
 
 void __1111nnn0mmm01100_dis(uint16_t op)
 {
-    /* fmov DRm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov DR%d,DR%d\n", m, n);
+    /* fmov    drm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    dr%d,dr%d\n", m, n);
 }
 
 void __1111nnn0mmmm1000_dis(uint16_t op)
 {
-    /* fmov @Rm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @R%d,DR%d\n", m, n);
+    /* fmov    @rm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov    @r%d,dr%d\n", m, n);
 }
 
 void __1111nnn0mmmm0110_dis(uint16_t op)
 {
-    /* fmov @(R0,Rm),DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @(R0,R%d),DR%d\n", m, n);
+    /* fmov    @(r0,rm),drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov    @(r0,r%d),dr%d\n", m, n);
 }
 
 void __1111nnn0mmmm1001_dis(uint16_t op)
 {
-    /* fmov @Rm+,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @R%d+,DR%d\n", m, n);
+    /* fmov    @rm+,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov    @r%d+,dr%d\n", m, n);
 }
 
 void __1111nnnnmmm01010_dis(uint16_t op)
 {
-    /* fmov DRm,@Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov DR%d,@R%d\n", m, n);
+    /* fmov    drm,@rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    dr%d,@r%d\n", m, n);
 }
 
 void __1111nnnnmmm01011_dis(uint16_t op)
 {
-    /* fmov DRm,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov DR%d,@-R%d\n", m, n);
+    /* fmov    drm,@-rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    dr%d,@-r%d\n", m, n);
 }
 
 void __1111nnnnmmm00111_dis(uint16_t op)
 {
-    /* fmov DRm,@(R0,Rn) */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov DR%d,@(R0,R%d)\n", m, n);
+    /* fmov    drm,@(r0,rn) */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    dr%d,@(r0,r%d)\n", m, n);
 }
 
 void __1111mmmm00011101_dis(uint16_t op)
 {
-    /* flds FRm,FPUL */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "flds FR%d,FPUL\n", m);
+    /* flds    frm,fpul */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "flds    fr%d,fpul\n", m);
 }
 
 void __1111nnnn00001101_dis(uint16_t op)
 {
-    /* fsts FPUL,FRn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "fsts FPUL,FR%d\n", n);
+    /* fsts    fpul,frn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "fsts    fpul,fr%d\n", n);
 }
 
 void __1111nnnn01011101_dis(uint16_t op)
 {
-    /* fabs FRn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "fabs FR%d\n", n);
+    /* fabs    frn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "fabs    fr%d\n", n);
 }
 
 void __1111nnnnmmmm0000_dis(uint16_t op)
 {
-    /* fadd FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fadd FR%d,FR%d\n", m, n);
+    /* fadd    frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fadd    fr%d,fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm0100_dis(uint16_t op)
 {
-    /* fcmp/eq FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fcmp/eq FR%d,FR%d\n", m, n);
+    /* fcmp/eq frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fcmp/eq fr%d,fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm0101_dis(uint16_t op)
 {
-    /* fcmp/gt FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fcmp/gt FR%d,FR%d\n", m, n);
+    /* fcmp/gt frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fcmp/gt fr%d,fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm0011_dis(uint16_t op)
 {
-    /* fdiv FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fdiv FR%d,FR%d\n", m, n);
+    /* fdiv    frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fdiv    fr%d,fr%d\n", m, n);
 }
 
 void __1111nnnn00101101_dis(uint16_t op)
 {
-    /* float FPUL,FRn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "float FPUL,FR%d\n", n);
+    /* float   fpul,frn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "float   fpul,fr%d\n", n);
 }
 
 void __1111nnnnmmmm1110_dis(uint16_t op)
 {
-    /* fmac FR0,FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmac FR0,FR%d,FR%d\n", m, n);
+    /* fmac    fr0,frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmac    fr0,fr%d,fr%d\n", m, n);
 }
 
 void __1111nnnnmmmm0010_dis(uint16_t op)
 {
-    /* fmul FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmul FR%d,FR%d\n", m, n);
+    /* fmul    frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmul    fr%d,fr%d\n", m, n);
 }
 
 void __1111nnnn01001101_dis(uint16_t op)
 {
-    /* fneg FRn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "fneg FR%d\n", n);
+    /* fneg    frn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "fneg    fr%d\n", n);
 }
 
 void __1111nnnn01101101_dis(uint16_t op)
 {
-    /* fsqrt FRn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "fsqrt FR%d\n", n);
+    /* fsqrt   frn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "fsqrt   fr%d\n", n);
 }
 
 void __1111nnnnmmmm0001_dis(uint16_t op)
 {
-    /* fsub FRm,FRn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fsub FR%d,FR%d\n", m, n);
+    /* fsub    frm,frn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fsub    fr%d,fr%d\n", m, n);
 }
 
 void __1111mmmm00111101_dis(uint16_t op)
 {
-    /* ftrc FRm,FPUL */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "ftrc FR%d,FPUL\n", m);
+    /* ftrc    frm,fpul */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "ftrc    fr%d,fpul\n", m);
 }
 
 void __1111nnn001011101_dis(uint16_t op)
 {
-    /* fabs DRn */
-    uint8_t n = (op>>9)&0x7;
-    fprintf(stdout, "fabs DR%d\n", n);
+    /* fabs    drn */
+    int8_t n = (op>>9)&0x7;
+    fprintf(stdout, "fabs    dr%d\n", n);
 }
 
 void __1111nnn0mmm00000_dis(uint16_t op)
 {
-    /* fadd DRm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fadd DR%d,DR%d\n", m, n);
+    /* fadd    drm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fadd    dr%d,dr%d\n", m, n);
 }
 
 void __1111nnn0mmm00100_dis(uint16_t op)
 {
-    /* fcmp/eq DRm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fcmp/eq DR%d,DR%d\n", m, n);
+    /* fcmp/eq drm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fcmp/eq dr%d,dr%d\n", m, n);
 }
 
 void __1111nnn0mmm00101_dis(uint16_t op)
 {
-    /* fcmp/gt DRm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fcmp/gt DR%d,DR%d\n", m, n);
+    /* fcmp/gt drm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fcmp/gt dr%d,dr%d\n", m, n);
 }
 
 void __1111nnn0mmm00011_dis(uint16_t op)
 {
-    /* fdiv DRm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fdiv DR%d,DR%d\n", m, n);
+    /* fdiv    drm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fdiv    dr%d,dr%d\n", m, n);
 }
 
 void __1111mmm010111101_dis(uint16_t op)
 {
-    /* fcnvds DRm,FPUL */
-    uint8_t m = (op>>9)&0x7;
-    fprintf(stdout, "fcnvds DR%d,FPUL\n", m);
+    /* fcnvds  drm,fpul */
+    int8_t m = (op>>9)&0x7;
+    fprintf(stdout, "fcnvds  dr%d,fpul\n", m);
 }
 
 void __1111nnn010101101_dis(uint16_t op)
 {
-    /* fcnvsd FPUL,DRn */
-    uint8_t n = (op>>9)&0x7;
-    fprintf(stdout, "fcnvsd FPUL,DR%d\n", n);
+    /* fcnvsd  fpul,drn */
+    int8_t n = (op>>9)&0x7;
+    fprintf(stdout, "fcnvsd  fpul,dr%d\n", n);
 }
 
 void __1111nnn000101101_dis(uint16_t op)
 {
-    /* float FPUL,DRn */
-    uint8_t n = (op>>9)&0x7;
-    fprintf(stdout, "float FPUL,DR%d\n", n);
+    /* float   fpul,drn */
+    int8_t n = (op>>9)&0x7;
+    fprintf(stdout, "float   fpul,dr%d\n", n);
 }
 
 void __1111nnn0mmm00010_dis(uint16_t op)
 {
-    /* fmul DRm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmul DR%d,DR%d\n", m, n);
+    /* fmul    drm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmul    dr%d,dr%d\n", m, n);
 }
 
 void __1111nnn001001101_dis(uint16_t op)
 {
-    /* fneg DRn */
-    uint8_t n = (op>>9)&0x7;
-    fprintf(stdout, "fneg DR%d\n", n);
+    /* fneg    drn */
+    int8_t n = (op>>9)&0x7;
+    fprintf(stdout, "fneg    dr%d\n", n);
 }
 
 void __1111nnn001101101_dis(uint16_t op)
 {
-    /* fsqrt DRn */
-    uint8_t n = (op>>9)&0x7;
-    fprintf(stdout, "fsqrt DR%d\n", n);
+    /* fsqrt   drn */
+    int8_t n = (op>>9)&0x7;
+    fprintf(stdout, "fsqrt   dr%d\n", n);
 }
 
 void __1111nnn0mmm00001_dis(uint16_t op)
 {
-    /* fsub DRm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fsub DR%d,DR%d\n", m, n);
+    /* fsub    drm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fsub    dr%d,dr%d\n", m, n);
 }
 
 void __1111mmm000111101_dis(uint16_t op)
 {
-    /* ftrc DRm,FPUL */
-    uint8_t m = (op>>9)&0x7;
-    fprintf(stdout, "ftrc DR%d,FPUL\n", m);
+    /* ftrc    drm,fpul */
+    int8_t m = (op>>9)&0x7;
+    fprintf(stdout, "ftrc    dr%d,fpul\n", m);
 }
 
 void __0100mmmm01101010_dis(uint16_t op)
 {
-    /* lds Rm,FPSCR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds R%d,FPSCR\n", m);
+    /* lds     rm,fpscr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds     r%d,fpscr\n", m);
 }
 
 void __0100mmmm01011010_dis(uint16_t op)
 {
-    /* lds Rm,FPUL */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds R%d,FPUL\n", m);
+    /* lds     rm,fpul */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds     r%d,fpul\n", m);
 }
 
 void __0100mmmm01100110_dis(uint16_t op)
 {
-    /* lds.l @Rm+,FPSCR */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds.l @R%d+,FPSCR\n", m);
+    /* lds.l   @rm+,fpscr */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds.l   @r%d+,fpscr\n", m);
 }
 
 void __0100mmmm01010110_dis(uint16_t op)
 {
-    /* lds.l @Rm+,FPUL */
-    uint8_t m = (op>>8)&0xf;
-    fprintf(stdout, "lds.l @R%d+,FPUL\n", m);
+    /* lds.l   @rm+,fpul */
+    int8_t m = (op>>8)&0xf;
+    fprintf(stdout, "lds.l   @r%d+,fpul\n", m);
 }
 
 void __0000nnnn01101010_dis(uint16_t op)
 {
-    /* sts FPSCR,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts FPSCR,R%d\n", n);
+    /* sts     fpscr,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts     fpscr,r%d\n", n);
 }
 
 void __0000nnnn01011010_dis(uint16_t op)
 {
-    /* sts FPUL,Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts FPUL,R%d\n", n);
+    /* sts     fpul,rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts     fpul,r%d\n", n);
 }
 
 void __0100nnnn01100010_dis(uint16_t op)
 {
-    /* sts.l FPSCR,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts.l FPSCR,@-R%d\n", n);
+    /* sts.l   fpscr,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts.l   fpscr,@-r%d\n", n);
 }
 
 void __0100nnnn01010010_dis(uint16_t op)
 {
-    /* sts.l FPUL,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    fprintf(stdout, "sts.l FPUL,@-R%d\n", n);
+    /* sts.l   fpul,@-rn */
+    int8_t n = (op>>8)&0xf;
+    fprintf(stdout, "sts.l   fpul,@-r%d\n", n);
 }
 
 void __1111nnn1mmm01100_dis(uint16_t op)
 {
-    /* fmov DRm,XDn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov DR%d,XD%d\n", m, n);
+    /* fmov    drm,xdn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    dr%d,xd%d\n", m, n);
 }
 
 void __1111nnn0mmm11100_dis(uint16_t op)
 {
-    /* fmov XDm,DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XD%d,DR%d\n", m, n);
+    /* fmov    xdm,drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    xd%d,dr%d\n", m, n);
 }
 
 void __1111nnn1mmm11100_dis(uint16_t op)
 {
-    /* fmov XDm,XDn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XD%d,XD%d\n", m, n);
+    /* fmov    xdm,xdn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    xd%d,xd%d\n", m, n);
 }
 
 void __1111nnn1mmmm1000_dis(uint16_t op)
 {
-    /* fmov @Rm,XDn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @R%d,XD%d\n", m, n);
+    /* fmov    @rm,xdn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov    @r%d,xd%d\n", m, n);
 }
 
 void __1111nnn1mmmm1001_dis(uint16_t op)
 {
-    /* fmov @Rm+,XDn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @R%d+,XD%d\n", m, n);
+    /* fmov    @rm+,xdn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov    @r%d+,xd%d\n", m, n);
 }
 
 void __1111nnn1mmmm0110_dis(uint16_t op)
 {
-    /* fmov @(R0,Rm),DRn */
-    uint8_t n = (op>>9)&0x7;
-    uint8_t m = (op>>4)&0xf;
-    fprintf(stdout, "fmov @(R0,R%d),DR%d\n", m, n);
+    /* fmov    @(r0,rm),drn */
+    int8_t n = (op>>9)&0x7;
+    int8_t m = (op>>4)&0xf;
+    fprintf(stdout, "fmov    @(r0,r%d),dr%d\n", m, n);
 }
 
 void __1111nnnnmmm11010_dis(uint16_t op)
 {
-    /* fmov XDm,@Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XD%d,@R%d\n", m, n);
+    /* fmov    xdm,@rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    xd%d,@r%d\n", m, n);
 }
 
 void __1111nnnnmmm11011_dis(uint16_t op)
 {
-    /* fmov XDm,@-Rn */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XD%d,@-R%d\n", m, n);
+    /* fmov    xdm,@-rn */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    xd%d,@-r%d\n", m, n);
 }
 
 void __1111nnnnmmm10111_dis(uint16_t op)
 {
-    /* fmov XDm,@(R0,Rn) */
-    uint8_t n = (op>>8)&0xf;
-    uint8_t m = (op>>5)&0x7;
-    fprintf(stdout, "fmov XD%d,@(R0,R%d)\n", m, n);
+    /* fmov    xdm,@(r0,rn) */
+    int8_t n = (op>>8)&0xf;
+    int8_t m = (op>>5)&0x7;
+    fprintf(stdout, "fmov    xd%d,@(r0,r%d)\n", m, n);
 }
 
 void __1111nnmm11101101_dis(uint16_t op)
 {
-    /* fipr FVm,FVn */
-    uint8_t n = (op>>10)&0x3;
-    uint8_t m = (op>>8)&0x3;
-    fprintf(stdout, "fipr FV%d,FV%d\n", m, n);
+    /* fipr    fvm,fvn */
+    int8_t n = (op>>10)&0x3;
+    int8_t m = (op>>8)&0x3;
+    fprintf(stdout, "fipr    fv%d,fv%d\n", m, n);
 }
 
 void __1111nn0111111101_dis(uint16_t op)
 {
-    /* ftrv XMTRX,FVn */
-    uint8_t n = (op>>10)&0x3;
-    fprintf(stdout, "ftrv XMTRX,FV%d\n", n);
+    /* ftrv    xmtrx,fvn */
+    int8_t n = (op>>10)&0x3;
+    fprintf(stdout, "ftrv    xmtrx,fv%d\n", n);
 }
 
 void __1111101111111101_dis(uint16_t op)
