@@ -24,6 +24,10 @@ void memwrite_l(uint32_t value, uint32_t address)
         fprintf(stderr, "MEMORY WRITE EXCEPTION AT ADDRESS %04x\n", address);
         exit(1);
     }
+    if (address == 0x235c) {
+        fprintf(stderr, "!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        exit(1);
+    }
     *(uint32_t*)(code+address) = htonl(value);
 }
 uint32_t memread_l(uint32_t address)
@@ -32,6 +36,7 @@ uint32_t memread_l(uint32_t address)
         fprintf(stderr, "MEMORY READ EXCEPTION AT ADDRESS %04x\n", address);
         exit(1);
     }
+    fprintf(stderr, "Reading address %08x, value: %08x\n", address, ntohl(*(uint32_t*)(code+address)));
     return ntohl(*(uint32_t*)(code+address));
 }
 int16_t memread_ws(uint32_t address)
@@ -241,8 +246,7 @@ void __0101nnnnmmmmdddd(uint16_t op)
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
     int8_t d = op&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   @(d,rm),rn --> __0101nnnnmmmmdddd\n");
-    exit(1);
+    _R(n) = memread_l(d*4 + _R(m));
 }
 
 void __0000nnnnmmmm0100(uint16_t op)
@@ -268,8 +272,8 @@ void __0000nnnnmmmm0110(uint16_t op)
     /* mov.l   rm,@(r0,rn) */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mov.l   rm,@(r0,rn) --> __0000nnnnmmmm0110\n");
-    exit(1);
+
+    memwrite_l(_R(m), _R(0) + _R(m));
 }
 
 void __0000nnnnmmmm1100(uint16_t op)
@@ -350,16 +354,14 @@ void __11000111dddddddd(uint16_t op)
 {
     /* mova    @(d,pc),r0 */
     int8_t d = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] mova    @(d,pc),r0 --> __11000111dddddddd\n");
-    exit(1);
+    _R(0) = (d<<2) + (regs.PC&0xFFFFFFFC) + 4;
 }
 
 void __0000nnnn00101001(uint16_t op)
 {
     /* movt    rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] movt    rn --> __0000nnnn00101001\n");
-    exit(1);
+    _R(n) = regs.SR.T;
 }
 
 void __0110nnnnmmmm1000(uint16_t op)
@@ -427,8 +429,7 @@ void __10001000iiiiiiii(uint16_t op)
 {
     /* cmp/eq  #i,r0 */
     int8_t i = op&0xff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] cmp/eq  #i,r0 --> __10001000iiiiiiii\n");
-    exit(1);
+    regs.SR.T = _R(0)==i;
 }
 
 void __0011nnnnmmmm0000(uint16_t op)
@@ -654,8 +655,8 @@ void __0011nnnnmmmm1000(uint16_t op)
     /* sub     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] sub     rm,rn --> __0011nnnnmmmm1000\n");
-    exit(1);
+
+    _R(n) -= _R(m);
 }
 
 void __0011nnnnmmmm1010(uint16_t op)
@@ -845,8 +846,11 @@ void __0100nnnn00100001(uint16_t op)
 {
     /* shar    rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] shar    rn --> __0100nnnn00100001\n");
-    exit(1);
+    regs.SR.T = _R(n)&0x1;
+    _R(n) >>= 1;
+    if (_R(n)&0x4000000) {
+        _R(n) |= 0x80000000;
+    }
 }
 
 void __0100nnnnmmmm1101(uint16_t op)
@@ -862,8 +866,10 @@ void __0100nnnn00000000(uint16_t op)
 {
     /* shll    rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] shll    rn --> __0100nnnn00000000\n");
-    exit(1);
+    if (_R(n)&0x80000000) {
+        regs.SR.T = 1;
+    }
+    _R(n) <<= 1;
 }
 
 void __0100nnnn00000001(uint16_t op)
@@ -926,8 +932,8 @@ void __10001011dddddddd(uint16_t op)
     /* bf      d */
     int8_t d = op&0xff;
     if (regs.SR.T == 0) {
-        regs.NPC = d*2 + regs.PC + 4;
-        regs.NNPC = regs.NPC+2;
+        regs.NPC = regs.PC + d*2 + 4;
+        regs.NNPC = regs.NPC + 2;
     }
 }
 
@@ -944,7 +950,8 @@ void __10001001dddddddd(uint16_t op)
     /* bt      d */
     int8_t d = op&0xff;
     if (regs.SR.T) {
-        regs.NPC += d*2 + 4;
+        regs.NPC  = regs.PC + d*2 + 4;
+        regs.NNPC = regs.NPC + 2;
     }
 }
 
@@ -959,23 +966,27 @@ void __10001101dddddddd(uint16_t op)
 void __1010dddddddddddd(uint16_t op)
 {
     /* bra     d */
-    uint16_t d = op&0xfff;
-    fprintf(stderr, "[NOT IMPLEMENTED!] bra     d --> __1010dddddddddddd\n");
-    exit(1);
+    int16_t d = op&0xfff;
+    if (op&0x800) {
+        d |= 0xF000;
+    }
+    regs.NNPC = d*2 + regs.PC + 4;
 }
 
 void __0000nnnn00100011(uint16_t op)
 {
     /* braf    rn */
     int8_t n = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] braf    rn --> __0000nnnn00100011\n");
-    exit(1);
+    regs.NNPC = _R(n) + regs.PC + 4;
 }
 
 void __1011dddddddddddd(uint16_t op)
 {
     /* bsr     d */
-    uint16_t d = op&0xfff;
+    int16_t d = op&0xfff;
+    if (op&0x800) {
+        d |= 0xF000;
+    }
     fprintf(stderr, "[NOT IMPLEMENTED!] bsr     d --> __1011dddddddddddd\n");
     exit(1);
 }
@@ -1164,8 +1175,7 @@ void __0100mmmm00101010(uint16_t op)
 {
     /* lds     rm,pr */
     int8_t m = (op>>8)&0xf;
-    fprintf(stderr, "[NOT IMPLEMENTED!] lds     rm,pr --> __0100mmmm00101010\n");
-    exit(1);
+    regs.PR = _R(m);
 }
 
 void __0100mmmm00000110(uint16_t op)

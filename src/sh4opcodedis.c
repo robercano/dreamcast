@@ -830,8 +830,11 @@ void __10001101dddddddd_dis(uint16_t op)
 void __1010dddddddddddd_dis(uint16_t op)
 {
     /* bra     d */
-    uint16_t d = op&0xfff;
-    fprintf(stdout, "bra     %d\n", d);
+    int16_t d = op&0xfff;
+    if (op&0x800) {
+        d |= 0xF000;
+    }
+    fprintf(stdout, "bra     %d %0x\n", d, d);
 }
 
 void __0000nnnn00100011_dis(uint16_t op)
@@ -844,7 +847,10 @@ void __0000nnnn00100011_dis(uint16_t op)
 void __1011dddddddddddd_dis(uint16_t op)
 {
     /* bsr     d */
-    uint16_t d = op&0xfff;
+    int16_t d = op&0xfff;
+    if (op&0x800) {
+        d |= 0xF000;
+    }
     fprintf(stdout, "bsr     %d\n", d);
 }
 
