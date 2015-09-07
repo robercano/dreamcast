@@ -23,7 +23,9 @@ SH4DISASM_OBJ := $(patsubst %.c, obj/%.o, $(SH4DISASM_SRC))
 SH4INTERP_SRC := sh4interpreter.c sh4opcodeemuLUT.c sh4opcodedisLUT.c sh4opcodeemu.c sh4opcodedis.c
 SH4INTERP_OBJ := $(patsubst %.c, obj/%.o, $(SH4INTERP_SRC))
 
-all: createdirs $(TOOLSDIR)/sh4opgen $(TOOLSDIR)/sh4disassembler $(TOOLSDIR)/sh4interpreter
+all: createdirs $(TOOLSDIR)/sh4disassembler $(TOOLSDIR)/sh4interpreter
+
+sh4opgen: $(TOOLSDIR)/sh4opgen
 
 createdirs:
 	mkdir -p $(OBJDIR)
@@ -38,10 +40,6 @@ $(TOOLSDIR)/sh4disassembler: $(SH4DISASM_OBJ)
 $(TOOLSDIR)/sh4interpreter: $(SH4INTERP_OBJ)
 	$(CXX) -o $@ $^
 
-obj/sh4opcodeLUT.o: .FORCE
-	$(CC) $(CFLAGS) -o $@ -c src/sh4opcodeLUT.c
-.FORCE:
-
 clean:
 	rm -rf $(OBJDIR)
 	rm -rf $(TOOLSDIR)
@@ -52,4 +50,4 @@ obj/%.o: src/%.c
 obj/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
-.PHONY: createdirs .FORCE
+.PHONY: createdirs sh4opgen
