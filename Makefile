@@ -23,7 +23,11 @@ SH4DISASM_OBJ := $(patsubst %.c, obj/%.o, $(SH4DISASM_SRC))
 SH4INTERP_SRC := sh4interpreter.c sh4opcodeemuLUT.c sh4opcodedisLUT.c sh4opcodeemu.c sh4opcodedis.c
 SH4INTERP_OBJ := $(patsubst %.c, obj/%.o, $(SH4INTERP_SRC))
 
-all: createdirs $(TOOLSDIR)/sh4disassembler $(TOOLSDIR)/sh4interpreter
+# SH4 ELF loader
+SH4ELFLOADER_SRC := sh4elfloader.c
+SH4ELFLOADER_OBJ := $(patsubst %.c, obj/%.o, $(SH4ELFLOADER_SRC))
+
+all: createdirs $(TOOLSDIR)/sh4disassembler $(TOOLSDIR)/sh4interpreter $(TOOLSDIR)/sh4elfloader
 
 sh4opgen: $(TOOLSDIR)/sh4opgen
 
@@ -32,13 +36,12 @@ createdirs:
 	mkdir -p $(TOOLSDIR)
 
 $(TOOLSDIR)/sh4opgen: $(SH4OPGEN_OBJ)
-	$(CXX) -o $@ $^
-
 $(TOOLSDIR)/sh4disassembler: $(SH4DISASM_OBJ)
-	$(CXX) -o $@ $^
-
 $(TOOLSDIR)/sh4interpreter: $(SH4INTERP_OBJ)
-	$(CXX) -o $@ $^
+$(TOOLSDIR)/sh4elfloader: CFLAGS += -Ilib/osx/libbfd
+$(TOOLSDIR)/sh4elfloader: LDFLAGS += -Llib/osx/libbfd -lbfd
+$(TOOLSDIR)/sh4elfloader: $(SH4ELFLOADER_OBJ)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
 clean:
 	rm -rf $(OBJDIR)
