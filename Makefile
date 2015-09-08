@@ -13,8 +13,8 @@ TOOLSDIR := tools
 SRCDIR := src
 
 # General flags
-CFLAGS = -Iinclude -Wno-format-extra-args -Wno-format
-CXXFLAGS = -Iinclude -Wno-format-extra-args -Wno-format
+CFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable
+CXXFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable
 
 # SH4 opcode generation tool
 SH4OPGEN_SRC := sh4opgen.c
@@ -24,33 +24,47 @@ SH4OPGEN_OBJ := $(patsubst %.c, obj/%.o, $(SH4OPGEN_SRC))
 SH4INTERP_SRC := sh4interpreter.c sh4core.c sh4mmu.c sh4log.c sh4elf.c sh4opcodeemuLUT.c sh4opcodedisLUT.c
 SH4INTERP_OBJ := $(patsubst %.c, obj/%.o, $(SH4INTERP_SRC))
 
+# Machine selection
+ifeq ($(shell uname),Linux)
+MACHINE := linux
+else
+MACHINE := osx
+endif
+
 all: createdirs $(TOOLSDIR)/sh4interpreter
+	@echo All done!
 
 sh4opgen: $(TOOLSDIR)/sh4opgen
 
 createdirs:
-	mkdir -p $(OBJDIR)
-	mkdir -p $(TOOLSDIR)
+	@echo -n - Creating directories...
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(TOOLSDIR)
+	@echo done!
 
-$(TOOLSDIR)/sh4opgen: $(SH4OPGEN_OBJ)
-ifeq ($(MACHINE),Linux)
-$(TOOLSDIR)/sh4interpreter: CFLAGS += -Ilib/linux/
-$(TOOLSDIR)/sh4interpreter: LDFLAGS += lib/linux/libbfd.a lib/linux/libiberty.a -lz
-else
-$(TOOLSDIR)/sh4interpreter: CFLAGS += -Ilib/osx/
-$(TOOLSDIR)/sh4interpreter: LDFLAGS += -Llib/osx/ -lbfd lib/osx/libiberty.a
-endif
-$(TOOLSDIR)/sh4interpreter: $(SH4INTERP_OBJ)
-	$(CXX) -o $@ $^ $(LDFLAGS)
+BuildInterpreter:
+	@echo -n - Building interpreter...
+
+BuildOpgen:
+	@echo -n - Building opcode generator...
+
+$(TOOLSDIR)/sh4opgen: BuildOpgen $(SH4OPGEN_OBJ)
+$(TOOLSDIR)/sh4interpreter: CFLAGS += -Ilib/$(MACHINE)/
+$(TOOLSDIR)/sh4interpreter: LDFLAGS += lib/$(MACHINE)/libbfd.a lib/$(MACHINE)/libiberty.a -lz
+$(TOOLSDIR)/sh4interpreter: BuildInterpreter $(SH4INTERP_OBJ)
+	@$(CXX) -o $@ $(filter-out $<,$^) $(LDFLAGS)
+	@echo done!
 
 clean:
-	rm -rf $(OBJDIR)
-	rm -rf $(TOOLSDIR)
+	@echo -n Cleaning everything...
+	@rm -rf $(OBJDIR)
+	@rm -rf $(TOOLSDIR)
+	@echo done!
 
 obj/%.o: src/%.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 obj/%.o: src/%.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
+	@$(CXX) $(CXXFLAGS) -o $@ -c $<
 
-.PHONY: createdirs sh4opgen
+.PHONY: createdirs sh4opgen BuildInterpreter BuildOpgen
