@@ -5,6 +5,7 @@
 #
 CC=gcc
 CXX=g++
+MACHINE=$(shell uname)
 
 # Directories
 OBJDIR := obj
@@ -38,8 +39,14 @@ createdirs:
 $(TOOLSDIR)/sh4opgen: $(SH4OPGEN_OBJ)
 $(TOOLSDIR)/sh4disassembler: $(SH4DISASM_OBJ)
 $(TOOLSDIR)/sh4interpreter: $(SH4INTERP_OBJ)
-$(TOOLSDIR)/sh4elfloader: CFLAGS += -Ilib/osx/libbfd
-$(TOOLSDIR)/sh4elfloader: LDFLAGS += -Llib/osx/libbfd -lbfd
+ifeq ($(MACHINE),Linux)
+$(TOOLSDIR)/sh4elfloader: CFLAGS += -Ilib/linux/
+$(TOOLSDIR)/sh4elfloader: LDFLAGS += lib/linux/libbfd.a lib/linux/libiberty.a -lz
+else
+$(TOOLSDIR)/sh4elfloader: CFLAGS += -Ilib/osx/
+$(TOOLSDIR)/sh4elfloader: LDFLAGS += -Llib/osx/ -lbfd lib/osx/libiberty.a
+endif
+
 $(TOOLSDIR)/sh4elfloader: $(SH4ELFLOADER_OBJ)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
