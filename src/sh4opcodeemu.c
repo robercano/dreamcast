@@ -8,6 +8,7 @@
  *********************************************/
 #include "sh4.h"
 #include "sh4opcode.h"
+#include <stdlib.h>
 
 void __0000000000000000(SH4Context_t *c, uint16_t op)
 {
@@ -448,8 +449,7 @@ void __0100nnnn00010101(SH4Context_t *c, uint16_t op)
 {
     /* cmp/pl  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] cmp/pl  rn --> __0100nnnn00010101\n");
-    exit(1);
+    c->regs.SR.T = ((int32_t)_R(n)) > 0;
 }
 
 void __0010nnnnmmmm1100(SH4Context_t *c, uint16_t op)
@@ -852,8 +852,7 @@ void __0100nnnn00001001(SH4Context_t *c, uint16_t op)
 {
     /* shlr2   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] shlr2   rn --> __0100nnnn00001001\n");
-    exit(1);
+    _R(n) >>= 2;
 }
 
 void __0100nnnn00011000(SH4Context_t *c, uint16_t op)
@@ -1425,8 +1424,12 @@ void __11000011iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* trapa   #i */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] trapa   #i --> __11000011iiiiiiii\n");
-    exit(1);
+    static int ignore = 4;
+    return;
+    if (ignore-- == 0) {
+        SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] trapa   #i --> __11000011iiiiiiii %d\n", ignore);
+        exit(1);
+    }
 }
 
 void __1111nnnn10001101(SH4Context_t *c, uint16_t op)

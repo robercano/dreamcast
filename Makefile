@@ -21,7 +21,9 @@ SH4OPGEN_SRC := sh4opgen.c
 SH4OPGEN_OBJ := $(patsubst %.c, obj/%.o, $(SH4OPGEN_SRC))
 
 # SH4 interpreter tool
-SH4INTERP_SRC := sh4interpreter.c sh4core.c sh4mmu.c sh4log.c sh4elf.c sh4opcodeemuLUT.c sh4opcodedisLUT.c
+SH4INTERP_SRC := sh4interpreter.c sh4core.c sh4mmu.c sh4log.c \
+	             sh4elf.c sh4opcodeemuLUT.c sh4opcodedisLUT.c \
+				 sh4opcodeemu.c sh4opcodedis.c
 SH4INTERP_OBJ := $(patsubst %.c, obj/%.o, $(SH4INTERP_SRC))
 
 # Machine selection
