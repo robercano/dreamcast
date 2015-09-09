@@ -13,8 +13,8 @@ TOOLSDIR := tools
 SRCDIR := src
 
 # General flags
-CFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable
-CXXFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable
+CFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable -O3
+CXXFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable -O3
 
 # SH4 opcode generation tool
 SH4OPGEN_SRC := sh4opgen.c

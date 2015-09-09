@@ -8,10 +8,58 @@
 #include <stdlib.h>
 #include <string.h>
 
+SH4Error __SH4_ELF_GetMainEntry(IN bfd *elf, uint32_t *mainentry)
+{
+    asymbol **symbols = NULL;
+    long storage, symcount, i;
+    SH4Error ret = SH4_ERROR_WRONG_FORMAT;
+
+    if (!(bfd_get_file_flags(elf) & HAS_SYMS)) {
+        return SH4_ERROR_WRONG_FORMAT;
+    }
+    storage = bfd_get_symtab_upper_bound(elf);
+    if (storage < 0) {
+        return SH4_ERROR_WRONG_FORMAT;
+    }
+    symbols = (asymbol **)malloc(storage);
+    if (symbols == NULL) {
+        return SH4_ERROR_OOM;
+    }
+    symcount = bfd_canonicalize_symtab(elf, symbols);
+    if (symcount < 0) {
+        free((void*)symbols);
+        return SH4_ERROR_OOM;
+    }
+
+    /* Analyze the symbols */
+    for (i=0; i<symcount; i++) {
+        bfd *cur_bfd;
+
+        if (symbols[i] == NULL) {
+            continue;
+        }
+        if (strcmp(symbols[i]->name, "_main") != 0) {
+            continue;
+        }
+        if (symbols[i]->section == NULL) {
+            *mainentry = (uint32_t)symbols[i]->value;
+        } else {
+            *mainentry = (uint32_t)(symbols[i]->section->vma + symbols[i]->value);
+        }
+
+        free((void*)symbols);
+        ret = SH4_SUCCESS;
+        break;
+    }
+    return ret;;
+}
+
 SH4Error SH4_ELF_ShowInfo(const char *elfname)
 {
     bfd *elf;
     asection *section;
+    uint32_t main_entry;
+    SH4Error ret;
 
     bfd_init();
 
@@ -52,7 +100,18 @@ SH4Error SH4_ELF_ShowInfo(const char *elfname)
         }
     }
 
+    SH4_LogEx(SH4_LOG_INFO, "\n");
+
+    ret = __SH4_ELF_GetMainEntry(elf, &main_entry);
+
     bfd_close(elf);
+
+    if (ret != SH4_SUCCESS) {
+        SH4_LogErr(SH4_LOG_ERROR, ret, "ERROR _main entrypoint not found in file");
+        return SH4_ERROR_WRONG_FORMAT;
+    }
+
+    SH4_Log(SH4_LOG_INFO, "Main entrypoint: %08x", main_entry);
     return SH4_SUCCESS;
 }
 
@@ -60,7 +119,9 @@ SH4Error SH4_ELF_Load(IN SH4Context_t *context, IN const char *elfname, IN uint3
 {
     bfd *elf;
     asection *section;
+    SH4Error ret;
 
+    /* Load the ELF file */
     bfd_init();
 
     elf = bfd_openr(elfname, 0);
@@ -78,7 +139,14 @@ SH4Error SH4_ELF_Load(IN SH4Context_t *context, IN const char *elfname, IN uint3
     context->memory = NULL;
     context->memsize = 0;
 
-    context->entrypoint = (uint32_t)bfd_get_start_address(elf);
+    ret = __SH4_ELF_GetMainEntry(elf, &context->entrypoint);
+    if (ret != SH4_SUCCESS) {
+        SH4_Log(SH4_LOG_INFO, "_main entrypoint not found, using start address");
+        context->entrypoint = (uint32_t)bfd_get_start_address(elf);
+    }
+
+    /* Initialize the registers */
+    SH4_Reset(context, context->entrypoint);
 
     /* Sections */
     for (section=elf->sections; section!=NULL; section=section->next) {
@@ -119,10 +187,13 @@ SH4Error SH4_ELF_Load(IN SH4Context_t *context, IN const char *elfname, IN uint3
         } else {
             bfd_get_section_contents(elf, section, context->memory + offset, 0, size);
         }
+
+        if (strcmp(bfd_section_name(elf, section), ".stack") == 0) {
+            /* Initialize R15 to the address */
+            context->regs.R[15].bank[1] = offset;
+        }
     }
     bfd_close(elf);
 
-    /* Initialize the registers */
-    SH4_Reset(context, context->entrypoint);
     return 0;
 }
