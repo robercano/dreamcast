@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-SH4Error __SH4_ELF_GetMainEntry(IN bfd *elf, uint32_t *mainentry)
+static SH4Error __SH4_ELF_GetMainEntry(IN bfd *elf, uint32_t *mainentry, uint32_t *printentry)
 {
     asymbol **symbols = NULL;
     long storage, symcount, i;
@@ -32,33 +32,39 @@ SH4Error __SH4_ELF_GetMainEntry(IN bfd *elf, uint32_t *mainentry)
     }
 
     /* Analyze the symbols */
+    bool printFound = false, mainFound = false;
     for (i=0; i<symcount; i++) {
         bfd *cur_bfd;
 
         if (symbols[i] == NULL) {
             continue;
         }
-        if (strcmp(symbols[i]->name, "_main") != 0) {
-            continue;
-        }
-        if (symbols[i]->section == NULL) {
-            *mainentry = (uint32_t)symbols[i]->value;
-        } else {
-            *mainentry = (uint32_t)(symbols[i]->section->vma + symbols[i]->value);
+        if (strcmp(symbols[i]->name, "_main") == 0) {
+            if (symbols[i]->section == NULL) {
+                *mainentry = (uint32_t)symbols[i]->value;
+            } else {
+                *mainentry = (uint32_t)(symbols[i]->section->vma + symbols[i]->value);
+            }
+            mainFound = true;
+        } else if (strcmp(symbols[i]->name, "_printf") == 0) {
+            *printentry = (uint32_t)(symbols[i]->section->vma + symbols[i]->value);
+            printFound = true;
         }
 
-        free((void*)symbols);
-        ret = SH4_SUCCESS;
-        break;
+        if (mainFound && printFound) {
+            free((void*)symbols);
+            ret = SH4_SUCCESS;
+            break;
+        }
     }
-    return ret;;
+    return ret;
 }
 
 SH4Error SH4_ELF_ShowInfo(const char *elfname)
 {
     bfd *elf;
     asection *section;
-    uint32_t main_entry;
+    uint32_t main_entry, print_entry;
     SH4Error ret;
 
     bfd_init();
@@ -102,7 +108,7 @@ SH4Error SH4_ELF_ShowInfo(const char *elfname)
 
     SH4_LogEx(SH4_LOG_INFO, "\n");
 
-    ret = __SH4_ELF_GetMainEntry(elf, &main_entry);
+    ret = __SH4_ELF_GetMainEntry(elf, &main_entry, &print_entry);
 
     bfd_close(elf);
 
@@ -112,6 +118,9 @@ SH4Error SH4_ELF_ShowInfo(const char *elfname)
     }
 
     SH4_Log(SH4_LOG_INFO, "Main entrypoint: %08x", main_entry);
+    SH4_Log(SH4_LOG_INFO, "printf address: %08x", print_entry);
+    SH4_LogEx(SH4_LOG_INFO, "\n");
+
     return SH4_SUCCESS;
 }
 
@@ -139,14 +148,14 @@ SH4Error SH4_ELF_Load(IN SH4Context_t *context, IN const char *elfname, IN uint3
     context->memory = NULL;
     context->memsize = 0;
 
-    ret = __SH4_ELF_GetMainEntry(elf, &context->entrypoint);
+    ret = __SH4_ELF_GetMainEntry(elf, &context->entrypoint, &context->print);
     if (ret != SH4_SUCCESS) {
         SH4_Log(SH4_LOG_INFO, "_main entrypoint not found, using start address");
         context->entrypoint = (uint32_t)bfd_get_start_address(elf);
     }
 
     /* Initialize the registers */
-    SH4_Reset(context, context->entrypoint);
+    SH4_Reset(context, context->entrypoint, context->print);
 
     /* Sections */
     for (section=elf->sections; section!=NULL; section=section->next) {

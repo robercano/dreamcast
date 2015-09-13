@@ -970,8 +970,33 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
 {
     /* jsr     @rn */
     int8_t n = (op>>8)&0xf;
+
     c->regs.PR = c->regs.PC+4;
     c->regs.NNPC = _R(n);
+
+    if (_R(n) == c->print) {
+        /* Manually execute next instruction before jumping to printf */
+        if (c->debug) {
+            SH4_DumpRegs(c);
+        }
+
+        c->regs.PC    = c->regs.NPC;
+        c->regs.NPC   = c->regs.NNPC;
+        c->regs.NNPC += 2;
+
+        uint16_t op = ntohs(*(uint16_t*)(c->memory+c->regs.PC));
+
+        /* Execute the opcode */
+        if (c->debug) {
+            SH4_LogEx(SH4_LOG_DEBUG, "%04x:        %02x %02x           ", c->regs.PC, (op>>8)&0xff, op&0xff);
+            SH7750DisasmLUT[op](c, op);
+        }
+        SH7750InterpLUT[op](c, op);
+
+        /* Now execute printf: maximum of 3 parameters!! */
+        SH4_Log(SH4_LOG_INFO, (char*)(c->memory+_R(4)), _R(5), _R(6), _R(7));
+        exit(1);
+    }
 }
 
 void __0000000000001011(SH4Context_t *c, uint16_t op)
