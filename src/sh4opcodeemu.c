@@ -81,8 +81,7 @@ void __0110nnnnmmmm0000(SH4Context_t *c, uint16_t op)
     /* mov.b   @rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] mov.b   @rm,rn --> __0110nnnnmmmm0000\n");
-    exit(1);
+    _R(n) = SH4_MMU_ReadS8(c, _R(m));
 }
 
 void __0110nnnnmmmm0001(SH4Context_t *c, uint16_t op)
@@ -340,8 +339,7 @@ void __0110nnnnmmmm1001(SH4Context_t *c, uint16_t op)
     /* swap.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] swap.w  rm,rn --> __0110nnnnmmmm1001\n");
-    exit(1);
+    _R(n) = (_R(m)<<16) | (_R(n)>>16);
 }
 
 void __0010nnnnmmmm1101(SH4Context_t *c, uint16_t op)
@@ -349,8 +347,7 @@ void __0010nnnnmmmm1101(SH4Context_t *c, uint16_t op)
     /* xtrct   rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] xtrct   rm,rn --> __0010nnnnmmmm1101\n");
-    exit(1);
+    _R(n) = (_R(m)<<16) | (_R(n)>>16);
 }
 
 void __0011nnnnmmmm1100(SH4Context_t *c, uint16_t op)
@@ -374,8 +371,9 @@ void __0011nnnnmmmm1110(SH4Context_t *c, uint16_t op)
     /* addc    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] addc    rm,rn --> __0011nnnnmmmm1110\n");
-    exit(1);
+    uint64_t sum = _R(n) + _R(m) + c->regs.SR.T;
+    _R(n) = sum;
+    c->regs.SR.T = (sum > 0x100000000LL);
 }
 
 void __0011nnnnmmmm1111(SH4Context_t *c, uint16_t op)
@@ -399,8 +397,7 @@ void __0011nnnnmmmm0000(SH4Context_t *c, uint16_t op)
     /* cmp/eq  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] cmp/eq  rm,rn --> __0011nnnnmmmm0000\n");
-    exit(1);
+    c->regs.SR.T = _R(n)==_R(m);
 }
 
 void __0011nnnnmmmm0010(SH4Context_t *c, uint16_t op)
@@ -425,8 +422,7 @@ void __0011nnnnmmmm0110(SH4Context_t *c, uint16_t op)
     /* cmp/hi  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] cmp/hi  rm,rn --> __0011nnnnmmmm0110\n");
-    exit(1);
+    c->regs.SR.T = _R(n)>_R(m);
 }
 
 void __0011nnnnmmmm0111(SH4Context_t *c, uint16_t op)
@@ -441,8 +437,7 @@ void __0100nnnn00010001(SH4Context_t *c, uint16_t op)
 {
     /* cmp/pz  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] cmp/pz  rn --> __0100nnnn00010001\n");
-    exit(1);
+    c->regs.SR.T = ((int32_t)_R(n)) >= 0;
 }
 
 void __0100nnnn00010101(SH4Context_t *c, uint16_t op)
@@ -466,8 +461,42 @@ void __0011nnnnmmmm0100(SH4Context_t *c, uint16_t op)
     /* div1    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] div1    rm,rn --> __0011nnnnmmmm0100\n");
-    exit(1);
+
+    /* Code copied from reicast....too lazy to write it myself */
+    uint32_t tmp0, tmp2;
+    uint8_t old_q, tmp1;
+
+    old_q = c->regs.SR.Q;
+    c->regs.SR.Q = (uint8_t)((0x80000000 & _R(n)) !=0);
+
+    _R(n) <<= 1;
+    _R(n) |= (uint32_t)c->regs.SR.T;
+
+    tmp0 = _R(n);    // this need only be done once here ..
+    tmp2 = _R(m);
+
+    if( 0 == old_q ) {
+        if( 0 == c->regs.SR.M ) {
+            _R(n) -= tmp2;
+            tmp1 = (_R(n)>tmp0);
+            c->regs.SR.Q = (c->regs.SR.Q==0) ? tmp1 : (uint8_t)(tmp1==0) ;
+        } else {
+            _R(n) += tmp2;
+            tmp1 =(_R(n)<tmp0);
+            c->regs.SR.Q = (c->regs.SR.Q==0) ? (uint8_t)(tmp1==0) : tmp1;
+        }
+    } else {
+        if( 0 == c->regs.SR.M ) {
+            _R(n) += tmp2;
+            tmp1 = (_R(n)<tmp0);
+            c->regs.SR.Q = (c->regs.SR.Q==0) ? tmp1 : (uint8_t)(tmp1==0) ;
+        } else {
+            _R(n) -= tmp2;
+            tmp1 = (_R(n)>tmp0);
+            c->regs.SR.Q = (c->regs.SR.Q==0) ? (uint8_t)(tmp1==0) : tmp1 ;
+        }
+    }
+    c->regs.SR.T = (c->regs.SR.Q==c->regs.SR.M);
 }
 
 void __0010nnnnmmmm0111(SH4Context_t *c, uint16_t op)
@@ -482,8 +511,9 @@ void __0010nnnnmmmm0111(SH4Context_t *c, uint16_t op)
 void __0000000000011001(SH4Context_t *c, uint16_t op)
 {
     /* div0u */
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] div0u --> __0000000000011001\n");
-    exit(1);
+    c->regs.SR.T = 0;
+    c->regs.SR.M = 0;
+    c->regs.SR.Q = 0;
 }
 
 void __0011nnnnmmmm1101(SH4Context_t *c, uint16_t op)
@@ -535,8 +565,7 @@ void __0110nnnnmmmm1100(SH4Context_t *c, uint16_t op)
     /* extu.b  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] extu.b  rm,rn --> __0110nnnnmmmm1100\n");
-    exit(1);
+    _R(n) = _R(m)&0x000000FF;
 }
 
 void __0110nnnnmmmm1101(SH4Context_t *c, uint16_t op)
@@ -544,8 +573,7 @@ void __0110nnnnmmmm1101(SH4Context_t *c, uint16_t op)
     /* extu.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] extu.w  rm,rn --> __0110nnnnmmmm1101\n");
-    exit(1);
+    _R(n) = _R(m)&0x0000FFFF;
 }
 
 void __0000nnnnmmmm1111(SH4Context_t *c, uint16_t op)
@@ -589,8 +617,7 @@ void __0010nnnnmmmm1110(SH4Context_t *c, uint16_t op)
     /* mulu.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] mulu.w  rm,rn --> __0010nnnnmmmm1110\n");
-    exit(1);
+    c->regs.MACL = (uint16_t)_R(n)*(uint16_t)_R(m);
 }
 
 void __0110nnnnmmmm1011(SH4Context_t *c, uint16_t op)
@@ -651,8 +678,7 @@ void __11001001iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* and     #i,r0 */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] and     #i,r0 --> __11001001iiiiiiii\n");
-    exit(1);
+    _R(0) &= i;
 }
 
 void __11001101iiiiiiii(SH4Context_t *c, uint16_t op)
@@ -716,9 +742,8 @@ void __0010nnnnmmmm1000(SH4Context_t *c, uint16_t op)
 void __11001000iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* tst     #i,r0 */
-    int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] tst     #i,r0 --> __11001000iiiiiiii\n");
-    exit(1);
+    uint8_t i = op&0xff;
+    c->regs.SR.T = !(_R(0)&i);
 }
 
 void __11001100iiiiiiii(SH4Context_t *c, uint16_t op)
@@ -734,8 +759,7 @@ void __0010nnnnmmmm1010(SH4Context_t *c, uint16_t op)
     /* xor     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] xor     rm,rn --> __0010nnnnmmmm1010\n");
-    exit(1);
+    _R(n) ^= _R(m);
 }
 
 void __11001010iiiiiiii(SH4Context_t *c, uint16_t op)
@@ -774,8 +798,9 @@ void __0100nnnn00100100(SH4Context_t *c, uint16_t op)
 {
     /* rotcl   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] rotcl   rn --> __0100nnnn00100100\n");
-    exit(1);
+    uint8_t tmp = _R(n)>>31;
+    _R(n) = (_R(n)<<1) | c->regs.SR.T;
+    c->regs.SR.T = tmp;
 }
 
 void __0100nnnn00100101(SH4Context_t *c, uint16_t op)
@@ -875,16 +900,14 @@ void __0100nnnn00101000(SH4Context_t *c, uint16_t op)
 {
     /* shll16  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] shll16  rn --> __0100nnnn00101000\n");
-    exit(1);
+    _R(n) <<= 16;
 }
 
 void __0100nnnn00101001(SH4Context_t *c, uint16_t op)
 {
     /* shlr16  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] shlr16  rn --> __0100nnnn00101001\n");
-    exit(1);
+    _R(n) >>= 16;
 }
 
 void __10001011dddddddd(SH4Context_t *c, uint16_t op)
@@ -947,8 +970,8 @@ void __1011dddddddddddd(SH4Context_t *c, uint16_t op)
     if (op&0x800) {
         d |= 0xF000;
     }
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] bsr     d --> __1011dddddddddddd\n");
-    exit(1);
+    c->regs.PR = c->regs.PC+4;
+    c->regs.NNPC = d*2 + c->regs.PC + 4;
 }
 
 void __0000nnnn00000011(SH4Context_t *c, uint16_t op)
@@ -971,9 +994,6 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
     /* jsr     @rn */
     int8_t n = (op>>8)&0xf;
 
-    c->regs.PR = c->regs.PC+4;
-    c->regs.NNPC = _R(n);
-
     if (_R(n) == c->print) {
         /* Manually execute next instruction before jumping to printf */
         if (c->debug) {
@@ -994,8 +1014,13 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
         SH7750InterpLUT[op](c, op);
 
         /* Now execute printf: maximum of 3 parameters!! */
-        SH4_Log(SH4_LOG_INFO, (char*)(c->memory+_R(4)), _R(5), _R(6), _R(7));
-        exit(1);
+        if (c->debug) {
+            SH4_Log(SH4_LOG_INFO, "Calling printf");
+        }
+        SH4_LogEx(SH4_LOG_INFO, (char*)(c->memory+_R(4)), _R(5), _R(6), _R(7));
+    } else {
+        c->regs.PR = c->regs.PC+4;
+        c->regs.NNPC = _R(n);
     }
 }
 
@@ -1256,8 +1281,7 @@ void __0000000001011000(SH4Context_t *c, uint16_t op)
 void __0000000000011000(SH4Context_t *c, uint16_t op)
 {
     /* sett */
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] sett --> __0000000000011000\n");
-    exit(1);
+    c->regs.SR.T = 1;
 }
 
 void __0000000000011011(SH4Context_t *c, uint16_t op)
@@ -1409,8 +1433,7 @@ void __0000nnnn00011010(SH4Context_t *c, uint16_t op)
 {
     /* sts     macl,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] sts     macl,rn --> __0000nnnn00011010\n");
-    exit(1);
+    _R(n) = c->regs.MACL;
 }
 
 void __0000nnnn00101010(SH4Context_t *c, uint16_t op)
