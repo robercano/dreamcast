@@ -339,7 +339,7 @@ void __0110nnnnmmmm1001(SH4Context_t *c, uint16_t op)
     /* swap.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    _R(n) = (_R(m)<<16) | (_R(n)>>16);
+    _R(n) = (_R(m)<<16) | (_R(m)>>16);
 }
 
 void __0010nnnnmmmm1101(SH4Context_t *c, uint16_t op)
@@ -547,8 +547,7 @@ void __0110nnnnmmmm1110(SH4Context_t *c, uint16_t op)
     /* exts.b  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] exts.b  rm,rn --> __0110nnnnmmmm1110\n");
-    exit(1);
+    _R(n) = (int8_t)_R(m);
 }
 
 void __0110nnnnmmmm1111(SH4Context_t *c, uint16_t op)
@@ -995,8 +994,8 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
     /* jsr     @rn */
     int8_t n = (op>>8)&0xf;
 
-    if (_R(n) == c->print) {
-        /* Manually execute next instruction before jumping to printf */
+    if (_R(n) == c->print || _R(n) == c->puts) {
+        /* Manually execute next instruction before jumping to printf or puts */
         if (c->debug) {
             SH4_DumpRegs(c);
         }
@@ -1016,9 +1015,9 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
 
         /* Now execute printf: maximum of 3 parameters!! */
         if (c->debug) {
-            SH4_Log(SH4_LOG_INFO, "Calling printf");
+            SH4_Log(SH4_LOG_INFO, "Calling printf or puts");
         }
-        SH4_LogEx(SH4_LOG_INFO, (char*)(c->memory+_R(4)), _R(5), _R(6), _R(7));
+        SH4_LogEx(SH4_LOG_INFO, (char*)(c->memory+_R(4)), _R(5), c->memory+_R(6), _R(7));
     } else {
         c->regs.PR = c->regs.PC+4;
         c->regs.NNPC = _R(n);
