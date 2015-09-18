@@ -989,6 +989,7 @@ void __0100nnnn00101011(SH4Context_t *c, uint16_t op)
     c->regs.NNPC = _R(n);
 }
 
+#include <arpa/inet.h>
 void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
 {
     /* jsr     @rn */
