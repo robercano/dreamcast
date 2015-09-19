@@ -15,7 +15,7 @@
 void __0000000000000000_dis(SH4Context_t *context, uint16_t op)
 {
     /* EXCEPTION */
-    SH4_Log(SH4_LOG_DEBUG, "EXCEPTION\n");
+    SH4_LogEx(SH4_LOG_DEBUG, ".word 0x%04x", op);
 }
 
 void __1110nnnniiiiiiii_dis(SH4Context_t *context, uint16_t op)
@@ -23,7 +23,7 @@ void __1110nnnniiiiiiii_dis(SH4Context_t *context, uint16_t op)
     /* mov     #i,rn */
     int8_t n = (op>>8)&0xf;
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov     #%d,r%d\n", i, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov     #%d,r%d", i, n);
 }
 
 void __1001nnnndddddddd_dis(SH4Context_t *context, uint16_t op)
@@ -31,7 +31,7 @@ void __1001nnnndddddddd_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   @(%d,pc),r%d\n", d, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   @(%d,pc),r%d", d, n);
 }
 
 void __1101nnnndddddddd_dis(SH4Context_t *context, uint16_t op)
@@ -39,7 +39,7 @@ void __1101nnnndddddddd_dis(SH4Context_t *context, uint16_t op)
     /* mov.l   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   @(%d,pc),r%d\n", d, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   @(%d,pc),r%d", d, n);
 }
 
 void __0110nnnnmmmm0011_dis(SH4Context_t *context, uint16_t op)
@@ -47,7 +47,7 @@ void __0110nnnnmmmm0011_dis(SH4Context_t *context, uint16_t op)
     /* mov     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov     r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
@@ -55,7 +55,7 @@ void __0010nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   rm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   r%d,@r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   r%d,@r%d", m, n);
 }
 
 void __0010nnnnmmmm0001_dis(SH4Context_t *context, uint16_t op)
@@ -63,7 +63,7 @@ void __0010nnnnmmmm0001_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   rm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   r%d,@r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   r%d,@r%d", m, n);
 }
 
 void __0010nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
@@ -71,7 +71,7 @@ void __0010nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
     /* mov.l   rm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   r%d,@r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   r%d,@r%d", m, n);
 }
 
 void __0110nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
@@ -79,7 +79,7 @@ void __0110nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   @rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   @r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   @r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm0001_dis(SH4Context_t *context, uint16_t op)
@@ -87,7 +87,7 @@ void __0110nnnnmmmm0001_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   @rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   @r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   @r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
@@ -95,7 +95,7 @@ void __0110nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
     /* mov.l   @rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   @r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   @r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
@@ -103,7 +103,7 @@ void __0010nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   rm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   r%d,@-r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   r%d,@-r%d", m, n);
 }
 
 void __0010nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
@@ -111,7 +111,7 @@ void __0010nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   rm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   r%d,@-r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   r%d,@-r%d", m, n);
 }
 
 void __0010nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
@@ -119,7 +119,7 @@ void __0010nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
     /* mov.l   rm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   r%d,@-r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   r%d,@-r%d", m, n);
 }
 
 void __0110nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
@@ -127,7 +127,7 @@ void __0110nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   @rm+,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   @r%d+,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   @r%d+,r%d", m, n);
 }
 
 void __0110nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
@@ -135,7 +135,7 @@ void __0110nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   @rm+,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   @r%d+,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   @r%d+,r%d", m, n);
 }
 
 void __0110nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
@@ -143,7 +143,7 @@ void __0110nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
     /* mov.l   @rm+,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   @r%d+,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   @r%d+,r%d", m, n);
 }
 
 void __10000000nnnndddd_dis(SH4Context_t *context, uint16_t op)
@@ -151,7 +151,7 @@ void __10000000nnnndddd_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   r0,@(d,rn) */
     int8_t n = (op>>4)&0xf;
     int8_t d = op&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   r0,@(%d,r%d)\n", d, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   r0,@(%d,r%d)", d, n);
 }
 
 void __10000001nnnndddd_dis(SH4Context_t *context, uint16_t op)
@@ -159,7 +159,7 @@ void __10000001nnnndddd_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   r0,@(d,rn) */
     int8_t n = (op>>4)&0xf;
     int8_t d = op&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   r0,@(%d,r%d)\n", d, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   r0,@(%d,r%d)", d, n);
 }
 
 void __0001nnnnmmmmdddd_dis(SH4Context_t *context, uint16_t op)
@@ -168,7 +168,7 @@ void __0001nnnnmmmmdddd_dis(SH4Context_t *context, uint16_t op)
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
     int8_t d = op&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   r%d,@(%d,r%d)\n", m, d, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   r%d,@(%d,r%d)", m, d, n);
 }
 
 void __10000100mmmmdddd_dis(SH4Context_t *context, uint16_t op)
@@ -176,7 +176,7 @@ void __10000100mmmmdddd_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   @(d,rm),r0 */
     int8_t m = (op>>4)&0xf;
     int8_t d = op&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   @(%d,r%d),r0\n", d, m);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   @(%d,r%d),r0", d, m);
 }
 
 void __10000101mmmmdddd_dis(SH4Context_t *context, uint16_t op)
@@ -184,7 +184,7 @@ void __10000101mmmmdddd_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   @(d,rm),r0 */
     int8_t m = (op>>4)&0xf;
     int8_t d = op&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   @(%d,r%d),r0\n", d, m);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   @(%d,r%d),r0", d, m);
 }
 
 void __0101nnnnmmmmdddd_dis(SH4Context_t *context, uint16_t op)
@@ -193,7 +193,7 @@ void __0101nnnnmmmmdddd_dis(SH4Context_t *context, uint16_t op)
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
     int8_t d = op&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   @(%d,r%d),r%d\n", d, m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   @(%d,r%d),r%d", d, m, n);
 }
 
 void __0000nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
@@ -201,7 +201,7 @@ void __0000nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   rm,@(r0,rn) */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   r%d,@(r0,r%d)\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   r%d,@(r0,r%d)", m, n);
 }
 
 void __0000nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
@@ -209,7 +209,7 @@ void __0000nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   rm,@(r0,rn) */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   r%d,@(r0,r%d)\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   r%d,@(r0,r%d)", m, n);
 }
 
 void __0000nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
@@ -217,7 +217,7 @@ void __0000nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
     /* mov.l   rm,@(r0,rn) */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   r%d,@(r0,r%d)\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   r%d,@(r0,r%d)", m, n);
 }
 
 void __0000nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
@@ -225,7 +225,7 @@ void __0000nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
     /* mov.b   @(r0,rm),rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   @(r0,r%d),r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   @(r0,r%d),r%d", m, n);
 }
 
 void __0000nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
@@ -233,7 +233,7 @@ void __0000nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
     /* mov.w   @(r0,rm),rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   @(r0,r%d),r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   @(r0,r%d),r%d", m, n);
 }
 
 void __0000nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
@@ -241,63 +241,63 @@ void __0000nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
     /* mov.l   @(r0,rm),rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   @(r0,r%d),r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   @(r0,r%d),r%d", m, n);
 }
 
 void __11000000dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* mov.b   r0,@(d,gbr) */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   r0,@(%d,gbr)\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   r0,@(%d,gbr)", d);
 }
 
 void __11000001dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* mov.w   r0,@(d,gbr) */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   r0,@(%d,gbr)\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   r0,@(%d,gbr)", d);
 }
 
 void __11000010dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* mov.l   r0,@(d,gbr) */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   r0,@(%d,gbr)\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   r0,@(%d,gbr)", d);
 }
 
 void __11000100dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* mov.b   @(d,gbr),r0 */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.b   @(%d,gbr),r0\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.b   @(%d,gbr),r0", d);
 }
 
 void __11000101dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* mov.w   @(d,gbr),r0 */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.w   @(%d,gbr),r0\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.w   @(%d,gbr),r0", d);
 }
 
 void __11000110dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* mov.l   @(d,gbr),r0 */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mov.l   @(%d,gbr),r0\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "mov.l   @(%d,gbr),r0", d);
 }
 
 void __11000111dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* mova    @(d,pc),r0 */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "mova    @(%d,pc),r0\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "mova    @(%d,pc),r0", d);
 }
 
 void __0000nnnn00101001_dis(SH4Context_t *context, uint16_t op)
 {
     /* movt    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "movt    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "movt    r%d", n);
 }
 
 void __0110nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
@@ -305,7 +305,7 @@ void __0110nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
     /* swap.b  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "swap.b  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "swap.b  r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm1001_dis(SH4Context_t *context, uint16_t op)
@@ -313,7 +313,7 @@ void __0110nnnnmmmm1001_dis(SH4Context_t *context, uint16_t op)
     /* swap.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "swap.w  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "swap.w  r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
@@ -321,7 +321,7 @@ void __0010nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
     /* xtrct   rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "xtrct   r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "xtrct   r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
@@ -329,7 +329,7 @@ void __0011nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
     /* add     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "add     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "add     r%d,r%d", m, n);
 }
 
 void __0111nnnniiiiiiii_dis(SH4Context_t *context, uint16_t op)
@@ -337,7 +337,7 @@ void __0111nnnniiiiiiii_dis(SH4Context_t *context, uint16_t op)
     /* add     #i,rn */
     int8_t n = (op>>8)&0xf;
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "add     #%d,r%d\n", i, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "add     #%d,r%d", i, n);
 }
 
 void __0011nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
@@ -345,7 +345,7 @@ void __0011nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
     /* addc    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "addc    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "addc    r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
@@ -353,14 +353,14 @@ void __0011nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
     /* addv    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "addv    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "addv    r%d,r%d", m, n);
 }
 
 void __10001000iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* cmp/eq  #i,r0 */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/eq  #%d,r0\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/eq  #%d,r0", i);
 }
 
 void __0011nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
@@ -368,7 +368,7 @@ void __0011nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
     /* cmp/eq  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/eq  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/eq  r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
@@ -376,7 +376,7 @@ void __0011nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
     /* cmp/hs  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/hs  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/hs  r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm0011_dis(SH4Context_t *context, uint16_t op)
@@ -384,7 +384,7 @@ void __0011nnnnmmmm0011_dis(SH4Context_t *context, uint16_t op)
     /* cmp/ge  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/ge  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/ge  r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
@@ -392,7 +392,7 @@ void __0011nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
     /* cmp/hi  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/hi  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/hi  r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
@@ -400,21 +400,21 @@ void __0011nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
     /* cmp/gt  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/gt  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/gt  r%d,r%d", m, n);
 }
 
 void __0100nnnn00010001_dis(SH4Context_t *context, uint16_t op)
 {
     /* cmp/pz  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/pz  r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/pz  r%d", n);
 }
 
 void __0100nnnn00010101_dis(SH4Context_t *context, uint16_t op)
 {
     /* cmp/pl  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/pl  r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/pl  r%d", n);
 }
 
 void __0010nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
@@ -422,7 +422,7 @@ void __0010nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
     /* cmp/str rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "cmp/str r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "cmp/str r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
@@ -430,7 +430,7 @@ void __0011nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
     /* div1    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "div1    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "div1    r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
@@ -438,13 +438,13 @@ void __0010nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
     /* div0s   rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "div0s   r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "div0s   r%d,r%d", m, n);
 }
 
 void __0000000000011001_dis(SH4Context_t *context, uint16_t op)
 {
     /* div0u */
-    SH4_Log(SH4_LOG_DEBUG, "div0u\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "div0u");
 }
 
 void __0011nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
@@ -452,7 +452,7 @@ void __0011nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
     /* dmuls.l rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "dmuls.l r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "dmuls.l r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
@@ -460,14 +460,14 @@ void __0011nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
     /* dmulu.l rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "dmulu.l r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "dmulu.l r%d,r%d", m, n);
 }
 
 void __0100nnnn00010000_dis(SH4Context_t *context, uint16_t op)
 {
     /* dt      rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "dt      r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "dt      r%d", n);
 }
 
 void __0110nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
@@ -475,7 +475,7 @@ void __0110nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
     /* exts.b  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "exts.b  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "exts.b  r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
@@ -483,7 +483,7 @@ void __0110nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
     /* exts.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "exts.w  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "exts.w  r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
@@ -491,7 +491,7 @@ void __0110nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
     /* extu.b  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "extu.b  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "extu.b  r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
@@ -499,7 +499,7 @@ void __0110nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
     /* extu.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "extu.w  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "extu.w  r%d,r%d", m, n);
 }
 
 void __0000nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
@@ -507,7 +507,7 @@ void __0000nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
     /* mac.l   @rm+,@rn+ */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mac.l   @r%d+,@r%d+\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mac.l   @r%d+,@r%d+", m, n);
 }
 
 void __0100nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
@@ -515,7 +515,7 @@ void __0100nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
     /* mac.w   @rm+,@rn+ */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mac.w   @r%d+,@r%d+\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mac.w   @r%d+,@r%d+", m, n);
 }
 
 void __0000nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
@@ -523,7 +523,7 @@ void __0000nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
     /* mul.l   rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mul.l   r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mul.l   r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
@@ -531,7 +531,7 @@ void __0010nnnnmmmm1111_dis(SH4Context_t *context, uint16_t op)
     /* muls.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "muls.w  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "muls.w  r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
@@ -539,7 +539,7 @@ void __0010nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
     /* mulu.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "mulu.w  r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "mulu.w  r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
@@ -547,7 +547,7 @@ void __0110nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
     /* neg     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "neg     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "neg     r%d,r%d", m, n);
 }
 
 void __0110nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
@@ -555,7 +555,7 @@ void __0110nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
     /* negc    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "negc    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "negc    r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
@@ -563,7 +563,7 @@ void __0011nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
     /* sub     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sub     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sub     r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
@@ -571,7 +571,7 @@ void __0011nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
     /* subc    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "subc    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "subc    r%d,r%d", m, n);
 }
 
 void __0011nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
@@ -579,7 +579,7 @@ void __0011nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
     /* subv    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "subv    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "subv    r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm1001_dis(SH4Context_t *context, uint16_t op)
@@ -587,21 +587,21 @@ void __0010nnnnmmmm1001_dis(SH4Context_t *context, uint16_t op)
     /* and     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "and     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "and     r%d,r%d", m, n);
 }
 
 void __11001001iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* and     #i,r0 */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "and     #%d,r0\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "and     #%d,r0", i);
 }
 
 void __11001101iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* and.b   #i,@(r0,gbr) */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "and.b   #%d,@(r0,gbr)\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "and.b   #%d,@(r0,gbr)", i);
 }
 
 void __0110nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
@@ -609,7 +609,7 @@ void __0110nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
     /* not     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "not     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "not     r%d,r%d", m, n);
 }
 
 void __0010nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
@@ -617,28 +617,28 @@ void __0010nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
     /* or      rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "or      r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "or      r%d,r%d", m, n);
 }
 
 void __11001011iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* or      #i,r0 */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "or      #%d,r0\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "or      #%d,r0", i);
 }
 
 void __11001111iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* or.b    #i,@(r0,gbr) */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "or.b    #%d,@(r0,gbr)\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "or.b    #%d,@(r0,gbr)", i);
 }
 
 void __0100nnnn00011011_dis(SH4Context_t *context, uint16_t op)
 {
     /* tas.b   @rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "tas.b   @r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "tas.b   @r%d", n);
 }
 
 void __0010nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
@@ -646,21 +646,21 @@ void __0010nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
     /* tst     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "tst     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "tst     r%d,r%d", m, n);
 }
 
 void __11001000iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* tst     #i,r0 */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "tst     #%d,r0\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "tst     #%d,r0", i);
 }
 
 void __11001100iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* tst.b   #i,@(r0,gbr) */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "tst.b   #%d,@(r0,gbr)\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "tst.b   #%d,@(r0,gbr)", i);
 }
 
 void __0010nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
@@ -668,49 +668,49 @@ void __0010nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
     /* xor     rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "xor     r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "xor     r%d,r%d", m, n);
 }
 
 void __11001010iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* xor     #i,r0 */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "xor     #%d,r0\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "xor     #%d,r0", i);
 }
 
 void __11001110iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* xor.b   #i,@(r0,gbr) */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "xor.b   #%d,@(r0,gbr)\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "xor.b   #%d,@(r0,gbr)", i);
 }
 
 void __0100nnnn00000100_dis(SH4Context_t *context, uint16_t op)
 {
     /* rotl    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "rotl    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "rotl    r%d", n);
 }
 
 void __0100nnnn00000101_dis(SH4Context_t *context, uint16_t op)
 {
     /* rotr    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "rotr    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "rotr    r%d", n);
 }
 
 void __0100nnnn00100100_dis(SH4Context_t *context, uint16_t op)
 {
     /* rotcl   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "rotcl   r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "rotcl   r%d", n);
 }
 
 void __0100nnnn00100101_dis(SH4Context_t *context, uint16_t op)
 {
     /* rotcr   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "rotcr   r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "rotcr   r%d", n);
 }
 
 void __0100nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
@@ -718,21 +718,21 @@ void __0100nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
     /* shad    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shad    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shad    r%d,r%d", m, n);
 }
 
 void __0100nnnn00100000_dis(SH4Context_t *context, uint16_t op)
 {
     /* shal    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shal    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shal    r%d", n);
 }
 
 void __0100nnnn00100001_dis(SH4Context_t *context, uint16_t op)
 {
     /* shar    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shar    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shar    r%d", n);
 }
 
 void __0100nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
@@ -740,91 +740,91 @@ void __0100nnnnmmmm1101_dis(SH4Context_t *context, uint16_t op)
     /* shld    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shld    r%d,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shld    r%d,r%d", m, n);
 }
 
 void __0100nnnn00000000_dis(SH4Context_t *context, uint16_t op)
 {
     /* shll    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shll    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shll    r%d", n);
 }
 
 void __0100nnnn00000001_dis(SH4Context_t *context, uint16_t op)
 {
     /* shlr    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shlr    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shlr    r%d", n);
 }
 
 void __0100nnnn00001000_dis(SH4Context_t *context, uint16_t op)
 {
     /* shll2   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shll2   r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shll2   r%d", n);
 }
 
 void __0100nnnn00001001_dis(SH4Context_t *context, uint16_t op)
 {
     /* shlr2   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shlr2   r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shlr2   r%d", n);
 }
 
 void __0100nnnn00011000_dis(SH4Context_t *context, uint16_t op)
 {
     /* shll8   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shll8   r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shll8   r%d", n);
 }
 
 void __0100nnnn00011001_dis(SH4Context_t *context, uint16_t op)
 {
     /* shlr8   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shlr8   r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shlr8   r%d", n);
 }
 
 void __0100nnnn00101000_dis(SH4Context_t *context, uint16_t op)
 {
     /* shll16  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shll16  r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shll16  r%d", n);
 }
 
 void __0100nnnn00101001_dis(SH4Context_t *context, uint16_t op)
 {
     /* shlr16  rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "shlr16  r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "shlr16  r%d", n);
 }
 
 void __10001011dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* bf      d */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "bf      %d\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "bf      %d", d);
 }
 
 void __10001111dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* bf/s    d */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "bf/s    %d\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "bf/s    %d", d);
 }
 
 void __10001001dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* bt      d */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "bt      %d\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "bt      %d", d);
 }
 
 void __10001101dddddddd_dis(SH4Context_t *context, uint16_t op)
 {
     /* bt/s    d */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "bt/s    %d\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "bt/s    %d", d);
 }
 
 void __1010dddddddddddd_dis(SH4Context_t *context, uint16_t op)
@@ -834,14 +834,14 @@ void __1010dddddddddddd_dis(SH4Context_t *context, uint16_t op)
     if (op&0x800) {
         d |= 0xF000;
     }
-    SH4_Log(SH4_LOG_DEBUG, "bra     %d %0x\n", d, d);
+    SH4_LogEx(SH4_LOG_DEBUG, "bra     %d %0x", d, d);
 }
 
 void __0000nnnn00100011_dis(SH4Context_t *context, uint16_t op)
 {
     /* braf    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "braf    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "braf    r%d", n);
 }
 
 void __1011dddddddddddd_dis(SH4Context_t *context, uint16_t op)
@@ -851,94 +851,94 @@ void __1011dddddddddddd_dis(SH4Context_t *context, uint16_t op)
     if (op&0x800) {
         d |= 0xF000;
     }
-    SH4_Log(SH4_LOG_DEBUG, "bsr     %d\n", d);
+    SH4_LogEx(SH4_LOG_DEBUG, "bsr     %d", d);
 }
 
 void __0000nnnn00000011_dis(SH4Context_t *context, uint16_t op)
 {
     /* bsrf    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "bsrf    r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "bsrf    r%d", n);
 }
 
 void __0100nnnn00101011_dis(SH4Context_t *context, uint16_t op)
 {
     /* jmp     @rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "jmp     @r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "jmp     @r%d", n);
 }
 
 void __0100nnnn00001011_dis(SH4Context_t *context, uint16_t op)
 {
     /* jsr     @rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "jsr     @r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "jsr     @r%d", n);
 }
 
 void __0000000000001011_dis(SH4Context_t *context, uint16_t op)
 {
     /* rts */
-    SH4_Log(SH4_LOG_DEBUG, "rts\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "rts");
 }
 
 void __0000000000101000_dis(SH4Context_t *context, uint16_t op)
 {
     /* clrmac */
-    SH4_Log(SH4_LOG_DEBUG, "clrmac\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "clrmac");
 }
 
 void __0000000001001000_dis(SH4Context_t *context, uint16_t op)
 {
     /* clrs */
-    SH4_Log(SH4_LOG_DEBUG, "clrs\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "clrs");
 }
 
 void __0000000000001000_dis(SH4Context_t *context, uint16_t op)
 {
     /* clrt */
-    SH4_Log(SH4_LOG_DEBUG, "clrt\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "clrt");
 }
 
 void __0100mmmm00001110_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc     rm,sr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc     r%d,sr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc     r%d,sr", m);
 }
 
 void __0100mmmm00011110_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc     rm,gbr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc     r%d,gbr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc     r%d,gbr", m);
 }
 
 void __0100mmmm00101110_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc     rm,vbr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc     r%d,vbr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc     r%d,vbr", m);
 }
 
 void __0100mmmm00111110_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc     rm,ssr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc     r%d,ssr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc     r%d,ssr", m);
 }
 
 void __0100mmmm01001110_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc     rm,spc */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc     r%d,spc\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc     r%d,spc", m);
 }
 
 void __0100mmmm11111010_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc     rm,dbr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc     r%d,dbr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc     r%d,dbr", m);
 }
 
 void __0100mmmm1nnn1110_dis(SH4Context_t *context, uint16_t op)
@@ -946,49 +946,49 @@ void __0100mmmm1nnn1110_dis(SH4Context_t *context, uint16_t op)
     /* ldc     rm,rn_bank */
     int8_t m = (op>>8)&0xf;
     int8_t n = (op>>4)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "ldc     r%d,r%d_bank\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc     r%d,r%d_bank", m, n);
 }
 
 void __0100mmmm00000111_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc.l   @rm+,sr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc.l   @r%d+,sr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc.l   @r%d+,sr", m);
 }
 
 void __0100mmmm00010111_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc.l   @rm+,gbr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc.l   @r%d+,gbr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc.l   @r%d+,gbr", m);
 }
 
 void __0100mmmm00100111_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc.l   @rm+,vbr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc.l   @r%d+,vbr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc.l   @r%d+,vbr", m);
 }
 
 void __0100mmmm00110111_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc.l   @rm+,ssr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc.l   @r%d+,ssr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc.l   @r%d+,ssr", m);
 }
 
 void __0100mmmm01000111_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc.l   @rm+,spc */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc.l   @r%d+,spc\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc.l   @r%d+,spc", m);
 }
 
 void __0100mmmm11110110_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldc.l   @rm+,dbr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ldc.l   @r%d+,dbr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc.l   @r%d+,dbr", m);
 }
 
 void __0100mmmm1nnn0111_dis(SH4Context_t *context, uint16_t op)
@@ -996,169 +996,169 @@ void __0100mmmm1nnn0111_dis(SH4Context_t *context, uint16_t op)
     /* ldc.l   @rm+,rn_bank */
     int8_t m = (op>>8)&0xf;
     int8_t n = (op>>4)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "ldc.l   @r%d+,r%d_bank\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "ldc.l   @r%d+,r%d_bank", m, n);
 }
 
 void __0100mmmm00001010_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds     rm,mach */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds     r%d,mach\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds     r%d,mach", m);
 }
 
 void __0100mmmm00011010_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds     rm,macl */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds     r%d,macl\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds     r%d,macl", m);
 }
 
 void __0100mmmm00101010_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds     rm,pr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds     r%d,pr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds     r%d,pr", m);
 }
 
 void __0100mmmm00000110_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds.l   @rm+,mach */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds.l   @r%d+,mach\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds.l   @r%d+,mach", m);
 }
 
 void __0100mmmm00010110_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds.l   @rm+,macl */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds.l   @r%d+,macl\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds.l   @r%d+,macl", m);
 }
 
 void __0100mmmm00100110_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds.l   @rm+,pr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds.l   @r%d+,pr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds.l   @r%d+,pr", m);
 }
 
 void __0000000000111000_dis(SH4Context_t *context, uint16_t op)
 {
     /* ldtlb */
-    SH4_Log(SH4_LOG_DEBUG, "ldtlb\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "ldtlb");
 }
 
 void __0000nnnn11000011_dis(SH4Context_t *context, uint16_t op)
 {
     /* movca.l r0,@rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "movca.l r0,@r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "movca.l r0,@r%d", n);
 }
 
 void __0000000000001001_dis(SH4Context_t *context, uint16_t op)
 {
     /* nop */
-    SH4_Log(SH4_LOG_DEBUG, "nop\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "nop");
 }
 
 void __0000nnnn10010011_dis(SH4Context_t *context, uint16_t op)
 {
     /* ocbi    @rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ocbi    @r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "ocbi    @r%d", n);
 }
 
 void __0000nnnn10100011_dis(SH4Context_t *context, uint16_t op)
 {
     /* ocbp    @rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ocbp    @r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "ocbp    @r%d", n);
 }
 
 void __0000nnnn10110011_dis(SH4Context_t *context, uint16_t op)
 {
     /* ocbwb   @rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ocbwb   @r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "ocbwb   @r%d", n);
 }
 
 void __0000nnnn10000011_dis(SH4Context_t *context, uint16_t op)
 {
     /* pref    @rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "pref    @r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "pref    @r%d", n);
 }
 
 void __0000000000101011_dis(SH4Context_t *context, uint16_t op)
 {
     /* rte */
-    SH4_Log(SH4_LOG_DEBUG, "rte\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "rte");
 }
 
 void __0000000001011000_dis(SH4Context_t *context, uint16_t op)
 {
     /* sets */
-    SH4_Log(SH4_LOG_DEBUG, "sets\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "sets");
 }
 
 void __0000000000011000_dis(SH4Context_t *context, uint16_t op)
 {
     /* sett */
-    SH4_Log(SH4_LOG_DEBUG, "sett\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "sett");
 }
 
 void __0000000000011011_dis(SH4Context_t *context, uint16_t op)
 {
     /* sleep */
-    SH4_Log(SH4_LOG_DEBUG, "sleep\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "sleep");
 }
 
 void __0000nnnn00000010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc     sr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc     sr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     sr,r%d", n);
 }
 
 void __0000nnnn00010010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc     gbr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc     gbr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     gbr,r%d", n);
 }
 
 void __0000nnnn00100010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc     vbr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc     vbr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     vbr,r%d", n);
 }
 
 void __0000nnnn00110010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc     ssr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc     ssr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     ssr,r%d", n);
 }
 
 void __0000nnnn01000010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc     spc,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc     spc,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     spc,r%d", n);
 }
 
 void __0000nnnn00111010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc     sgr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc     sgr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     sgr,r%d", n);
 }
 
 void __0000nnnn11111010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc     dbr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc     dbr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     dbr,r%d", n);
 }
 
 void __0000nnnn1mmm0010_dis(SH4Context_t *context, uint16_t op)
@@ -1166,56 +1166,56 @@ void __0000nnnn1mmm0010_dis(SH4Context_t *context, uint16_t op)
     /* stc     rm_bank,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "stc     r%d_bank,r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc     r%d_bank,r%d", m, n);
 }
 
 void __0100nnnn00000011_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc.l   sr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   sr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   sr,@-r%d", n);
 }
 
 void __0100nnnn00010011_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc.l   gbr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   gbr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   gbr,@-r%d", n);
 }
 
 void __0100nnnn00100011_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc.l   vbr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   vbr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   vbr,@-r%d", n);
 }
 
 void __0100nnnn00110011_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc.l   ssr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   ssr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   ssr,@-r%d", n);
 }
 
 void __0100nnnn01000011_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc.l   spc,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   spc,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   spc,@-r%d", n);
 }
 
 void __0100nnnn00110010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc.l   sgr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   sgr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   sgr,@-r%d", n);
 }
 
 void __0100nnnn11110010_dis(SH4Context_t *context, uint16_t op)
 {
     /* stc.l   dbr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   dbr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   dbr,@-r%d", n);
 }
 
 void __0100nnnn1mmm0011_dis(SH4Context_t *context, uint16_t op)
@@ -1223,70 +1223,70 @@ void __0100nnnn1mmm0011_dis(SH4Context_t *context, uint16_t op)
     /* stc.l   rm_bank,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "stc.l   r%d_bank,@-r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "stc.l   r%d_bank,@-r%d", m, n);
 }
 
 void __0000nnnn00001010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts     mach,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts     mach,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts     mach,r%d", n);
 }
 
 void __0000nnnn00011010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts     macl,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts     macl,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts     macl,r%d", n);
 }
 
 void __0000nnnn00101010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts   pr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts   pr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts   pr,r%d", n);
 }
 
 void __0100nnnn00000010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts.l   mach,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts.l   mach,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts.l   mach,@-r%d", n);
 }
 
 void __0100nnnn00010010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts.l   macl,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts.l   macl,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts.l   macl,@-r%d", n);
 }
 
 void __0100nnnn00100010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts.l   pr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts.l   pr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts.l   pr,@-r%d", n);
 }
 
 void __11000011iiiiiiii_dis(SH4Context_t *context, uint16_t op)
 {
     /* trapa   #i */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_DEBUG, "trapa   #%d\n", i);
+    SH4_LogEx(SH4_LOG_DEBUG, "trapa   #%d", i);
 }
 
 void __1111nnnn10001101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fldi0   frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fldi0   fr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fldi0   fr%d", n);
 }
 
 void __1111nnnn10011101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fldi1   frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fldi1   fr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fldi1   fr%d", n);
 }
 
 void __1111nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
@@ -1294,7 +1294,7 @@ void __1111nnnnmmmm1100_dis(SH4Context_t *context, uint16_t op)
     /* fmov    frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    fr%d,fr%d", m, n);
 }
 
 void __1111nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
@@ -1302,7 +1302,7 @@ void __1111nnnnmmmm1000_dis(SH4Context_t *context, uint16_t op)
     /* fmov.s  @rm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov.s  @r%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov.s  @r%d,fr%d", m, n);
 }
 
 void __1111nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
@@ -1310,7 +1310,7 @@ void __1111nnnnmmmm0110_dis(SH4Context_t *context, uint16_t op)
     /* fmov.s  @(r0,rm),frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov.s  @(r0,r%d),fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov.s  @(r0,r%d),fr%d", m, n);
 }
 
 void __1111nnnnmmmm1001_dis(SH4Context_t *context, uint16_t op)
@@ -1318,7 +1318,7 @@ void __1111nnnnmmmm1001_dis(SH4Context_t *context, uint16_t op)
     /* fmov.s  @rm+,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov.s  @r%d+,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov.s  @r%d+,fr%d", m, n);
 }
 
 void __1111nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
@@ -1326,7 +1326,7 @@ void __1111nnnnmmmm1010_dis(SH4Context_t *context, uint16_t op)
     /* fmov.s  frm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov.s  fr%d,@r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov.s  fr%d,@r%d", m, n);
 }
 
 void __1111nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
@@ -1334,7 +1334,7 @@ void __1111nnnnmmmm1011_dis(SH4Context_t *context, uint16_t op)
     /* fmov.s  frm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov.s  fr%d,@-r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov.s  fr%d,@-r%d", m, n);
 }
 
 void __1111nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
@@ -1342,7 +1342,7 @@ void __1111nnnnmmmm0111_dis(SH4Context_t *context, uint16_t op)
     /* fmov.s  frm,@(r0,rn) */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov.s  fr%d,@(r0,r%d)\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov.s  fr%d,@(r0,r%d)", m, n);
 }
 
 void __1111nnn0mmm01100_dis(SH4Context_t *context, uint16_t op)
@@ -1350,7 +1350,7 @@ void __1111nnn0mmm01100_dis(SH4Context_t *context, uint16_t op)
     /* fmov    drm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    dr%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    dr%d,dr%d", m, n);
 }
 
 void __1111nnn0mmmm1000_dis(SH4Context_t *context, uint16_t op)
@@ -1358,7 +1358,7 @@ void __1111nnn0mmmm1000_dis(SH4Context_t *context, uint16_t op)
     /* fmov    @rm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    @r%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    @r%d,dr%d", m, n);
 }
 
 void __1111nnn0mmmm0110_dis(SH4Context_t *context, uint16_t op)
@@ -1366,7 +1366,7 @@ void __1111nnn0mmmm0110_dis(SH4Context_t *context, uint16_t op)
     /* fmov    @(r0,rm),drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    @(r0,r%d),dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    @(r0,r%d),dr%d", m, n);
 }
 
 void __1111nnn0mmmm1001_dis(SH4Context_t *context, uint16_t op)
@@ -1374,7 +1374,7 @@ void __1111nnn0mmmm1001_dis(SH4Context_t *context, uint16_t op)
     /* fmov    @rm+,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    @r%d+,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    @r%d+,dr%d", m, n);
 }
 
 void __1111nnnnmmm01010_dis(SH4Context_t *context, uint16_t op)
@@ -1382,7 +1382,7 @@ void __1111nnnnmmm01010_dis(SH4Context_t *context, uint16_t op)
     /* fmov    drm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    dr%d,@r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    dr%d,@r%d", m, n);
 }
 
 void __1111nnnnmmm01011_dis(SH4Context_t *context, uint16_t op)
@@ -1390,7 +1390,7 @@ void __1111nnnnmmm01011_dis(SH4Context_t *context, uint16_t op)
     /* fmov    drm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    dr%d,@-r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    dr%d,@-r%d", m, n);
 }
 
 void __1111nnnnmmm00111_dis(SH4Context_t *context, uint16_t op)
@@ -1398,28 +1398,28 @@ void __1111nnnnmmm00111_dis(SH4Context_t *context, uint16_t op)
     /* fmov    drm,@(r0,rn) */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    dr%d,@(r0,r%d)\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    dr%d,@(r0,r%d)", m, n);
 }
 
 void __1111mmmm00011101_dis(SH4Context_t *context, uint16_t op)
 {
     /* flds    frm,fpul */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "flds    fr%d,fpul\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "flds    fr%d,fpul", m);
 }
 
 void __1111nnnn00001101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fsts    fpul,frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fsts    fpul,fr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fsts    fpul,fr%d", n);
 }
 
 void __1111nnnn01011101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fabs    frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fabs    fr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fabs    fr%d", n);
 }
 
 void __1111nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
@@ -1427,7 +1427,7 @@ void __1111nnnnmmmm0000_dis(SH4Context_t *context, uint16_t op)
     /* fadd    frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fadd    fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fadd    fr%d,fr%d", m, n);
 }
 
 void __1111nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
@@ -1435,7 +1435,7 @@ void __1111nnnnmmmm0100_dis(SH4Context_t *context, uint16_t op)
     /* fcmp/eq frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fcmp/eq fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fcmp/eq fr%d,fr%d", m, n);
 }
 
 void __1111nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
@@ -1443,7 +1443,7 @@ void __1111nnnnmmmm0101_dis(SH4Context_t *context, uint16_t op)
     /* fcmp/gt frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fcmp/gt fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fcmp/gt fr%d,fr%d", m, n);
 }
 
 void __1111nnnnmmmm0011_dis(SH4Context_t *context, uint16_t op)
@@ -1451,14 +1451,14 @@ void __1111nnnnmmmm0011_dis(SH4Context_t *context, uint16_t op)
     /* fdiv    frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fdiv    fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fdiv    fr%d,fr%d", m, n);
 }
 
 void __1111nnnn00101101_dis(SH4Context_t *context, uint16_t op)
 {
     /* float   fpul,frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "float   fpul,fr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "float   fpul,fr%d", n);
 }
 
 void __1111nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
@@ -1466,7 +1466,7 @@ void __1111nnnnmmmm1110_dis(SH4Context_t *context, uint16_t op)
     /* fmac    fr0,frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmac    fr0,fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmac    fr0,fr%d,fr%d", m, n);
 }
 
 void __1111nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
@@ -1474,21 +1474,21 @@ void __1111nnnnmmmm0010_dis(SH4Context_t *context, uint16_t op)
     /* fmul    frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmul    fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmul    fr%d,fr%d", m, n);
 }
 
 void __1111nnnn01001101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fneg    frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fneg    fr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fneg    fr%d", n);
 }
 
 void __1111nnnn01101101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fsqrt   frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fsqrt   fr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fsqrt   fr%d", n);
 }
 
 void __1111nnnnmmmm0001_dis(SH4Context_t *context, uint16_t op)
@@ -1496,21 +1496,21 @@ void __1111nnnnmmmm0001_dis(SH4Context_t *context, uint16_t op)
     /* fsub    frm,frn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fsub    fr%d,fr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fsub    fr%d,fr%d", m, n);
 }
 
 void __1111mmmm00111101_dis(SH4Context_t *context, uint16_t op)
 {
     /* ftrc    frm,fpul */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "ftrc    fr%d,fpul\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ftrc    fr%d,fpul", m);
 }
 
 void __1111nnn001011101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fabs    drn */
     int8_t n = (op>>9)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fabs    dr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fabs    dr%d", n);
 }
 
 void __1111nnn0mmm00000_dis(SH4Context_t *context, uint16_t op)
@@ -1518,7 +1518,7 @@ void __1111nnn0mmm00000_dis(SH4Context_t *context, uint16_t op)
     /* fadd    drm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fadd    dr%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fadd    dr%d,dr%d", m, n);
 }
 
 void __1111nnn0mmm00100_dis(SH4Context_t *context, uint16_t op)
@@ -1526,7 +1526,7 @@ void __1111nnn0mmm00100_dis(SH4Context_t *context, uint16_t op)
     /* fcmp/eq drm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fcmp/eq dr%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fcmp/eq dr%d,dr%d", m, n);
 }
 
 void __1111nnn0mmm00101_dis(SH4Context_t *context, uint16_t op)
@@ -1534,7 +1534,7 @@ void __1111nnn0mmm00101_dis(SH4Context_t *context, uint16_t op)
     /* fcmp/gt drm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fcmp/gt dr%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fcmp/gt dr%d,dr%d", m, n);
 }
 
 void __1111nnn0mmm00011_dis(SH4Context_t *context, uint16_t op)
@@ -1542,28 +1542,28 @@ void __1111nnn0mmm00011_dis(SH4Context_t *context, uint16_t op)
     /* fdiv    drm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fdiv    dr%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fdiv    dr%d,dr%d", m, n);
 }
 
 void __1111mmm010111101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fcnvds  drm,fpul */
     int8_t m = (op>>9)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fcnvds  dr%d,fpul\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "fcnvds  dr%d,fpul", m);
 }
 
 void __1111nnn010101101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fcnvsd  fpul,drn */
     int8_t n = (op>>9)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fcnvsd  fpul,dr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fcnvsd  fpul,dr%d", n);
 }
 
 void __1111nnn000101101_dis(SH4Context_t *context, uint16_t op)
 {
     /* float   fpul,drn */
     int8_t n = (op>>9)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "float   fpul,dr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "float   fpul,dr%d", n);
 }
 
 void __1111nnn0mmm00010_dis(SH4Context_t *context, uint16_t op)
@@ -1571,21 +1571,21 @@ void __1111nnn0mmm00010_dis(SH4Context_t *context, uint16_t op)
     /* fmul    drm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmul    dr%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmul    dr%d,dr%d", m, n);
 }
 
 void __1111nnn001001101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fneg    drn */
     int8_t n = (op>>9)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fneg    dr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fneg    dr%d", n);
 }
 
 void __1111nnn001101101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fsqrt   drn */
     int8_t n = (op>>9)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fsqrt   dr%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fsqrt   dr%d", n);
 }
 
 void __1111nnn0mmm00001_dis(SH4Context_t *context, uint16_t op)
@@ -1593,70 +1593,70 @@ void __1111nnn0mmm00001_dis(SH4Context_t *context, uint16_t op)
     /* fsub    drm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fsub    dr%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fsub    dr%d,dr%d", m, n);
 }
 
 void __1111mmm000111101_dis(SH4Context_t *context, uint16_t op)
 {
     /* ftrc    drm,fpul */
     int8_t m = (op>>9)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "ftrc    dr%d,fpul\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "ftrc    dr%d,fpul", m);
 }
 
 void __0100mmmm01101010_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds     rm,fpscr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds     r%d,fpscr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds     r%d,fpscr", m);
 }
 
 void __0100mmmm01011010_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds     rm,fpul */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds     r%d,fpul\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds     r%d,fpul", m);
 }
 
 void __0100mmmm01100110_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds.l   @rm+,fpscr */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds.l   @r%d+,fpscr\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds.l   @r%d+,fpscr", m);
 }
 
 void __0100mmmm01010110_dis(SH4Context_t *context, uint16_t op)
 {
     /* lds.l   @rm+,fpul */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "lds.l   @r%d+,fpul\n", m);
+    SH4_LogEx(SH4_LOG_DEBUG, "lds.l   @r%d+,fpul", m);
 }
 
 void __0000nnnn01101010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts     fpscr,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts     fpscr,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts     fpscr,r%d", n);
 }
 
 void __0000nnnn01011010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts     fpul,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts     fpul,r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts     fpul,r%d", n);
 }
 
 void __0100nnnn01100010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts.l   fpscr,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts.l   fpscr,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts.l   fpscr,@-r%d", n);
 }
 
 void __0100nnnn01010010_dis(SH4Context_t *context, uint16_t op)
 {
     /* sts.l   fpul,@-rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "sts.l   fpul,@-r%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "sts.l   fpul,@-r%d", n);
 }
 
 void __1111nnn1mmm01100_dis(SH4Context_t *context, uint16_t op)
@@ -1664,7 +1664,7 @@ void __1111nnn1mmm01100_dis(SH4Context_t *context, uint16_t op)
     /* fmov    drm,xdn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    dr%d,xd%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    dr%d,xd%d", m, n);
 }
 
 void __1111nnn0mmm11100_dis(SH4Context_t *context, uint16_t op)
@@ -1672,7 +1672,7 @@ void __1111nnn0mmm11100_dis(SH4Context_t *context, uint16_t op)
     /* fmov    xdm,drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    xd%d,dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    xd%d,dr%d", m, n);
 }
 
 void __1111nnn1mmm11100_dis(SH4Context_t *context, uint16_t op)
@@ -1680,7 +1680,7 @@ void __1111nnn1mmm11100_dis(SH4Context_t *context, uint16_t op)
     /* fmov    xdm,xdn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    xd%d,xd%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    xd%d,xd%d", m, n);
 }
 
 void __1111nnn1mmmm1000_dis(SH4Context_t *context, uint16_t op)
@@ -1688,7 +1688,7 @@ void __1111nnn1mmmm1000_dis(SH4Context_t *context, uint16_t op)
     /* fmov    @rm,xdn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    @r%d,xd%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    @r%d,xd%d", m, n);
 }
 
 void __1111nnn1mmmm1001_dis(SH4Context_t *context, uint16_t op)
@@ -1696,7 +1696,7 @@ void __1111nnn1mmmm1001_dis(SH4Context_t *context, uint16_t op)
     /* fmov    @rm+,xdn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    @r%d+,xd%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    @r%d+,xd%d", m, n);
 }
 
 void __1111nnn1mmmm0110_dis(SH4Context_t *context, uint16_t op)
@@ -1704,7 +1704,7 @@ void __1111nnn1mmmm0110_dis(SH4Context_t *context, uint16_t op)
     /* fmov    @(r0,rm),drn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    @(r0,r%d),dr%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    @(r0,r%d),dr%d", m, n);
 }
 
 void __1111nnnnmmm11010_dis(SH4Context_t *context, uint16_t op)
@@ -1712,7 +1712,7 @@ void __1111nnnnmmm11010_dis(SH4Context_t *context, uint16_t op)
     /* fmov    xdm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    xd%d,@r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    xd%d,@r%d", m, n);
 }
 
 void __1111nnnnmmm11011_dis(SH4Context_t *context, uint16_t op)
@@ -1720,7 +1720,7 @@ void __1111nnnnmmm11011_dis(SH4Context_t *context, uint16_t op)
     /* fmov    xdm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    xd%d,@-r%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    xd%d,@-r%d", m, n);
 }
 
 void __1111nnnnmmm10111_dis(SH4Context_t *context, uint16_t op)
@@ -1728,7 +1728,7 @@ void __1111nnnnmmm10111_dis(SH4Context_t *context, uint16_t op)
     /* fmov    xdm,@(r0,rn) */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_DEBUG, "fmov    xd%d,@(r0,r%d)\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fmov    xd%d,@(r0,r%d)", m, n);
 }
 
 void __1111nnmm11101101_dis(SH4Context_t *context, uint16_t op)
@@ -1736,25 +1736,25 @@ void __1111nnmm11101101_dis(SH4Context_t *context, uint16_t op)
     /* fipr    fvm,fvn */
     int8_t n = (op>>10)&0x3;
     int8_t m = (op>>8)&0x3;
-    SH4_Log(SH4_LOG_DEBUG, "fipr    fv%d,fv%d\n", m, n);
+    SH4_LogEx(SH4_LOG_DEBUG, "fipr    fv%d,fv%d", m, n);
 }
 
 void __1111nn0111111101_dis(SH4Context_t *context, uint16_t op)
 {
     /* ftrv    xmtrx,fvn */
     int8_t n = (op>>10)&0x3;
-    SH4_Log(SH4_LOG_DEBUG, "ftrv    xmtrx,fv%d\n", n);
+    SH4_LogEx(SH4_LOG_DEBUG, "ftrv    xmtrx,fv%d", n);
 }
 
 void __1111101111111101_dis(SH4Context_t *context, uint16_t op)
 {
     /* frchg */
-    SH4_Log(SH4_LOG_DEBUG, "frchg\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "frchg");
 }
 
 void __1111001111111101_dis(SH4Context_t *context, uint16_t op)
 {
     /* fschg */
-    SH4_Log(SH4_LOG_DEBUG, "fschg\n");
+    SH4_LogEx(SH4_LOG_DEBUG, "fschg");
 }
 
