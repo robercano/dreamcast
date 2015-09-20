@@ -23,7 +23,7 @@ SH4OPGEN_OBJ := $(patsubst %.c, obj/%.o, $(SH4OPGEN_SRC))
 # SH4 interpreter tool
 SH4INTERP_SRC := sh4interpreter.c sh4core.c sh4mmu.c sh4log.c \
 	             sh4elf.c sh4opcodeemuLUT.c sh4opcodedisLUT.c \
-				 sh4opcodeemu.c sh4opcodedis.c
+				 sh4opcodeemu.c sh4opcodedis.c sh4debugger.c
 SH4INTERP_OBJ := $(patsubst %.c, obj/%.o, $(SH4INTERP_SRC))
 
 # Machine selection
@@ -52,7 +52,7 @@ BuildOpgen:
 
 $(TOOLSDIR)/sh4opgen: BuildOpgen $(SH4OPGEN_OBJ)
 $(TOOLSDIR)/sh4interpreter: CFLAGS += -Ilib/$(MACHINE)/
-$(TOOLSDIR)/sh4interpreter: LDFLAGS += lib/$(MACHINE)/libbfd.a lib/$(MACHINE)/libiberty.a -lz
+$(TOOLSDIR)/sh4interpreter: LDFLAGS += lib/$(MACHINE)/libbfd.a lib/$(MACHINE)/libiberty.a -lz -lncurses
 $(TOOLSDIR)/sh4interpreter: BuildInterpreter $(SH4INTERP_OBJ)
 	@$(CXX) -o $@ $(filter-out $<,$^) $(LDFLAGS)
 	@echo done!

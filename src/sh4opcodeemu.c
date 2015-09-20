@@ -990,10 +990,6 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
 
     if (/*_R(n) == c->print ||*/ _R(n) == c->puts) {
         /* Manually execute next instruction before jumping to printf or puts */
-        if (c->debug) {
-            SH4_DumpRegs(c);
-        }
-
         c->regs.PC    = c->regs.NPC;
         c->regs.NPC   = c->regs.NNPC;
         c->regs.NNPC += 2;
@@ -1001,10 +997,10 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
         uint16_t op = ntohs(*(uint16_t*)(c->memory+c->regs.PC));
 
         /* Execute the opcode */
-        if (c->debug) {
-            SH4_LogEx(SH4_LOG_DEBUG, "%04x:        %02x %02x           ", c->regs.PC, (op>>8)&0xff, op&0xff);
-            SH7750DisasmLUT[op](c, op);
-        }
+        //if (c->debug) {
+        //    SH4_LogEx(SH4_LOG_DEBUG, "%04x:        %02x %02x           ", c->regs.PC, (op>>8)&0xff, op&0xff);
+        //    SH7750DisasmLUT[op](c, op);
+        //}
         SH7750InterpLUT[op](c, op);
 
         /* Now execute printf: maximum of 3 parameters!! */
