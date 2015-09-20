@@ -629,8 +629,9 @@ void __0110nnnnmmmm1010(SH4Context_t *c, uint16_t op)
     /* negc    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] negc    rm,rn --> __0110nnnnmmmm1010\n");
-    exit(1);
+    int64_t tmp = (int64_t)0 - (int64_t)_R(m) - (int64_t)c->regs.SR.T;
+    c->regs.SR.T = tmp<0;
+    _R(n) = (uint32_t)tmp;
 }
 
 void __0011nnnnmmmm1000(SH4Context_t *c, uint16_t op)
@@ -1007,8 +1008,8 @@ void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
         if (c->debug) {
             SH4_Log(SH4_LOG_INFO, "Calling printf or puts");
         }
-        SH4_Log(SH4_LOG_INFO, "Calling printf or puts %s, %08x %08x %08x", c->memory+_R(4), _R(5), _R(6), _R(7));
-        SH4_LogEx(SH4_LOG_INFO, (char*)(c->memory+_R(4)), *(float*)&_R(5), _R(6), _R(7));
+        //SH4_Log(SH4_LOG_INFO, "Calling printf or puts %s, %08x %08x %08x", c->memory+_R(4), _R(5), _R(6), _R(7));
+        SH4_LogEx(SH4_LOG_INFO, (char*)(c->memory+_R(4)), _R(5), _R(6), _R(7));
     } else {
         c->regs.PR = c->regs.PC+4;
         c->regs.NNPC = _R(n);
