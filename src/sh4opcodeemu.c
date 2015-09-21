@@ -447,10 +447,10 @@ void __0010nnnnmmmm1100(SH4Context_t *c, uint16_t op)
     int8_t m = (op>>4)&0xf;
 
     uint32_t tmp = _R(n)^_R(m);
-    c->regs.SR.T = ((uint8_t*)&tmp)[0] &&
-                   ((uint8_t*)&tmp)[1] &&
-                   ((uint8_t*)&tmp)[2] &&
-                   ((uint8_t*)&tmp)[3];
+    c->regs.SR.T = !(((uint8_t*)&tmp)[0] &&
+                     ((uint8_t*)&tmp)[1] &&
+                     ((uint8_t*)&tmp)[2] &&
+                     ((uint8_t*)&tmp)[3]);
 }
 
 void __0011nnnnmmmm0100(SH4Context_t *c, uint16_t op)
