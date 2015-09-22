@@ -9,6 +9,8 @@
 #include "sh4.h"
 #include "sh4opcode.h"
 #include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
 
 void __0000000000000000(SH4Context_t *c, uint16_t op)
 {
@@ -29,7 +31,7 @@ void __1001nnnndddddddd(SH4Context_t *c, uint16_t op)
 {
     /* mov.w   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
-    int8_t d = op&0xff;
+    uint8_t d = op&0xff;
 
     _R(n) = SH4_MMU_ReadS16(c, d*2 + c->regs.PC + 4);
 }
@@ -38,7 +40,7 @@ void __1101nnnndddddddd(SH4Context_t *c, uint16_t op)
 {
     /* mov.l   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
-    int8_t d = op&0xff;
+    uint8_t d = op&0xff;
     _R(n) = SH4_MMU_ReadU32(c, d*4 + (c->regs.PC&0xfffffffc) + 4);
 }
 
@@ -229,7 +231,7 @@ void __0000nnnnmmmm0110(SH4Context_t *c, uint16_t op)
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
 
-    SH4_MMU_WriteU32(c, _R(m), _R(0) + _R(m));
+    SH4_MMU_WriteU32(c, _R(m), _R(0) + _R(n));
 }
 
 void __0000nnnnmmmm1100(SH4Context_t *c, uint16_t op)
@@ -237,8 +239,7 @@ void __0000nnnnmmmm1100(SH4Context_t *c, uint16_t op)
     /* mov.b   @(r0,rm),rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] mov.b   @(r0,rm),rn --> __0000nnnnmmmm1100\n");
-    exit(1);
+    _R(n) = SH4_MMU_ReadS8(c, _R(0) + _R(m));
 }
 
 void __0000nnnnmmmm1101(SH4Context_t *c, uint16_t op)
@@ -1463,11 +1464,16 @@ void __11000011iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* trapa   #i */
     int8_t i = op&0xff;
-    static int ignore = 4;
-    return;
-    if (ignore-- == 0) {
-        SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] trapa   #i --> __11000011iiiiiiii %d\n", ignore);
-        exit(1);
+    if (i == 34) {
+        switch(_R(4)) {
+            case 4: /* write */
+                _R(1) = write(_R(5), (void*)(c->memory+_R(6)), _R(7));
+                SH4_MMU_WriteU32(c, errno, c->regs.PC+16);
+                break;
+            default:
+                SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] trapa call %d\n", _R(4));
+                exit(1);
+        }
     }
 }
 

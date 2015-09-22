@@ -3,3 +3,4 @@ obj
 tools
 cscope.*
 tags
+.deps

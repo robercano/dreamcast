@@ -31,7 +31,7 @@ void __1001nnnndddddddd_dis(SH4Context_t *c, uint16_t op)
 {
     /* mov.w   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
-    int8_t d = op&0xff;
+    uint8_t d = op&0xff;
     printw("mov.w   @(%d,pc),r%d", d, n);
 }
 
@@ -39,7 +39,7 @@ void __1101nnnndddddddd_dis(SH4Context_t *c, uint16_t op)
 {
     /* mov.l   @(d,pc),rn */
     int8_t n = (op>>8)&0xf;
-    int8_t d = op&0xff;
+    uint8_t d = op&0xff;
     printw("mov.l   @(%d,pc),r%d", d, n);
 }
 
