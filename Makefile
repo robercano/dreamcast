@@ -11,10 +11,17 @@ MACHINE=$(shell uname)
 OBJDIR := obj
 TOOLSDIR := tools
 SRCDIR := src
+DEPDIR := .deps
+
+$(shell mkdir -p $(OBJDIR) >/dev/null)
+$(shell mkdir -p $(TOOLSDIR) >/dev/null)
+$(shell mkdir -p $(SRCDIR) >/dev/null)
+$(shell mkdir -p $(DEPDIR) >/dev/null)
 
 # General flags
 CFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable -O3
 CXXFLAGS = -Iinclude -Wall -Werror -Wno-unused-variable -O3
+DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
 # SH4 opcode generation tool
 SH4OPGEN_SRC := sh4opgen.c
@@ -33,16 +40,10 @@ else
 MACHINE := osx
 endif
 
-all: createdirs $(TOOLSDIR)/sh4interpreter
+all: $(TOOLSDIR)/sh4interpreter
 	@echo All done!
 
 sh4opgen: $(TOOLSDIR)/sh4opgen
-
-createdirs:
-	@echo -n - Creating directories...
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $(TOOLSDIR)
-	@echo done!
 
 BuildInterpreter:
 	@echo -n - Building interpreter...
@@ -61,12 +62,19 @@ clean:
 	@echo -n Cleaning everything...
 	@rm -rf $(OBJDIR)
 	@rm -rf $(TOOLSDIR)
+	@rm -rf $(DEPDIR)
 	@echo done!
 
-obj/%.o: src/%.c
-	@$(CC) $(CFLAGS) -o $@ -c $<
+obj/%.o: src/%.c $(DEPDIR)/%.d
+	@$(CC) $(DEPFLAGS) $(CFLAGS) -o $@ -c $<
+	 mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d
 
-obj/%.o: src/%.cpp
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+obj/%.o: src/%.cpp $(DEPDIR)/%.d
+	@$(CXX) $(DEPFLAGS) $(CXXFLAGS) -o $@ -c $<
+	 mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d
+
+$(DEPDIR)/%.d: ;
+
+-include $(patsubst %,$(DEPDIR)/%.d,$(basename $(SH4INTERP_SRC)))
 
 .PHONY: createdirs sh4opgen BuildInterpreter BuildOpgen
