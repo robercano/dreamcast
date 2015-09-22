@@ -67,11 +67,11 @@ clean:
 
 obj/%.o: src/%.c $(DEPDIR)/%.d
 	@$(CC) $(DEPFLAGS) $(CFLAGS) -o $@ -c $<
-	 mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d
+	@mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d
 
 obj/%.o: src/%.cpp $(DEPDIR)/%.d
 	@$(CXX) $(DEPFLAGS) $(CXXFLAGS) -o $@ -c $<
-	 mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d
+	@mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d
 
 $(DEPDIR)/%.d: ;
 
