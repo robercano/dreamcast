@@ -44,9 +44,9 @@ static SH4Error __SH4_ELF_LoadSymbolTable(IN SH4Context_t *c, IN bfd *elf)
 
     /* Analyze the symbols */
     for (i=0; i<symcount; i++) {
-        bfd *cur_bfd;
 
-        if (symbols[i] == NULL) {
+        if (symbols[i] == NULL ||
+            symbols[i]->name[0] != '_') { /* Only symbols starting with underscore */
             continue;
         }
 
@@ -56,6 +56,10 @@ static SH4Error __SH4_ELF_LoadSymbolTable(IN SH4Context_t *c, IN bfd *elf)
             item->address = (uint32_t)symbols[i]->value;
         } else {
             item->address = (uint32_t)(symbols[i]->section->vma + symbols[i]->value);
+        }
+        if (item->address == 0x0) {
+            /* Do not save 0x0 addresses */
+            continue;
         }
         strncpy(item->name, symbols[i]->name, sizeof item->name);
 
@@ -105,6 +109,11 @@ void SH4_ELF_ShowInfo(IN SH4Context_t *c)
     SH4_Log(SH4_LOG_INFO, "_printf address: %08x", c->print);
     SH4_Log(SH4_LOG_INFO, "_puts address: %08x", c->puts);
     SH4_LogEx(SH4_LOG_INFO, "\n");
+
+    /* All symbols */
+    for (i=0; i<c->symbTableLen; ++i) {
+        SH4_Log(SH4_LOG_INFO, "%08x: %s", c->symbTable[i].address, c->symbTable[i].name);
+    }
 }
 
 SH4Error SH4_ELF_Load(IN SH4Context_t *context, IN const char *elfname, IN uint32_t maxMemSize)

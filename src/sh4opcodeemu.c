@@ -984,36 +984,15 @@ void __0100nnnn00101011(SH4Context_t *c, uint16_t op)
     c->regs.NNPC = _R(n);
 }
 
-#include <arpa/inet.h>
 void __0100nnnn00001011(SH4Context_t *c, uint16_t op)
 {
     /* jsr     @rn */
     int8_t n = (op>>8)&0xf;
 
-    if (/*_R(n) == c->print ||*/ _R(n) == c->puts) {
-        /* Manually execute next instruction before jumping to printf or puts */
-        c->regs.PC    = c->regs.NPC;
-        c->regs.NPC   = c->regs.NNPC;
-        c->regs.NNPC += 2;
-
-        uint16_t op = ntohs(*(uint16_t*)(c->memory+c->regs.PC));
-
-        /* Execute the opcode */
-        //if (c->debug) {
-        //    SH4_LogEx(SH4_LOG_DEBUG, "%04x:        %02x %02x           ", c->regs.PC, (op>>8)&0xff, op&0xff);
-        //    SH7750DisasmLUT[op](c, op);
-        //}
-        SH7750InterpLUT[op](c, op);
-
-        /* Now execute printf: maximum of 3 parameters!! */
-        if (c->debug) {
-            SH4_Log(SH4_LOG_INFO, "Calling printf or puts");
-        }
-        //SH4_Log(SH4_LOG_INFO, "Calling printf or puts %s, %08x %08x %08x", c->memory+_R(4), _R(5), _R(6), _R(7));
-        SH4_LogEx(SH4_LOG_INFO, (char*)(c->memory+_R(4)), _R(5), _R(6), _R(7));
-    } else {
-        c->regs.PR = c->regs.PC+4;
-        c->regs.NNPC = _R(n);
+    c->regs.PR = c->regs.PC+4;
+    c->regs.NNPC = _R(n);
+    if (c->debug_mode == 'n' && c->globalbp == 0) {
+        c->globalbp_next = c->regs.PR;
     }
 }
 
@@ -1021,6 +1000,9 @@ void __0000000000001011(SH4Context_t *c, uint16_t op)
 {
     /* rts */
     c->regs.NNPC = c->regs.PR;
+    if (c->globalbp == 0) {
+        c->globalbp_next = c->regs.PR;
+    }
 }
 
 void __0000000000101000(SH4Context_t *c, uint16_t op)
@@ -1464,10 +1446,11 @@ void __11000011iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* trapa   #i */
     int8_t i = op&0xff;
+    SH4_Log(SH4_LOG_ERROR, "trapa call %d, R4=%d, R5=%d, R6=%d, R7=%d", i, _R(4), _R(5), _R(6), _R(7));
     if (i == 34) {
         switch(_R(4)) {
             case 4: /* write */
-                _R(1) = write(_R(5), (void*)(c->memory+_R(6)), _R(7));
+                _R(1) = write(_R(5), (void*)(c->memory+_R(6)), _R(7)) != _R(7);
                 SH4_MMU_WriteU32(c, errno, c->regs.PC+16);
                 break;
             default:
