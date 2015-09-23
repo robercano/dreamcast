@@ -1000,7 +1000,7 @@ void __0000000000001011(SH4Context_t *c, uint16_t op)
 {
     /* rts */
     c->regs.NNPC = c->regs.PR;
-    if (c->globalbp == 0) {
+    if (c->debug_mode != 'r' && c->globalbp == 0) {
         c->globalbp_next = c->regs.PR;
     }
 }
