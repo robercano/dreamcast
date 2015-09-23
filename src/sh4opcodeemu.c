@@ -849,9 +849,7 @@ void __0100nnnn00000000(SH4Context_t *c, uint16_t op)
 {
     /* shll    rn */
     int8_t n = (op>>8)&0xf;
-    if (_R(n)&0x80000000) {
-        c->regs.SR.T = 1;
-    }
+    c->regs.SR.T = (_R(n)&0x80000000)!=0;
     _R(n) <<= 1;
 }
 
@@ -859,8 +857,8 @@ void __0100nnnn00000001(SH4Context_t *c, uint16_t op)
 {
     /* shlr    rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] shlr    rn --> __0100nnnn00000001\n");
-    exit(1);
+    c->regs.SR.T = (_R(n)&0x00000001)!=0;
+    _R(n) >>= 1;
 }
 
 void __0100nnnn00001000(SH4Context_t *c, uint16_t op)
@@ -967,6 +965,9 @@ void __1011dddddddddddd(SH4Context_t *c, uint16_t op)
     }
     c->regs.PR = c->regs.PC+4;
     c->regs.NNPC = d*2 + c->regs.PC + 4;
+    if (c->debug_mode == 'n' && c->globalbp == 0) {
+        c->globalbp_next = c->regs.PR;
+    }
 }
 
 void __0000nnnn00000011(SH4Context_t *c, uint16_t op)
