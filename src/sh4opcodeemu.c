@@ -325,8 +325,7 @@ void __0110nnnnmmmm1000(SH4Context_t *c, uint16_t op)
     /* swap.b  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] swap.b  rm,rn --> __0110nnnnmmmm1000\n");
-    exit(1);
+    _R(n) = (_R(m)&0xFFFF0000) | ((_R(m)>>8)&0xFF) | ((_R(m)<<8)&0xFF00);
 }
 
 void __0110nnnnmmmm1001(SH4Context_t *c, uint16_t op)
@@ -760,8 +759,7 @@ void __11001010iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* xor     #i,r0 */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] xor     #i,r0 --> __11001010iiiiiiii\n");
-    exit(1);
+    _R(0) ^= i;
 }
 
 void __11001110iiiiiiii(SH4Context_t *c, uint16_t op)
@@ -804,8 +802,13 @@ void __0100nnnn00100101(SH4Context_t *c, uint16_t op)
 {
     /* rotcr   rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] rotcr   rn --> __0100nnnn00100101\n");
-    exit(1);
+    if (c->regs.SR.T) {
+        c->regs.SR.T = _R(n)&0x1;
+        _R(n) = (_R(n)>>1) | 0x80000000;
+    } else {
+        c->regs.SR.T = _R(n)&0x1;
+        _R(n) = (_R(n)>>1);
+    }
 }
 
 void __0100nnnnmmmm1100(SH4Context_t *c, uint16_t op)
@@ -1447,7 +1450,7 @@ void __11000011iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* trapa   #i */
     int8_t i = op&0xff;
-    SH4_Log(SH4_LOG_ERROR, "trapa call %d, R4=%d, R5=%d, R6=%d, R7=%d", i, _R(4), _R(5), _R(6), _R(7));
+    //SH4_Log(SH4_LOG_ERROR, "trapa call %d, R4=%d, R5=%d, R6=%d, R7=%d", i, _R(4), _R(5), _R(6), _R(7));
     if (i == 34) {
         switch(_R(4)) {
             case 4: /* write */
