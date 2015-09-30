@@ -90,8 +90,7 @@ void __0110nnnnmmmm0001(SH4Context_t *c, uint16_t op)
     /* mov.w   @rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] mov.w   @rm,rn --> __0110nnnnmmmm0001\n");
-    exit(1);
+    _R(n) = SH4_MMU_ReadS16(c, _R(m));
 }
 
 void __0110nnnnmmmm0010(SH4Context_t *c, uint16_t op)
@@ -107,8 +106,8 @@ void __0010nnnnmmmm0100(SH4Context_t *c, uint16_t op)
     /* mov.b   rm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] mov.b   rm,@-rn --> __0010nnnnmmmm0100\n");
-    exit(1);
+    _R(n)--;
+    SH4_MMU_WriteU8(c, _R(m), _R(n));
 }
 
 void __0010nnnnmmmm0101(SH4Context_t *c, uint16_t op)
@@ -552,8 +551,7 @@ void __0110nnnnmmmm1111(SH4Context_t *c, uint16_t op)
     /* exts.w  rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] exts.w  rm,rn --> __0110nnnnmmmm1111\n");
-    exit(1);
+    _R(n) = (int16_t)_R(m);
 }
 
 void __0110nnnnmmmm1100(SH4Context_t *c, uint16_t op)
@@ -1450,7 +1448,7 @@ void __11000011iiiiiiii(SH4Context_t *c, uint16_t op)
 {
     /* trapa   #i */
     int8_t i = op&0xff;
-    //SH4_Log(SH4_LOG_ERROR, "trapa call %d, R4=%d, R5=%d, R6=%d, R7=%d", i, _R(4), _R(5), _R(6), _R(7));
+    //SH4_Log(SH4_LOG_ERROR, "trapa call %d, R4=%d, R5=%d, R6=%08x, R7=%d", i, _R(4), _R(5), _R(6), _R(7));
     if (i == 34) {
         switch(_R(4)) {
             case 4: /* write */
