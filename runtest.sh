@@ -11,7 +11,7 @@ popd >/dev/null
 
 # Compile the SH4 and the X86 binaries
 sh-elf-gcc -ml -o $DIR/tests/sh4tests tests/sh4tests.c
-gcc -o $DIR/tests/sh4tests.x86 tests/sh4tests.c
+gcc -O3 -o $DIR/tests/sh4tests.x86 tests/sh4tests.c
 
 # Run the tests and compare
 diff <($DIR/tests/sh4tests.x86 $ITER $STR) <($DIR/tools/sh4interpreter $DIR/tests/sh4tests $ITER $STR) > .runtests.diff
