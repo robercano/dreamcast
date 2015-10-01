@@ -93,7 +93,7 @@ int main(int argc, char **argv)
             a[i] = n*i;
             b[i] = n*i;
         }
-        printf("%d\n", memcmp(a, b, 256));
+        printf("%d\n", memcmp(a, b, 256)==0);
         );
 
     RUN(
@@ -103,13 +103,13 @@ int main(int argc, char **argv)
         }
         a[255] = 45;
         b[255] = 46;
-        printf("%d\n", memcmp(a, b, 256));
+        printf("%d\n", memcmp(a, b, 256)<0);
        );
 
     RUN(
         a[255] = 46;
         b[255] = 45;
-        printf("%d\n", memcmp(a, b, 256));
+        printf("%d\n", memcmp(a, b, 256)>0);
        );
 
     /* memmove */
@@ -120,9 +120,9 @@ int main(int argc, char **argv)
             a[i] = n*(i+1);
             b[i] = n*i;
         }
-        printf("%d\n", memcmp(a, b, 256));
+        printf("%d\n", memcmp(a, b, 256)!=0);
         printf("%d\n", a==memmove(a, b, 256));
-        printf("%d\n", memcmp(a, b, 256));
+        printf("%d\n", memcmp(a, b, 256)==0);
        );
     RUN(
         for (i=0; i<1024; ++i) {
@@ -133,10 +133,10 @@ int main(int argc, char **argv)
                 b[i] = n*i;
             }
         }
-        printf("%d\n", memcmp(a, b, 256));
-        printf("%d\n", memcmp(a, b, 1024));
+        printf("%d\n", memcmp(a, b, 256)==0);
+        printf("%d\n", memcmp(a, b, 1024)!=0);
         printf("%d\n", a==memmove(a+256, b+256, 768));
-        printf("%d\n", memcmp(a, b, 1024));
+        printf("%d\n", memcmp(a, b, 1024)==0);
        );
 
     /* fp */
