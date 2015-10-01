@@ -842,8 +842,12 @@ void __0100nnnnmmmm1101(SH4Context_t *c, uint16_t op)
     /* shld    rm,rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] shld    rm,rn --> __0100nnnnmmmm1101\n");
-    exit(1);
+    int32_t shift = _R(m) | 0x7FFFFFE0;
+    if (shift < 0) {
+        _R(n) >>= -shift;
+    } else {
+        _R(n) <<= shift;
+    }
 }
 
 void __0100nnnn00000000(SH4Context_t *c, uint16_t op)
@@ -918,8 +922,9 @@ void __10001111dddddddd(SH4Context_t *c, uint16_t op)
 {
     /* bf/s    d */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] bf/s    d --> __10001111dddddddd\n");
-    exit(1);
+    if (c->regs.SR.T == 0) {
+        c->regs.NNPC = c->regs.PC + d*2 + 4;
+    }
 }
 
 void __10001001dddddddd(SH4Context_t *c, uint16_t op)
@@ -936,8 +941,9 @@ void __10001101dddddddd(SH4Context_t *c, uint16_t op)
 {
     /* bt/s    d */
     int8_t d = op&0xff;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] bt/s    d --> __10001101dddddddd\n");
-    exit(1);
+    if (c->regs.SR.T) {
+        c->regs.NNPC  = c->regs.PC + d*2 + 4;
+    }
 }
 
 void __1010dddddddddddd(SH4Context_t *c, uint16_t op)
@@ -1581,8 +1587,7 @@ void __1111nnnnmmm01010(SH4Context_t *c, uint16_t op)
     /* fmov    drm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] fmov    drm,@rn --> __1111nnnnmmm01010\n");
-    exit(1);
+    SH4_MMU_WriteU64(c, *(uint64_t*)&_DR(m), _R(n));
 }
 
 void __1111nnnnmmm01011(SH4Context_t *c, uint16_t op)
@@ -1590,8 +1595,8 @@ void __1111nnnnmmm01011(SH4Context_t *c, uint16_t op)
     /* fmov    drm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] fmov    drm,@-rn --> __1111nnnnmmm01011\n");
-    exit(1);
+    _R(n) -= 8;
+    SH4_MMU_WriteU64(c, *(uint64_t*)&_DR(m), _R(n));
 }
 
 void __1111nnnnmmm00111(SH4Context_t *c, uint16_t op)
@@ -1607,16 +1612,14 @@ void __1111mmmm00011101(SH4Context_t *c, uint16_t op)
 {
     /* flds    frm,fpul */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] flds    frm,fpul --> __1111mmmm00011101\n");
-    exit(1);
+    c->regs.FPUL = _FR(m);
 }
 
 void __1111nnnn00001101(SH4Context_t *c, uint16_t op)
 {
     /* fsts    fpul,frn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] fsts    fpul,frn --> __1111nnnn00001101\n");
-    exit(1);
+    _FR(n) = c->regs.FPUL;
 }
 
 void __1111nnnn01011101(SH4Context_t *c, uint16_t op)
@@ -1844,8 +1847,7 @@ void __0100mmmm01011010(SH4Context_t *c, uint16_t op)
 {
     /* lds     rm,fpul */
     int8_t m = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] lds     rm,fpul --> __0100mmmm01011010\n");
-    exit(1);
+    c->regs.FPUL = _R(m);
 }
 
 void __0100mmmm01100110(SH4Context_t *c, uint16_t op)
@@ -1876,8 +1878,7 @@ void __0000nnnn01011010(SH4Context_t *c, uint16_t op)
 {
     /* sts     fpul,rn */
     int8_t n = (op>>8)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] sts     fpul,rn --> __0000nnnn01011010\n");
-    exit(1);
+    _R(n) = c->regs.FPUL;
 }
 
 void __0100nnnn01100010(SH4Context_t *c, uint16_t op)
@@ -1937,8 +1938,9 @@ void __1111nnn1mmmm1001(SH4Context_t *c, uint16_t op)
     /* fmov    @rm+,xdn */
     int8_t n = (op>>9)&0x7;
     int8_t m = (op>>4)&0xf;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] fmov    @rm+,xdn --> __1111nnn1mmmm1001\n");
-    exit(1);
+    uint64_t v = SH4_MMU_ReadU64(c, _R(m));
+    _XD(n) = *(double*)&v;
+    _R(m) += 8;
 }
 
 void __1111nnn1mmmm0110(SH4Context_t *c, uint16_t op)
@@ -1955,8 +1957,7 @@ void __1111nnnnmmm11010(SH4Context_t *c, uint16_t op)
     /* fmov    xdm,@rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] fmov    xdm,@rn --> __1111nnnnmmm11010\n");
-    exit(1);
+    SH4_MMU_WriteU64(c, *(uint64_t*)&_XD(m), _R(n));
 }
 
 void __1111nnnnmmm11011(SH4Context_t *c, uint16_t op)
@@ -1964,8 +1965,8 @@ void __1111nnnnmmm11011(SH4Context_t *c, uint16_t op)
     /* fmov    xdm,@-rn */
     int8_t n = (op>>8)&0xf;
     int8_t m = (op>>5)&0x7;
-    SH4_Log(SH4_LOG_ERROR, "[NOT IMPLEMENTED!] fmov    xdm,@-rn --> __1111nnnnmmm11011\n");
-    exit(1);
+    _R(n) -= 8;
+    SH4_MMU_WriteU64(c, *(uint64_t*)&_XD(m), _R(n));
 }
 
 void __1111nnnnmmm10111(SH4Context_t *c, uint16_t op)
