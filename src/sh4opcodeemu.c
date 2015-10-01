@@ -1031,8 +1031,7 @@ void __0100mmmm00001110(SH4Context_t *c, uint16_t op)
 {
     /* ldc     rm,sr */
     int8_t m = (op>>8)&0xf;
-    _SRPUT(_R(m));
-    SH4_Log(SH4_LOG_ERROR, "------------> %d, %x\n", m, _R(m)>>12);
+    _SRSET(_R(m));
 }
 
 void __0100mmmm00011110(SH4Context_t *c, uint16_t op)
